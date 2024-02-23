@@ -1,0 +1,25 @@
+{
+  "name": "bitebybyte",
+  "version": "1.0.0",
+  "description": "Web and Mobile App on MERN stack. Learning app where user can learn step by step how to cook different cuisines from around the world.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NikoKaramitos/BiteByByte.git"
+  },
+  "author": "Niko Karamitos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NikoKaramitos/BiteByByte/issues"
+  },
+  "homepage": "https://github.com/NikoKaramitos/BiteByByte#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mongodb": "^6.3.0"
+  }
+}
