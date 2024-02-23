@@ -1,11 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://byteAdmin:iHateCOP4331E3NRFXtHKoyRr7lA@poosnation.n4lh38u.mongodb.net/?retryWrites=true&w=majority&appName=POOSNation";
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+// Use an environment variable for the MongoDB URI
+const uri = process.env.MONGODB_URI;
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -14,33 +14,31 @@ const client = new MongoClient(uri, {
   }
 });
 
-async function run() {
-  try {
-    await client.connect();
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    await client.close();
-  }
-}
-run().catch(console.dir);
+// Connect to MongoDB outside of the request/response cycle
+client.connect().then(() => console.log("Successfully connected to MongoDB"))
+.catch(err => console.error("Failed to connect to MongoDB", err));
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use((req, res, next) =>
-{
+app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
         'Access-Control-Allow-Headers',
-        'Origin', 'X-Requested-With, Content-Type, Accept, Authorization'
+        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
     );
     res.setHeader(
         'Access-Control-Allow-Methods',
         'GET, POST, PATCH, DELETE, OPTIONS'
-      );
-      next();
+    );
+    next();
 });
 
-app.listen(5001);
+const PORT = process.env.PORT || 5001;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+}).on('error', err => {
+  console.error('Express failed to start');
+  console.error(err);
+});
