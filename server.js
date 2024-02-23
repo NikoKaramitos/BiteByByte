@@ -35,12 +35,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(express.static('build'));
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
-});
-
-
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
