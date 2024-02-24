@@ -37,6 +37,9 @@ app.use((req, res, next) => {
     next();
 });
 
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
