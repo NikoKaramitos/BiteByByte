@@ -4,8 +4,6 @@ const cors = require('cors');
 const path = require('path'); // test
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
-const app = express();
-
 app.use(express.static(path.join(__dirname, 'frontend/build')));
 
 // Use an environment variable for the MongoDB URI
@@ -23,6 +21,7 @@ const client = new MongoClient(uri, {
 client.connect().then(() => console.log("Successfully connected to MongoDB"))
 .catch(err => console.error("Failed to connect to MongoDB", err));
 
+const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
