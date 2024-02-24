@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/NikoKaramitos/BiteByByte/issues"
   },
-  "homepage": " https://bitebybyte-731c91aa3cb3.herokuapp.com/",
+  "homepage": "https://github.com/NikoKaramitos/BiteByByte/",
   "dependencies": {
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
