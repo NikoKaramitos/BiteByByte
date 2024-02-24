@@ -1,7 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path'); // test
 const { MongoClient, ServerApiVersion } = require('mongodb');
+
+app.use(express.static(path.join(__dirname, 'build'))); // test
 
 // Use an environment variable for the MongoDB URI
 const uri = process.env.MONGODB_URI;
