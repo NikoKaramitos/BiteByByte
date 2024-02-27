@@ -70,7 +70,16 @@ app.post("/api/register", async (req, res, next) => {
 
 	try {
 		const db = client.db("Users");
-		const result = await db.collection("users").insertOne(newUsers);
+		let duplicate = await db
+			.collection("users")
+			.find({ Login: login })
+			.toArray();
+
+		if (duplicate.length > 0) {
+			return res.status(409).json("Username taken");
+		} else {
+			const result = await db.collection("users").insertOne(newUsers);
+		}
 	} catch (e) {
 		error = e.toString();
 	}
