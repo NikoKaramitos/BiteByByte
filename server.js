@@ -67,23 +67,25 @@ app.post("/api/addcard", async (req, res, next) => {
 
 app.post("/api/register", async (req, res, next) => {
 	// incoming: firstName, lastName, email, login, password
-	// outgoing: error
+	// outgoing: id, error
 
-	const { firstName, lastName, email, login, password } = req.body;
+	const { firstName, lastName, email, username, password } = req.body;
 
 	const newUsers = {
 		FirstName: firstName,
 		LastName: lastName,
 		Email: email,
-		Login: login,
+		Login: username,
 		Password: password,
 	};
-
+	var id = -1;
+	var fn = "";
+	var ln = "";
 	var error = "";
-
+	// Check for duplicate users
 	try {
 		const db = client.db("Users");
-		let duplicate = await db
+		const duplicate = await db
 			.collection("users")
 			.find({ Login: login })
 			.toArray();
@@ -92,12 +94,15 @@ app.post("/api/register", async (req, res, next) => {
 			return res.status(409).json("Username taken");
 		} else {
 			const result = await db.collection("users").insertOne(newUsers);
+			id = result[0]._id;
+			fn = firstName;
+			ln = lastName;
 		}
 	} catch (e) {
 		error = e.toString();
 	}
 
-	var ret = { error: error };
+	var ret = { id: id, firstName: fn, lastName: ln, error: "" };
 	res.status(200).json(ret);
 });
 
