@@ -3,8 +3,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path"); // test
 const { MongoClient, ServerApiVersion } = require("mongodb");
-
-const path = require('path');
 const PORT = process.env.PORT || 5001;
 
 const app = express();
@@ -13,6 +11,12 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.set('port', (process.env.PORT || 5001));
+
+/**
+ * 
+ * DATABASE
+ * 
+ */
 
 // Use an environment variable for the MongoDB URI
 const uri = process.env.MONGODB_URI;
@@ -44,16 +48,34 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.get("/", (req, res) => {
-	res.send("Hello World!");
-});
+// app.get("/", (req, res) => {
+// 	res.send("Hello World!");
+// });
 
+// Start Node + Express server on port 5001
 app.listen(PORT, () =>
 {
 console.log('Server listening on port ' + PORT);
 });
 
-app.post("/api/register", async (req, res, next) => {
+// Server static assets if in production
+if (process.env.NODE_ENV === 'production')
+{
+// Set static folder
+app.use(express.static('frontend/build'));
+app.get('*', (req, res) =>
+{
+res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+});
+}
+
+/* 
+
+API SECTION
+
+*/
+
+app.post(buildPath('api/register'), async (req, res, next) => {
 	// incoming: firstName, lastName, email, username, password
 	// outgoing: error
 
@@ -89,7 +111,7 @@ app.post("/api/register", async (req, res, next) => {
 	res.status(200).json(ret);
 });
 
-app.post("/api/login", async (req, res, next) => {
+app.post(buildPath('api/login'), async (req, res, next) => {
 	// incoming: login, password
 	// outgoing: id, firstName, lastName, error
 
