@@ -3,10 +3,16 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path"); // test
 const { MongoClient, ServerApiVersion } = require("mongodb");
+
+const path = require('path');
+const PORT = process.env.PORT || 5001;
+
 const app = express();
 app.use(express.static(path.join(__dirname, "frontend/build")));
 app.use(cors());
 app.use(bodyParser.json());
+
+app.set('port', (process.env.PORT || 5001));
 
 // Use an environment variable for the MongoDB URI
 const uri = process.env.MONGODB_URI;
@@ -42,15 +48,10 @@ app.get("/", (req, res) => {
 	res.send("Hello World!");
 });
 
-const PORT = process.env.PORT || 5001;
-app
-	.listen(PORT, () => {
-		console.log(`Server is running on port ${PORT}`);
-	})
-	.on("error", (err) => {
-		console.error("Express failed to start");
-		console.error(err);
-	});
+app.listen(PORT, () =>
+{
+console.log('Server listening on port ' + PORT);
+});
 
 app.post("/api/register", async (req, res, next) => {
 	// incoming: firstName, lastName, email, username, password
