@@ -127,7 +127,7 @@ app.post("/api/login", async (req, res, next) => {
 		error = "No Record Found";
 	}
 
-	var ret = { id: id, firstName: fn, lastName: ln, error: results };
+	var ret = { id: id, firstName: fn, lastName: ln, error: error };
 	res.status(200).json(ret);
 });
 
