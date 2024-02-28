@@ -71,7 +71,7 @@ app.post("/api/register", async (req, res, next) => {
 
 	const { firstName, lastName, email, username, password } = req.body;
 
-	const newUsers = {
+	const newUser = {
 		FirstName: firstName,
 		LastName: lastName,
 		Email: email,
@@ -87,14 +87,14 @@ app.post("/api/register", async (req, res, next) => {
 		const db = client.db("Users");
 		const duplicate = await db
 			.collection("users")
-			.find({ Login: login })
+			.find({ Login: username })
 			.toArray();
 
 		if (duplicate.length > 0) {
-			return res.status(409).json("Username taken");
+			return res.status(409).json({ error: "Username taken" });
 		} else {
-			const result = await db.collection("users").insertOne(newUsers);
-			id = result[0]._id;
+			const result = await db.collection("users").insertOne(newUser);
+			id = result.insertedId;
 			fn = firstName;
 			ln = lastName;
 		}
@@ -102,8 +102,8 @@ app.post("/api/register", async (req, res, next) => {
 		error = e.toString();
 	}
 
-	var ret = { id: id, firstName: fn, lastName: ln, error: "" };
-	res.status(200).json(ret);
+	var ret = { id: id, firstName: fn, lastName: ln, error: error };
+	res.status(error ? 500 : 200).json(ret);
 });
 
 app.post("/api/login", async (req, res, next) => {
