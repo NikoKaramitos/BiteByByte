@@ -18,7 +18,7 @@ app.use(bodyParser.json());
  *
  **********************************************************************************/
 
-require('dotenv').config();
+require("dotenv").config();
 const url = process.env.MONGODB_URI;
 const MongoClient = require("mongodb").MongoClient;
 const client = new MongoClient(url);
@@ -65,6 +65,42 @@ app.post("/api/addcard", async (req, res, next) => {
 	res.status(200).json(ret);
 });
 
+app.post("/api/register", async (req, res, next) => {
+	// incoming: firstName, lastName, email, login, password
+	// outgoing: error
+
+	const { firstName, lastName, email, login, password } = req.body;
+
+	const newUsers = {
+		FirstName: firstName,
+		LastName: lastName,
+		Email: email,
+		Login: login,
+		Password: password,
+	};
+
+	var error = "";
+
+	try {
+		const db = client.db("Users");
+		let duplicate = await db
+			.collection("users")
+			.find({ Login: login })
+			.toArray();
+
+		if (duplicate.length > 0) {
+			return res.status(409).json("Username taken");
+		} else {
+			const result = await db.collection("users").insertOne(newUsers);
+		}
+	} catch (e) {
+		error = e.toString();
+	}
+
+	var ret = { error: error };
+	res.status(200).json(ret);
+});
+
 app.post("/api/login", async (req, res, next) => {
 	// incoming: login, password
 	// outgoing: id, firstName, lastName, error
@@ -73,9 +109,9 @@ app.post("/api/login", async (req, res, next) => {
 
 	const { login, password } = req.body;
 
-	const db = client.db("COP4331Cards");
+	const db = client.db("Users");
 	const results = await db
-		.collection("Users")
+		.collection("users")
 		.find({ Login: login, Password: password })
 		.toArray();
 
@@ -84,7 +120,7 @@ app.post("/api/login", async (req, res, next) => {
 	var ln = "";
 
 	if (results.length > 0) {
-		id = results[0].UserId;
+		id = results[0]._id;
 		fn = results[0].FirstName;
 		ln = results[0].LastName;
 	}
