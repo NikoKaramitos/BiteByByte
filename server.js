@@ -53,8 +53,8 @@ app.post("/api/addcard", async (req, res, next) => {
 	var error = "";
 
 	try {
-		const db = client.db("COP4331Cards");
-		const result = db.collection("Cards").insertOne(newCard);
+		const db = client.db("Users");
+		const result = db.collection("users").insertOne(newCard);
 	} catch (e) {
 		error = e.toString();
 	}
@@ -139,9 +139,9 @@ app.post("/api/searchcards", async (req, res, next) => {
 
 	var _search = search.trim();
 
-	const db = client.db("COP4331Cards");
+	const db = client.db("Users");
 	const results = await db
-		.collection("Cards")
+		.collection("cuisine")
 		.find({ Card: { $regex: _search + ".*", $options: "i" } })
 		.toArray();
 
