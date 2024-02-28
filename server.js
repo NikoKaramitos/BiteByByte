@@ -123,6 +123,8 @@ app.post("/api/login", async (req, res, next) => {
 		id = results[0]._id;
 		fn = results[0].FirstName;
 		ln = results[0].LastName;
+	} else {
+		error = "No Record Found";
 	}
 
 	var ret = { id: id, firstName: fn, lastName: ln, error: "" };
