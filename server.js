@@ -171,12 +171,12 @@ app.post("/api/deleteUser", async (req, res, next) => {
 	const error = "";
 
 
-	if (db.find({ userId: userId }) == null)
+	if (db.find({ _id: userId }) == null)
 	{
 		error = "User not found";
 		return res.status(409).json({ error: error });
 	}
-	if (db.findOneAndDelete({ userId: userId }) == null)
+	if (db.findOneAndDelete({ _id: userId }) == null)
 	{
 		error = "User not deleted";
 		return res.status(410).json({ error: error }); 
