@@ -166,9 +166,9 @@ app.post("/api/deleteUser", async (req, res, next) => {
 	// outgoing: error
 
 	const { userId } = req.body;
+	var error = "";
 	try {
 		const db = client.db("Users");
-		const error = "";
 
 		if (db.collection("users").find({ _id: userId }) == null) {
 			error = "User not found";
