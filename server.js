@@ -161,29 +161,28 @@ app.post("/api/searchcards", async (req, res, next) => {
 	res.status(200).json(ret);
 });
 
-app.post("/api/deleteUser", async (req, res, next) => {
-	// incoming: userId
-	// outgoing: error
+// app.post("/api/deleteUser", async (req, res, next) => {
+// 	// incoming: userId
+// 	// outgoing: error
 
-	const { userId } = req.body;
+// 	const { userId } = req.body;
 
-	const db = client.db("Users");
-	const error = "";
+// 	const db = client.db("Users");
+// 	const error = "";
 
+// 	if (db.find({ _id: userId }) == null)
+// 	{
+// 		error = "User not found";
+// 		return res.status(409).json({ error: error });
+// 	}
+// 	if (db.findOneAndDelete({ _id: userId }) == null)
+// 	{
+// 		error = "User not deleted";
+// 		return res.status(410).json({ error: error });
+// 	}
 
-	if (db.find({ _id: userId }) == null)
-	{
-		error = "User not found";
-		return res.status(409).json({ error: error });
-	}
-	if (db.findOneAndDelete({ _id: userId }) == null)
-	{
-		error = "User not deleted";
-		return res.status(410).json({ error: error }); 
-	}
-
-	res.status(200).json({ error: error });
-});
+// 	res.status(200).json({ error: error });
+// });
 
 // Server static assets if in production
 if (process.env.NODE_ENV === "production") {
