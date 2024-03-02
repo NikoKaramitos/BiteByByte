@@ -6,5 +6,5 @@ A Learn-to-Cook Web App made using a MERN stack!
 ## Backend
 - Node.JS
 - Express.JS
-## Mobile
+## Bite by Byte Mobile
 For mobile application check this repo: [ByteByByte-Mobile](https://github.com/NikoKaramitos/BitebyByte-Mobile)
