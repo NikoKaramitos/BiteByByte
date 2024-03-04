@@ -1,15 +1,18 @@
 import React from 'react';
+//import Login from '../components/Login';
+import NavBar from '../Navbar';
+import Login from '../pages/Login'
 
-import PageTitle from '../components/PageTitle';
-import Login from '../components/Login';
 
 const LoginPage = () =>
 {
 
     return(
       <div>
-        <PageTitle />
+        <><NavBar/></>
+        
         <Login />
+        
       </div>
     );
 };
