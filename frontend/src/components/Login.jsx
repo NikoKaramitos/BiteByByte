@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-
-import aroundWorld from '../assets/around-world.jpg'
+import RegisterPage from "../pages/RegisterPage";
+import aroundWorld from '../assets/around-world2.jpeg'
 
 export default function Login()
 {
@@ -58,7 +58,7 @@ export default function Login()
                 <img className="absolute w-full h-full object-cover mix-blend-overlay" src= {aroundWorld} alt=""/>
 
             <div className="flex justify-center items-center h-full">
-                <form className="max-w-[400px] w-full mx-auto bg-white p-8">
+                <form className="max-w-[400px] w-full rounded 2xl shadowl 2xl mx-auto bg-white p-8">
                     <h2 className="text-4xl font-bold text-center py-6 ">BITEbyBYTE.</h2>
                     <div className="flex flex-col mb-4">
                         <label>Username</label>
@@ -66,12 +66,20 @@ export default function Login()
                     </div>
                     <div className="flex flex-col">
                         <label>Password</label>
-                        <input id="loginPassword" className="border relative p-2 " type="password" ref={(c) => (loginPassword = c)}/>
+                        <input id="loginPassword" className="border relative p-2" type="password" ref={(c) => (loginPassword = c)}/>
                     </div>
-                    <button id="loginButton" className="w-full py-3 mt-8 bg-indigo-600 hover: bg-indigo-500 relative text-white" onClick={doLogin}>Sign In</button>
+                        <a href="#_" className="relative flex flex-col items-center px-12 py-3 mt-2 overflow-hidden font-medium text-indigo-600 border-2 border-indigo-600 rounded-full hover:text-white group hover:bg-gray-50">
+                            <span className="absolute left-0 block w-full h-0 transition-all bg-indigo-600 opacity-100 group-hover:h-full top-1/2 group-hover:top-0 duration-400 ease"></span>
+                            <span className="absolute right-0 flex-col items-center justify-start w-10 h-10 duration-300 transform translate-x-full group-hover:translate-x-0 ease">
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            </span>
+                            <span class="relative"onClick={doLogin}>Sign In</span>
+                        </a>
                         <p className="flex items-center mt-2 relative"><input className="mr-2" type="checkbox" /> Remember Me </p>
-                        <button id="registerButton" className="relative w-full my-5 py-2 text-black" onClick={doLogin}>Not a member? Sign up now!</button>
+                        
+                        <button id="registerButton" className="w-full py-3 mt-8 bg-indigo-600 hover: bg-indigo-500 relative text-white" onClick={RegisterPage}>Register</button>
                     <span id="loginResult">{message}</span>
+                     <span id="loginResult">{message}</span>
                 </form>
             </div>
         </div>
