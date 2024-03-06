@@ -1,15 +1,15 @@
 import React from "react";
 import "./App.css";
 import Navbar from "./components/navbar";
-
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Title from "./pages/HomePage";
 
 
 function App() {
 	return (
-		<BrowserRouter>
+		<div>
 			<Navbar/>
-		</BrowserRouter>
+			<Title/>
+		</div>
 	);
 }
 
