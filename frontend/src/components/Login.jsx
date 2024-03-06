@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import RegisterPage from "../pages/RegisterPage";
+//import Register from "../components/Register";
 import aroundWorld from '../assets/around-world2.jpeg'
+
+
 
 export default function Login()
 {
+	
     var loginName;
 	var loginPassword;
 
@@ -53,6 +56,13 @@ export default function Login()
 	};
 
 
+	function goRegister(event) {
+		event.preventDefault();
+		window.location.href = "/register";
+	};
+
+
+
     return (
         <div className="relative w-full h-screen bg-zinc-900/90">
                 <img className="absolute w-full h-full object-cover mix-blend-overlay" src= {aroundWorld} alt=""/>
@@ -73,13 +83,12 @@ export default function Login()
                             <span className="absolute right-0 flex-col items-center justify-start w-10 h-10 duration-300 transform translate-x-full group-hover:translate-x-0 ease">
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                             </span>
-                            <span class="relative"onClick={doLogin}>Sign In</span>
+                            <span className="relative"onClick={doLogin}>Sign In</span>
+							<span id="loginResult">{message}</span>
                         </a>
                         <p className="flex items-center mt-2 relative"><input className="mr-2" type="checkbox" /> Remember Me </p>
                         
-                        <button id="registerButton" className="w-full py-3 mt-8 bg-indigo-600 hover: bg-indigo-500 relative text-white" onClick={RegisterPage}>Register</button>
-                    <span id="loginResult">{message}</span>
-                     <span id="loginResult">{message}</span>
+                        <button id="registerButton" className="w-full py-3 mt-8 bg-indigo-600 hover: bg-indigo-500 relative text-white" href="/register" onClick={goRegister}>Register</button>
                 </form>
             </div>
         </div>

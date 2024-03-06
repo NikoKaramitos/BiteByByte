@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import aroundWorld from '../assets/around-world2.jpeg';
-import LoginPage from "../pages/LoginPage";
-
+//import LoginPage from "../pages/LoginPage";
 
 
 export default function Register()
@@ -49,12 +48,17 @@ export default function Register()
 				localStorage.setItem("user_data", JSON.stringify(user));
 
 				setMessage("");
-				window.location.href = "/cards";
+				window.location.href = "/";
 			}
 		} catch (e) {
 			alert(e.toString());
 			return;
 		}
+	};
+
+    const goLogin = (event) => {
+		event.preventDefault();
+		window.location.href = "/";
 	};
 
 	return (
@@ -93,7 +97,7 @@ export default function Register()
                         <span class="relative"onClick={doRegister}>Register</span>
                     </a>
                     <p className="flex items-center mt-2 relative"><input className="mr-2" type="checkbox" /> Remember Me </p>
-                    <button id="registerButton" className="relative w-full my-5 py-2 text-black" onClick={LoginPage}>Already a member? Sign in now!</button>
+                    <button id="registerButton" className="relative w-full my-5 py-2 text-black" href="/" onClick={goLogin}>Already a member? Sign in now!</button>
                 <span id="loginResult">{message}</span>
             </form>
             </div>
