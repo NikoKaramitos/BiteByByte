@@ -122,6 +122,7 @@ app.post("/api/login", async (req, res, next) => {
 		.toArray();
 	if (usernames.length == 0) {
 		error = "Username not found";
+		return res.status(409).json({ error: error});
 	}
 	const passwords = await db
 		.collection("users")
@@ -129,6 +130,7 @@ app.post("/api/login", async (req, res, next) => {
 		.toArray();
 	if (passwords.length == 0) {
 		error = "Password not found";
+		return res.status(409).json({ error: error});
 	}
 
 	
