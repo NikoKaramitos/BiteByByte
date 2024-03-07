@@ -115,6 +115,7 @@ app.post("/api/login", async (req, res, next) => {
 	const { login, password } = req.body;
 
 	const db = client.db("Users");
+
 	const results = await db
 		.collection("users")
 		.find({ Login: login, Password: password })
@@ -169,8 +170,9 @@ app.post("/api/deleteUser", async (req, res, next) => {
 	var error = "";
 	try {
 		const db = client.db("Users");
-
-		if (db.collection("users").find({ _id: userId }) == null) {
+		var idError = await db.collection("users").find({ _id: userId });
+		console.log(idError);
+		if (idError == null) {
 			error = "User not found";
 			return res.status(409).json({ error: error });
 		}
