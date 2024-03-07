@@ -116,6 +116,22 @@ app.post("/api/login", async (req, res, next) => {
 
 	const db = client.db("Users");
 
+	const usernames = await db
+		.collection("users")
+		.find({ Login: login })
+		.toArray();
+	if (usernames.length == 0) {
+		error = "Username not found";
+	}
+	const passwords = await db
+		.collection("users")
+		.find({ Password: password })
+		.toArray();
+	if (passwords.length == 0) {
+		error = "Password not found";
+	}
+
+	
 	const results = await db
 		.collection("users")
 		.find({ Login: login, Password: password })
