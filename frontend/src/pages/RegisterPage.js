@@ -1,21 +1,19 @@
 import React from 'react';
 //import Login from '../components/Login';
 import NavBar from '../Navbar';
-import Login from '../components/Login'
+import Register from '../components/Register';
 
-
-const LoginPage = () =>
+const RegisterPage = () =>
 {
 
     return(
       <div>
         <><NavBar/></>
-        
-        <Login />
+        <Register />
         
       </div>
     );
-};
+}
 
-export default LoginPage;
+export default RegisterPage;
 
