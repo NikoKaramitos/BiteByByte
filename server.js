@@ -170,15 +170,11 @@ app.post("/api/deleteUser", async (req, res, next) => {
 	var error = "";
 	try {
 		const db = client.db("Users");
-		var idError = await db.collection("users").find({ _id: userId });
-		console.log(idError);
-		if (idError == null) {
+		var user = await db.collection("users").findOneAndDelete({ _id: userId });
+
+		if (!user.value) {
 			error = "User not found";
-			return res.status(409).json({ error: error });
-		}
-		if (db.collection("users").findOneAndDelete({ _id: userId }) == null) {
-			error = "User not deleted";
-			return res.status(410).json({ error: error });
+			return res.status(409).json({ error: error});
 		}
 	} catch (e) {
 		error = e.toString();
