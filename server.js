@@ -190,7 +190,7 @@ app.post("/api/deleteUser", async (req, res, next) => {
 		const db = client.db("Users");
 		var user = await db.collection("users").findOneAndDelete({ _id: userId });
 
-		if (user.length == 0) {
+		if (!user) {
 			error = "User not found";
 			return res.status(409).json({ error: error});
 		}
