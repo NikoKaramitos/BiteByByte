@@ -70,7 +70,7 @@ export default function Login()
 
 				<div className=" flex justify-center items-center h-full">
 					<form className="max-w-[400px] w-full rounded 2xl shadowl 2xl mx-auto bg-white p-8">
-						<h2 className="text-4xl font-bold text-center py-6 ">BITEbyBYTE.</h2>
+						<h2 className="text-3xl font-bold text-center py-6 ">BITEbyBYTE.</h2>
 						<div className="flex flex-col mb-4">
 							<label>Username</label>
 							<input id="loginName" className="border relative p-2" type="text" ref={(c) => (loginName = c)} />

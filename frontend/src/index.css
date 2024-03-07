@@ -3,7 +3,7 @@
 @import "tailwindcss/utilities";
 
 body {
-  font-family: "Pixelify Sans", sans-serif;
+  font-family: "Press Start 2P", system-ui;
   font-optical-sizing: auto;
 
   background-color: #ECE4B7;
