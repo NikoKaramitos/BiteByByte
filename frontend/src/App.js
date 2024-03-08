@@ -1,7 +1,8 @@
 import React from "react";
 import "./App.css";
 import Navbar from "./components/navbar";
-import Title from "./pages/HomePage";
+import Title from "./pages/Title";
+import Body from "./pages/Body";
 
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
 		<div>
 			<Navbar/>
 			<Title/>
+			<Body/>
 		</div>
 	);
 }
