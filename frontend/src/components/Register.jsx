@@ -40,6 +40,7 @@ export default function Register()
 
 			if (res.id <= 0) {
 				setMessage("Username is already taken.");
+            
                 
 			} else {
 				var user = {
@@ -72,22 +73,18 @@ export default function Register()
 
             <div className="flex justify-center items-center h-full">
                 <form className="max-w-[400px] w-full rounded 2xl shadowl 2xl mx-auto bg-white p-8">
-                    <h2 className="text-4xl font-bold text-center py-6 ">BITEbyBYTE.</h2>
+                    <h2 className="text-2xl font-bold text-center py-6 ">BITEbyBYTE.</h2>
 
-                    <label>First Name</label>
-                    <div className="flex flex-col mb-4">
-                        <input id="firstName" className=" relative text-md block px-3 py-2 rounded-lg w-full bg-white border-2
-                        border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none
-                        invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer" required
-                        ref={(c) => (firstName = c)} />
-                         <span className="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                        Please enter a first name</span>
+                    <div className="flex flex-col mb-4 text-sm">
+                    <label>First Name</label>    
+                        <input id="firstName" input="text" className="relative bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                         ref={(c) => (firstName = c)} placeholder=" " required />
                 </div>
 
 
-                <div className="flex flex-col mb-4">
+                <div className="flex flex-col mb-4 text-sm">
                     <label>Last Name</label>
-                    <input id="lasttName" className="relative 2text-md block px-3 py-2 rounded-lg w-full
+                    <input id="lastName" className="relative 2text-md block px-3 py-2 rounded-lg w-full
                     bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none peer
                     invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer" required
                     type="text" 
@@ -97,8 +94,9 @@ export default function Register()
 
                 </div>
 
-                <label>Email</label>
-                <div className="flex flex-col mb-4">
+               
+                <div className="flex flex-col mb-4 text-sm">
+                    <label>Email</label>
                     <input id="email" type="email" name="email" className="peer relative 2text-md block px-3 py-2 rounded-lg w-full
                     bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none
                     invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500"
@@ -110,7 +108,7 @@ export default function Register()
                 
                 </div>
                 
-                <div className="flex flex-col mb-4">
+                <div className="flex flex-col mb-4 text-sm">
                     <label>Username</label>
                     <input id="username" className="peer relative 2text-md block px-3 py-2 rounded-lg w-full
                         bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none
@@ -122,28 +120,25 @@ export default function Register()
                 </div>
 
 
-                <div className="flex flex-col">
+                <div className="flex flex-col text-sm">
                     <label>Password</label>
-                    <input id="password" className="peer relative 2text-md block px-3 py-2 rounded-lg w-full
+                    <input id="password" className="peer relative block px-3 py-2 mb-2 rounded-lg w-full
                         bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none
                         invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 "
                         type="password"  required pattern=".{7,}" ref={(c) => (password = c)}/>
-                        <span className="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                        Enter a password
-                        </span>
                 </div>
 
 
-                    <a href="#_" className="relative flex flex-col items-center px-12 py-3 mt-2 overflow-hidden font-medium text-indigo-600 border-2 border-indigo-600 rounded-full hover:text-white group hover:bg-gray-50">
+                    <a href="#_" className="relative flex flex-col items-center px-12 py-3 mt-2 overflow-hidden font-medium text-indigo-600 border-2 border-indigo-600 rounded-full hover:text-white group hover:bg-gray-50 text-sm">
                         <span className="absolute left-0 block w-full h-0 transition-all bg-indigo-600 opacity-100 group-hover:h-full top-1/2 group-hover:top-0 duration-400 ease"></span>
                         <span className="absolute right-0 flex-col items-center justify-start w-10 h-10 duration-300 transform translate-x-full group-hover:translate-x-0 ease">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </span>
-                        <button className="relative"onClick={doRegister}>Register</button>
+                        <span className="relative"onClick={doRegister}>Register</span>
                     </a>
-                    <span id="registerResult">{message}</span>
-                    <p className="flex items-center mt-2 relative"><input className="mr-2" type="checkbox" /> Remember Me </p>
-                    <button id="signinButton"className="relative w-full my-5 py-2 text-black" href="/" onClick={goLogin}>Already a member? Sign in now!</button>
+                    <span className="text-xs" id="registerResult">{message}</span>
+                    <p className="flex items-center mt-2 relative text-sm"><input className="mr-2 mt-3  mb-3" type="checkbox" /> Forgot Password? </p>
+                    <span id="signinButton"className="relative text-sm w-full my-5 py-3 mt-4 text-black" onClick={goLogin} href="/" >Already a member? Sign in now!</span>
             </form>
             </div>
             </div>
