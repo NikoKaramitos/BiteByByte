@@ -85,19 +85,30 @@ app.post("/api/register", async (req, res, next) => {
 	// Check for duplicate users
 	try {
 		const db = client.db("Users");
-		const duplicate = await db
+		const duplicateUser = await db
 			.collection("users")
 			.find({ Login: username })
 			.toArray();
 
-		if (duplicate.length > 0) {
+		if (duplicateUser.length > 0) {
 			return res.status(409).json({ error: "Username taken" });
-		} else {
-			const result = await db.collection("users").insertOne(newUser);
-			id = result.insertedId;
-			fn = firstName;
-			ln = lastName;
 		}
+
+		const duplicateEmail = await db
+			.collection("users")
+			.find({ Email: email })
+			.toArray();
+
+		if (duplicateEmail.length > 0) {
+			return res
+				.status(409)
+				.json({ error: "That email has been used in another account" });
+		}
+
+		const result = await db.collection("users").insertOne(newUser);
+		id = result.insertedId;
+		fn = firstName;
+		ln = lastName;
 	} catch (e) {
 		error = e.toString();
 	}
@@ -115,6 +126,24 @@ app.post("/api/login", async (req, res, next) => {
 	const { login, password } = req.body;
 
 	const db = client.db("Users");
+
+	const usernames = await db
+		.collection("users")
+		.find({ Login: login })
+		.toArray();
+	if (usernames.length == 0) {
+		error = "Username not found";
+		return res.status(409).json({ error: error });
+	}
+	const passwords = await db
+		.collection("users")
+		.find({ Password: password })
+		.toArray();
+	if (passwords.length == 0) {
+		error = "Password not found";
+		return res.status(409).json({ error: error });
+	}
+
 	const results = await db
 		.collection("users")
 		.find({ Login: login, Password: password })
@@ -169,14 +198,13 @@ app.post("/api/deleteUser", async (req, res, next) => {
 	var error = "";
 	try {
 		const db = client.db("Users");
+		var user = await db
+			.collection("users")
+			.findOneAndDelete({ _id: userId });
 
-		if (db.collection("users").find({ _id: userId }) == null) {
+		if (!user) {
 			error = "User not found";
 			return res.status(409).json({ error: error });
-		}
-		if (db.collection("users").findOneAndDelete({ _id: userId }) == null) {
-			error = "User not deleted";
-			return res.status(410).json({ error: error });
 		}
 	} catch (e) {
 		error = e.toString();
