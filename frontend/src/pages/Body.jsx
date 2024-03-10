@@ -1,8 +1,7 @@
 import React from "react";
-import phone from './phone.png';
-import apple from './apple.png';
-import google from './google.png';
-
+import apple from '../assets/apple.png';
+import google from '../assets/google.png';
+import phone from '../assets/phone.png';
 
 const Body = () =>{
 	return (

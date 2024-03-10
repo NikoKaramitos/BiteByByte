@@ -1,10 +1,13 @@
 import React from 'react';
-import earth from './earth.png'; // Assuming earth.png is in the same directory as Title.js
+import earth from '../assets/earth.png'; // Assuming earth.png is in the assests folder
 import {motion} from "framer-motion";
 import { Button } from "@material-tailwind/react";
+import Navbar from '../components/navbar';
+import Body from "../pages/Body";
+import Footer from "../components/Footer"
 
 
-const Title = () =>{
+const LandingPage = () =>{
 	return (
 		<div>
 	  		<h1 className='text-black text-2xl text-center mt-20'>Learn the cuisine’s of the world!</h1>
@@ -24,5 +27,5 @@ const Title = () =>{
 	)
 }
 
-export default Title;
+export default LandingPage;
 

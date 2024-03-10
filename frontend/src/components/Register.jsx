@@ -54,7 +54,7 @@ export default function Register()
 				localStorage.setItem("user_data", JSON.stringify(user));
 
 				setMessage("");
-				window.location.href = "/";
+				window.location.href = "/login";
 			}
 		} catch (e) {
 			alert(e.toString());
@@ -64,7 +64,7 @@ export default function Register()
 
     function goLogin (event){
 		event.preventDefault();
-		window.location.href = "/Login";
+		window.location.href = "/login";
 	};
 
 	return (
