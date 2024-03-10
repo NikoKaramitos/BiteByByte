@@ -6,11 +6,19 @@ body {
   font-family: "Press Start 2P", system-ui;
   font-optical-sizing: auto;
 
-  background-color: #ECE4B7;
+  background-color: #f3dfc1;
+}
+
+.footer{
+  font-family: "Arial", sans-serif; 
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.btn{
+  @apply cursor-pointer shadow-md;
 }
 
