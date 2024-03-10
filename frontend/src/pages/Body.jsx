@@ -2,8 +2,6 @@ import React from "react";
 import phone from './phone.png';
 import apple from './apple.png';
 import google from './google.png';
-import { PiCookingPotBold } from "react-icons/pi";
-import { TbProgressCheck } from "react-icons/tb";
 
 
 const Body = () =>{
