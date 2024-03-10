@@ -22,3 +22,8 @@ code {
   @apply cursor-pointer shadow-md;
 }
 
+/*make navbar top element*/
+.nav {
+  z-index: 9999;
+}
+

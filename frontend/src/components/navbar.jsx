@@ -3,7 +3,7 @@ import bear from '../assets/bear.png';
 
 const Navbar = () => {
     return (
-        <div className='bg-orange-50 border-gray-200 dark:bg-gray-900 sticky top-0'>
+        <div className=' nav bg-orange-50 border-gray-200 dark:bg-gray-900 sticky top-0'>
             <div className='max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4'>
                 <a href="https://github.com/NikoKaramitos/BiteByByte" class="flex items-center space-x-3 rtl:space-x-reverse">
                     <img src={bear} class="h-14" alt="BiteByByteLogo" />
