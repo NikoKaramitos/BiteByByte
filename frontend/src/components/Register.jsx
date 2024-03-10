@@ -64,7 +64,7 @@ export default function Register()
 
     function goLogin (event){
 		event.preventDefault();
-		window.location.href = "/";
+		window.location.href = "/Login";
 	};
 
 	return (
