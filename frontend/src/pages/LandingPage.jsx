@@ -1,5 +1,5 @@
 import React from 'react';
-import earth from '../assets/earth.png'; // Assuming earth.png is in the assests folder
+import earth from '../assets/earth.png'; 
 import {motion} from "framer-motion";
 import { Button } from "@material-tailwind/react";
 import Navbar from '../components/navbar';

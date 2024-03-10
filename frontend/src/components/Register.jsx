@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import aroundWorld from '../assets/around-world2.jpeg';
+//import aroundWorld from '../assets/around-world2.jpeg';
 //import LoginPage from "../pages/LoginPage";
 
 
@@ -94,6 +94,7 @@ export default function Register()
 			return;
         }
     }*/
+    //<img className="absolute w-full h-full object-cover mix-blend-overlay" src= {aroundWorld} alt=""/>
 	return (
             <div className="relative w-full h-screen">
 
@@ -161,7 +162,7 @@ export default function Register()
                     </a>
                     <span className="text-xs text-red-500" id="registerResult">{message}</span>
                     <p className="flex items-center mt-2 relative text-sm"><input className="mr-2 mt-3  mb-3" type="checkbox" /> Forgot Password? </p>
-                    <span id="signinButton"className="relative text-sm w-full my-5 py-3 mt-4 text-black" onClick={goLogin} href="/" >Already a member? Sign in now!</span>
+                    <span id="signinButton"className="relative text-sm w-full my-5 py-3 mt-4 text-black" onClick={goLogin} href="/login" >Already a member? Sign in now!</span>
             </form>
             </div>
             </div>
