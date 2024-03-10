@@ -37,17 +37,14 @@ export default function Login()
 
 			var res = JSON.parse(await response.text());
 
-			if (res.id <= 0) {
-				setMessage("User/Password combination incorrect");
-			} 
-
-			else if(res.loginName == 0){
-				setMessage("Username does not exist");
+			if (res.error === "Username not found") {
+				setMessage("Username not found. Create an account now!");
+                return;
 			}
-			else if(res.password == 0){
-				setMessage("Password does not exist");
+            if (res.error === "Password not found") {
+				setMessage("Seems to be the wrong password. \n Use Forgot Password");
+                return;
 			}
-
 			else {
 				var user = {
 					firstName: res.firstName,
@@ -102,7 +99,7 @@ export default function Login()
 							</span>
 							<button className="relative" onClick={doLogin}>Sign In</button>
 						</a>
-						<span className="text-xs" id="loginResult">{message}</span>
+						<span className="text-xs text-red-500" id="loginResult">{message}</span>
 						<p className="flex items-center mt-2 relative text-sm"><input className="mr-2 mt-3  mb-3" type="checkbox" /> Forgot Password? </p>
 
 						<button id="registerButton" className="w-full py-3 mt-4 bg-indigo-600 hover: relative text-white" href="/register" onClick={goRegister}>Register</button>

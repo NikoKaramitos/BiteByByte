@@ -36,13 +36,17 @@ export default function Register()
 			});
 
 			var res = JSON.parse(await response.text());
-            
 
-			if (res.id <= 0) {
+            if (res.error === "Username taken") {
 				setMessage("Username is already taken.");
-            
-                
-			} else {
+                return;
+			}
+            if (res.error === "That email has been used in another account") {
+				setMessage("That email has been used in another account. \n Use Forgot Password");
+                return;
+			}
+			
+            else {
 				var user = {
 					firstName: res.firstName,
 					lastName: res.lastName,
@@ -53,8 +57,9 @@ export default function Register()
 				};
 				localStorage.setItem("user_data", JSON.stringify(user));
 
-				setMessage("");
-				window.location.href = "/login";
+				setMessage("Registration succesful! Check your email for confirmation");
+                
+			//	window.location.href = "/login";
 			}
 		} catch (e) {
 			alert(e.toString());
@@ -66,13 +71,35 @@ export default function Register()
 		event.preventDefault();
 		window.location.href = "/login";
 	};
+    
 
+    //This function is to check that empty inputs are not submitted
+  /*  function validate(){
+        
+
+        const FirstName = document.getElementById('firstName').value
+        const email = document.getElementById('email').value
+        const regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+        try {
+            if(!regex.test(email)) {
+                setMessage("Invalid email!")
+              }
+              else if(FirstName.length === 0)
+              {
+                  setMessage("Must enter a first name")
+              }
+            
+        } catch (e) {
+            alert(e.toString());
+			return;
+        }
+    }*/
 	return (
             <div className="relative w-full h-screen bg-zinc-900/90">
             <img className="absolute w-full h-full object-cover mix-blend-overlay" src= {aroundWorld} alt=""/>
 
             <div className="flex justify-center items-center h-full">
-                <form className="max-w-[400px] w-full rounded 2xl shadowl 2xl mx-auto bg-white p-8">
+                <form className="max-w-[400px] w-full rounded 2xl shadowl 2xl mx-auto bg-white p-10" >
                     <h2 className="text-2xl font-bold text-center py-6 ">BITEbyBYTE.</h2>
 
                     <div className="flex flex-col mb-4 text-sm">
@@ -86,11 +113,10 @@ export default function Register()
                     <label>Last Name</label>
                     <input id="lastName" className="relative 2text-md block px-3 py-2 rounded-lg w-full
                     bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none peer
-                    invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer" required
-                    type="text" 
+                    invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
+                    type="text" required
                     ref={(c) => (lastName = c)} />
-                    <span className="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                        Please enter a last name</span>
+                    
 
                 </div>
 
@@ -100,11 +126,8 @@ export default function Register()
                     <input id="email" type="email" name="email" className="peer relative 2text-md block px-3 py-2 rounded-lg w-full
                     bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none
                     invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500"
-                    placeholder=" " required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                    placeholder="" required pattern="/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;"
                     ref={(c) => (email = c)} />
-                    <span className="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                        Enter a valid email address</span>
-
                 
                 </div>
                 
@@ -135,8 +158,9 @@ export default function Register()
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </span>
                         <span className="relative"onClick={doRegister}>Register</span>
+                        
                     </a>
-                    <span className="text-xs" id="registerResult">{message}</span>
+                    <span className="text-xs text-red-500" id="registerResult">{message}</span>
                     <p className="flex items-center mt-2 relative text-sm"><input className="mr-2 mt-3  mb-3" type="checkbox" /> Forgot Password? </p>
                     <span id="signinButton"className="relative text-sm w-full my-5 py-3 mt-4 text-black" onClick={goLogin} href="/" >Already a member? Sign in now!</span>
             </form>
