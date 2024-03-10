@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import aroundWorld from '../assets/around-world2.jpeg';
+//import aroundWorld from '../assets/around-world2.jpeg';
 //import LoginPage from "../pages/LoginPage";
 
 
@@ -94,9 +94,9 @@ export default function Register()
 			return;
         }
     }*/
+    //<img className="absolute w-full h-full object-cover mix-blend-overlay" src= {aroundWorld} alt=""/>
 	return (
-            <div className="relative w-full h-screen bg-zinc-900/90">
-            <img className="absolute w-full h-full object-cover mix-blend-overlay" src= {aroundWorld} alt=""/>
+            <div className="relative w-full h-screen bg-[##f3dfc1]-900/90">
 
             <div className="flex justify-center items-center h-full">
                 <form className="max-w-[400px] w-full rounded 2xl shadowl 2xl mx-auto bg-white p-10" >
@@ -162,7 +162,7 @@ export default function Register()
                     </a>
                     <span className="text-xs text-red-500" id="registerResult">{message}</span>
                     <p className="flex items-center mt-2 relative text-sm"><input className="mr-2 mt-3  mb-3" type="checkbox" /> Forgot Password? </p>
-                    <span id="signinButton"className="relative text-sm w-full my-5 py-3 mt-4 text-black" onClick={goLogin} href="/" >Already a member? Sign in now!</span>
+                    <span id="signinButton"className="relative text-sm w-full my-5 py-3 mt-4 text-black" onClick={goLogin} href="/login" >Already a member? Sign in now!</span>
             </form>
             </div>
             </div>
