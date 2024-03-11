@@ -76,7 +76,7 @@ export default function Login()
 				<img className="absolute w-full h-full object-cover mix-blend-overlay" src={kitchen} alt="" />
 
 				<div className=" flex justify-center items-center h-full">
-					<form className="max-w-[400px] w-full rounded 2xl shadowl border-4 border-black 2xl mx-auto bg-teal-400 p-8">
+					<form className="max-w-[400px] w-full rounded 2xl shadowl border-4 border-black 2xl mx-auto bg-white p-8">
 						<h2 className="text-2xl font-bold text-center py-6 ">BITEbyBYTE</h2>
 						<div className="flex flex-col mb-4 text-sm">
 							<label>Username</label>
