@@ -8,7 +8,6 @@ import Footer from "../components/Footer"
 import { useNavigate } from 'react-router-dom';
 
 
-
 const LandingPage = () =>{
 
 	const navigate = useNavigate();
