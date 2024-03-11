@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import Footer from "../pages/Footer";
 //import Register from "../components/Register";
 import aroundWorld from '../assets/around-world2.jpeg'
+
+
+
 
 export default function Login()
 {
@@ -69,7 +71,7 @@ export default function Login()
 
 
     return (
-		<div className="relative w-full h-screen">
+		<div className="mt-20 relative w-full ">
 
 				<div className=" flex justify-center items-center h-full">
 					<form className="max-w-[400px] w-full rounded 2xl shadowl 2xl mx-auto bg-emerald-300 p-8 border border-black">
@@ -102,7 +104,6 @@ export default function Login()
 						<button id="registerButton" className="w-full py-3 mt-4 bg-orange-500 hover: relative text-white" href="/register" onClick={goRegister}>Register</button>
 					</form>
 				</div>
-				<Footer/>
 			</div>
     )
 }

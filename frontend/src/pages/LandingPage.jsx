@@ -5,7 +5,7 @@ import { Button } from "@material-tailwind/react";
 import Navbar from '../components/navbar';
 import Body from "../pages/Body";
 import Footer from "../pages/Footer";
-import { useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
 
 
 const LandingPage = () =>{

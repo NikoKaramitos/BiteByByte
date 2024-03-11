@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Footer from "../pages/Footer";
 //import aroundWorld from '../assets/around-world2.jpeg';
 //import LoginPage from "../pages/LoginPage";
 
@@ -166,7 +165,6 @@ export default function Register()
                     <span id="signinButton"className="relative text-sm w-full my-5 py-3 mt-4 text-black" onClick={goLogin} href="/login" >Already a member? Sign in now!</span>
             </form>
             </div>
-            <Footer/>
             </div>
 	);
 }
