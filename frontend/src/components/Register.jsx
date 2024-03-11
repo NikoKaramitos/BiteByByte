@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import aroundWorld from '../assets/around-world2.jpeg';
-//import LoginPage from "../pages/LoginPage";
+//import aroundWorld from '../assets/around-world2.jpeg';
+import { useNavigate } from 'react-router-dom';
+
+ 
 
 
 export default function Register()
@@ -11,6 +13,11 @@ export default function Register()
     var username;
     var password;
 
+    const [message, setMessage] = useState("");
+
+    const navigate = useNavigate();
+
+
 	const app_name = "bitebybyte-9e423411050b";
 	function buildPath(route) {
 		if (process.env.NODE_ENV === "production") {
@@ -20,13 +27,16 @@ export default function Register()
 		}
 	}
 
-	const [message, setMessage] = useState("");
 
 	const doRegister = async (event) => {
 		event.preventDefault();
-
+    
 		var obj = { firstName: firstName.value, lastName: lastName.value, email: email.value, username: username.value, password:password.value };
 		var js = JSON.stringify(obj);
+        if (!firstName.value || !lastName.value || !email.value || !username.value || !password.value) {
+            setMessage("All fields are required.");
+            return;
+        }
 
 		try {
 			const response = await fetch(buildPath('api/register'), {
@@ -67,88 +77,81 @@ export default function Register()
 		}
 	};
 
-    function goLogin (event){
-		event.preventDefault();
-		window.location.href = "/login";
-	};
-    
-
-    //This function is to check that empty inputs are not submitted
-  /*  function validate(){
-        
-
-        const FirstName = document.getElementById('firstName').value
-        const email = document.getElementById('email').value
-        const regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
-        try {
-            if(!regex.test(email)) {
-                setMessage("Invalid email!")
-              }
-              else if(FirstName.length === 0)
-              {
-                  setMessage("Must enter a first name")
-              }
-            
-        } catch (e) {
-            alert(e.toString());
-			return;
-        }
-    }*/
+  
 	return (
-            <div className="relative w-full h-screen bg-zinc-900/90">
-            <img className="absolute w-full h-full object-cover mix-blend-overlay" src= {aroundWorld} alt=""/>
-
+            <div className="relative w-full h-screen">
             <div className="flex justify-center items-center h-full">
-                <form className="max-w-[400px] w-full rounded 2xl shadowl 2xl mx-auto bg-white p-10" >
+                <form className="max-w-[400px] w-full rounded 2xl shadowl 2xl mx-auto bg-white p-10"novalidate >
                     <h2 className="text-2xl font-bold text-center py-6 ">BITEbyBYTE.</h2>
 
-                    <div className="flex flex-col mb-4 text-sm">
-                    <label>First Name</label>    
-                        <input id="firstName" input="text" className="relative bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                         ref={(c) => (firstName = c)} placeholder=" " required />
+
+                 
+                    <div className="flex flex-col mb-4 text-sm" >
+                    <label>First Name  
+                        <input id="firstName" input="text" className="relative 2text-md block px-3 py-2 rounded-lg w-full
+                    bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md
+                    invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
+                         ref={(c) => (firstName = c)}  placeholder=" "
+                         type="text" required pattern="^(?=.*[a-zA-Z])[^\d]+$" />
+                         <span class="mt-2 hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                        Name cannot contain numbers
+                    </span>
+                         
+                    </label>  
                 </div>
 
 
                 <div className="flex flex-col mb-4 text-sm">
-                    <label>Last Name</label>
+                    <label>Last Name
                     <input id="lastName" className="relative 2text-md block px-3 py-2 rounded-lg w-full
                     bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none peer
-                    invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
-                    type="text" required
+                    invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer" placeholder=" "
+                    type="text" required pattern="^(?=.*[a-zA-Z])[^\d]+$"
                     ref={(c) => (lastName = c)} />
-                    
-
+                    <span class="mt-2 hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                        Name cannot contain numbers
+                    </span>
+                    </label>
                 </div>
 
                
                 <div className="flex flex-col mb-4 text-sm">
-                    <label>Email</label>
+                    <label>Email
                     <input id="email" type="email" name="email" className="peer relative 2text-md block px-3 py-2 rounded-lg w-full
                     bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none
-                    invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500"
-                    placeholder="" required pattern="/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;"
-                    ref={(c) => (email = c)} />
-                
+                    invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
+                    ref={(c) => (email = c)} placeholder=" "required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                    />
+                    <span class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                        Please enter a valid email address
+                    </span>
+                    </label>
                 </div>
                 
+                
                 <div className="flex flex-col mb-4 text-sm">
-                    <label>Username</label>
-                    <input id="username" className="peer relative 2text-md block px-3 py-2 rounded-lg w-full
-                        bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none
-                        invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 "
-                        required type="text" ref={(c) => (username = c)} />
-                    <span className="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                        Enter a Username
-                    </span>
+                    <label>Username
+                        <input id="username" className="peer relative 2text-md block px-3 py-2 rounded-lg w-full
+                            bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none
+                            invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer" placeholder=" "
+                            required pattern=".{5}" type="text" ref={(c) => (username = c)} />
+                        <span className="mt-2 hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                            Username must be longer than 5 characters
+                        </span>
+                    </label>
                 </div>
 
 
                 <div className="flex flex-col text-sm">
-                    <label>Password</label>
-                    <input id="password" className="peer relative block px-3 py-2 mb-2 rounded-lg w-full
-                        bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none
-                        invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 "
-                        type="password"  required pattern=".{7,}" ref={(c) => (password = c)}/>
+                    <label>Password
+                        <input id="password" className="relative block px-3 py-2 mb-2 rounded-lg w-full
+                            bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none
+                            invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
+                            type="password" placeholder=" " required pattern=".{7,}" ref={(c) => (password = c)}/>
+                            <span class="mt-2 hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                                Password must contain one uppercase and at least one digit.
+                        </span>
+                    </label>
                 </div>
 
 
@@ -157,12 +160,12 @@ export default function Register()
                         <span className="absolute right-0 flex-col items-center justify-start w-10 h-10 duration-300 transform translate-x-full group-hover:translate-x-0 ease">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </span>
-                        <span className="relative"onClick={doRegister}>Register</span>
+                        <button className="relative" type="submit" onClick={doRegister}>Register</button>
                         
                     </a>
                     <span className="text-xs text-red-500" id="registerResult">{message}</span>
                     <p className="flex items-center mt-2 relative text-sm"><input className="mr-2 mt-3  mb-3" type="checkbox" /> Forgot Password? </p>
-                    <span id="signinButton"className="relative text-sm w-full my-5 py-3 mt-4 text-black" onClick={goLogin} href="/" >Already a member? Sign in now!</span>
+                    <span id="signinButton"className="relative text-sm w-full my-5 py-3 mt-4 text-black" onClick={() => navigate('/login')} >Already a member? Sign in now!</span>
             </form>
             </div>
             </div>
