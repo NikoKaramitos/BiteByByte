@@ -1,6 +1,6 @@
 import React from 'react';
 //import Login from '../components/Login';
-import NavBar from '../Navbar';
+import Navbar from '../components/navbar';
 import Register from '../components/Register';
 
 const RegisterPage = () =>
@@ -8,7 +8,7 @@ const RegisterPage = () =>
 
     return(
       <div>
-        <><NavBar/></>
+        <><Navbar/></>
         <Register />
         
       </div>

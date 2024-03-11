@@ -1,6 +1,6 @@
 import React from 'react';
 //import Login from '../components/Login';
-import NavBar from '../Navbar';
+import Navbar from '../components/navbar';
 import Login from '../components/Login'
 
 
@@ -9,8 +9,7 @@ const LoginPage = () =>
 
     return(
       <div>
-        <><NavBar/></>
-        
+        <><Navbar/></>     
         <Login />
         
       </div>

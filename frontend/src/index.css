@@ -3,10 +3,14 @@
 @import "tailwindcss/utilities";
 
 body {
-  font-family: "Pixelify Sans", sans-serif;
+  font-family: "Press Start 2P", system-ui;
   font-optical-sizing: auto;
 
-  background-color: #ECE4B7;
+  background-color: #f3dfc1;
+}
+
+.footer{
+  font-family: "Arial", sans-serif; 
 }
 
 code {
@@ -14,3 +18,14 @@ code {
     monospace;
 }
 
+.btn{
+  @apply cursor-pointer shadow-md;
+}
+
+.nav{
+  z-index: 9999;
+}
+
+.navbar ul a.active {
+  color: #4ade80;
+ }
