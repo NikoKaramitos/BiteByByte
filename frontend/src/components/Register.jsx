@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 //import aroundWorld from '../assets/around-world2.jpeg';
 import { useNavigate } from 'react-router-dom';
-import Footer from "../components/Footer"
+import Footer from "../components/Footer";
+import kitchen from '../assets/kitchen.gif'
 
 export default function Register()
 {
@@ -77,7 +78,8 @@ export default function Register()
 
   
 	return (
-            <div className="relative w-full h-screen">
+            <div className="relative w-full h-screen bg-zinc-900/90">
+                <img className="absolute w-full h-full object-cover mix-blend-overlay" src={kitchen} alt="" />
             <div className="flex justify-center items-center h-full">
                 <form className="max-w-[400px] w-full rounded 2xl shadowl 2xl border-4 border-black mx-auto bg-white p-10"novalidate >
                     <h2 className="text-2xl font-bold text-center py-6 ">BITEbyBYTE.</h2>
@@ -121,7 +123,7 @@ export default function Register()
                     ref={(c) => (email = c)} placeholder=" "required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                     />
                     <span class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                        Please enter a valid email address
+                        Enter a valid email address
                     </span>
                     </label>
                 </div>
@@ -134,7 +136,7 @@ export default function Register()
                             invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer" placeholder=" "
                             required pattern="^[a-zA-Z0-9_]{5,}$" type="text" ref={(c) => (username = c)} />
                         <span className="mt-2 hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                            Username must be longer than 5 characters
+                            Username must be longer than 5 characters including numbers and underscores
                         </span>
                     </label>
                 </div>
