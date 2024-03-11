@@ -132,7 +132,7 @@ export default function Register()
                         <input id="username" className="peer relative 2text-md block px-3 py-2 rounded-lg w-full
                             bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none
                             invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer" placeholder=" "
-                            required pattern="^(?=(?:[a-zA-Z]*\d))(?=.*[a-zA-Z_])[a-zA-Z0-9_]{5,}$" type="text" ref={(c) => (username = c)} />
+                            required pattern="^[a-zA-Z0-9_]{5,}$" type="text" ref={(c) => (username = c)} />
                         <span className="mt-2 hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                             Username must be longer than 5 characters
                         </span>
