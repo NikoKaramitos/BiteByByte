@@ -227,6 +227,32 @@ app.post("/api/deleteUser", async (req, res, next) => {
 	res.status(200).json({ error: error });
 });
 
+app.post("/api/changePassword", async (req, res, next) => {
+	// incoming: email, newPassword
+	// outgoing: error
+
+	const { email, newPassword } = req.body;
+	var error = "";
+
+	try {
+		const db = client.db("Users");
+		var updatedUser = await db
+			.collection("users")
+			.findOneAndUpdate(
+				{ Email: email },
+				{ $set: { Password: newPassword } }
+			);
+		if (!updatedUser) {
+			error = "User not found";
+			return res.status(409).json({ error: error });
+		}
+	} catch (e) {
+		error = e.toString();
+	}
+
+	res.status(200).json({ error: error });
+});
+
 app.post("/api/email", async (req, res, next) => {
 	//===========================================
 	// incoming: emailTo, message, subject
