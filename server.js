@@ -202,7 +202,7 @@ app.post("/api/searchcards", async (req, res, next) => {
 	var ret = { results: _ret, error: error };
 	res.status(200).json(ret);
 });
-
+const { ObjectId } = require("mongodb");
 app.post("/api/deleteUser", async (req, res, next) => {
 	//===========================================
 	// incoming: userId
@@ -214,8 +214,7 @@ app.post("/api/deleteUser", async (req, res, next) => {
 		const db = client.db("Users");
 		var user = await db
 			.collection("users")
-			.findOneAndDelete({ _id: userId });
-
+			.findOneAndDelete({ _id: new ObjectId(userId) });
 		if (!user) {
 			error = "User not found";
 			return res.status(409).json({ error: error });
