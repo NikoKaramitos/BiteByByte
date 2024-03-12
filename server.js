@@ -252,6 +252,31 @@ app.post("/api/changePassword", async (req, res, next) => {
 	res.status(200).json({ error: error });
 });
 
+app.post("/api/findEmail", async (req, res, next) => {
+	//===========================================
+	// incoming: email
+	// outgoing: error
+	//===========================================
+
+	var error = "";
+
+	const { email } = req.body;
+
+	const db = client.db("Users");
+
+	const emails = await db
+		.collection("users")
+		.find({ Email: email })
+		.toArray();
+	
+	if (emails.length == 0) {
+		error = "Email not found";
+		return res.status(409).json({ error: error });
+	}
+
+	res.status(200).json({ error: error });
+});
+
 app.post("/api/email", async (req, res, next) => {
 	//===========================================
 	// incoming: emailTo, message, subject
