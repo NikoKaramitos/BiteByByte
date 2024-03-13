@@ -16,6 +16,7 @@
 		"dotenv": "^16.4.5",
 		"express": "^4.18.3",
 		"mongodb": "^6.4.0",
+		"react-awesome-shapes": "^0.1.12",
 		"react-bootstrap": "^2.10.1"
 	},
 	"devDependencies": {

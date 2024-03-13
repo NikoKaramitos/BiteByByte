@@ -5,7 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import CardPage from "./pages/CardPage";
 import RegisterPage from "./pages/RegisterPage";
 import LandingPage from "./pages/LandingPage";
-
+import Dash from "./pages/Dash";
 import { ThemeProvider } from "@material-tailwind/react";
 
 
@@ -17,6 +17,7 @@ function App() {
 					<Route path="/login" index element={<LoginPage/>} />
 					<Route path="/register" index element={<RegisterPage/>} />
 					<Route path="/cards" index element={<CardPage/>} />
+					<Route path="/dash" index element={<Dash/>} />
 				</Routes>
 			</BrowserRouter>
 	);
