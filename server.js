@@ -163,16 +163,30 @@ app.post("/api/login", async (req, res, next) => {
 	var id = -1;
 	var fn = "";
 	var ln = "";
+	var email = "";
+	var code = -1;
+	var verified = false;
 
 	if (results.length > 0) {
 		id = results[0]._id;
 		fn = results[0].FirstName;
 		ln = results[0].LastName;
+		email = results[0].Email;
+		code = results[0].TokenKey;
+		verified = results[0].Verified;
 	} else {
 		error = "No Record Found";
 	}
 
-	var ret = { id: id, firstName: fn, lastName: ln, error: error };
+	var ret = {
+		id: id,
+		firstName: fn,
+		lastName: ln,
+		email: email,
+		code: code,
+		verified: verified,
+		error: error,
+	};
 	res.status(200).json(ret);
 });
 
@@ -203,6 +217,8 @@ app.post("/api/searchcards", async (req, res, next) => {
 	res.status(200).json(ret);
 });
 const { ObjectId } = require("mongodb");
+const { verify } = require("crypto");
+const { verifiedaccess } = require("googleapis/build/src/apis/verifiedaccess");
 app.post("/api/deleteUser", async (req, res, next) => {
 	//===========================================
 	// incoming: userId
@@ -268,7 +284,7 @@ app.post("/api/findEmail", async (req, res, next) => {
 		.collection("users")
 		.find({ Email: email })
 		.toArray();
-	
+
 	if (emails.length == 0) {
 		error = "Email not found";
 		return res.status(409).json({ error: error });
@@ -314,7 +330,7 @@ app.post("/api/email", async (req, res, next) => {
 	});
 
 	const mailOptions = {
-		from: "BiteByByte <bbbtesty@gmail.com>",
+		from: process.env.FROM,
 		to: emailTo,
 		subject: subject,
 		generateTextFromHTML: true,
