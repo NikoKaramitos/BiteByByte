@@ -226,6 +226,13 @@ app.post("/api/deleteUser", async (req, res, next) => {
 	res.status(200).json({ error: error });
 });
 
+app.post("/api/loadUser", async (req, res, next) => {
+	// incoming userID
+	// outgoing user information
+
+	const { userId } = req.body;
+});
+
 app.post("/api/changePassword", async (req, res, next) => {
 	// incoming: email, newPassword
 	// outgoing: error
