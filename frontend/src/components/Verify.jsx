@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import kitchen from "../assets/kitchen.gif";
 import bearMail from "../assets/bearMail.png";
 // import { useNavigate } from "react-router-dom";
-// import Footer from "../components/Footer";
+import Footer from "../components/Footer";
 
 function Verify() {
 	let code;
@@ -43,49 +43,39 @@ function Verify() {
 	};
 
 	return (
-		<div
-			id="Background-color"
-			className="relative w-full h-screen bg-zinc-900/90 flex justify-center items-center"
-		>
+		<div className="relative w-full h-screen bg-zinc-900/90 ">
 			<img
-				id="Background-image"
-				className=" absolute inset-0 w-full h-full object-cover mix-blend-overlay"
+				className="absolute w-full inset-0 h-full object-cover mix-blend-overlay"
 				src={kitchen}
 				alt=""
 			/>
-			<div className="relative z-10">
-				<img
-					id="Bear-Mail"
-					className="m-0 h-48 pl-14"
-					src={bearMail}
-					alt="Please check your email for the code. Check spam and junk"
-				/>
-				<form
-					onSubmit={doVerify}
-					className="max-w-[400px] w-full rounded 2x1 shadowl 2xl border-4 border-black mx-auto bg-white p-10"
-					noValidate
-				>
+			<div className="relative h-full z-10">
+				<div className="flex justify-center items-center">
+					<img
+						id="Bear-Mail"
+						className="m-0 h-48 "
+						src={bearMail}
+						alt="Please check your email for the code. Check spam and junk"
+					/>
+				</div>
+				<form className="max-w-[400px] w-full rounded 2xl shadowl border-4 border-black 2xl mx-auto bg-white p-8">
 					<h2 className="text-2xl font-bold text-center py-6 ">
-						BITEbyBYTE.
+						BITEbyBYTE
 					</h2>
-					<span id="title">Insert Code</span>
-					<br />
+					<label>Insert Code</label>
 					<input
-						className="relative 2text-md block px-3 py-2 rounded-lg w-full
-                    bg-white border-2 border-gray-300 placeholder-gray-300 shadow-md
-                    invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
+						id="Code"
+						className="relative block px-3 py-2 rounded-lg w-full
+						bg-white border-2 border-gray-300 placeholder-gray-400 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none peer"
 						type="text"
-						id="code"
-						required
-						pattern="[0-9]"
 						placeholder="123456"
+						required
 						ref={(c) => (code = c)}
 					/>
 					<br />
-
 					<a
 						href="#_"
-						className="relative flex flex-col items-center px-12 py-3 mt-2 overflow-hidden font-medium text-black border-2 border-orange-500 rounded-full hover:text-white group hover:bg-gray-50 text-sm"
+						className="relative flex flex-col items-center py-2 mt-3 mb-3 overflow-hidden font-medium text-black border-2 border-orange-500 rounded-full hover:text-white group hover:bg-gray-50"
 					>
 						<span className="absolute left-0 block w-full h-0 transition-all bg-orange-500 opacity-100 group-hover:h-full top-1/2 group-hover:top-0 duration-400 ease"></span>
 						<span className="absolute right-0 flex-col items-center justify-start w-10 h-10 duration-300 transform translate-x-full group-hover:translate-x-0 ease">
@@ -104,17 +94,16 @@ function Verify() {
 								></path>
 							</svg>
 						</span>
-						<button
-							className="relative"
-							type="submit"
-							onClick={doVerify}
-						>
+						<button className="relative" onClick={doVerify}>
 							Submit
 						</button>
 					</a>
-					<span id="codeResult">{message}</span>
+					<span className="text-xs text-red-500" id="loginResult">
+						{message}
+					</span>
 				</form>
 			</div>
+			<Footer />
 		</div>
 	);
 }
