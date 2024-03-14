@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import kitchen from "../assets/kitchen.gif";
+import bearMail from "../assets/bearMail.png";
 // import { useNavigate } from "react-router-dom";
 // import Footer from "../components/Footer";
 
@@ -53,6 +54,12 @@ function Verify() {
 				alt=""
 			/>
 			<div className="relative z-10">
+				<img
+					id="Bear-Mail"
+					className="m-0 h-48 pl-14"
+					src={bearMail}
+					alt="Please check your email for the code. Check spam and junk"
+				/>
 				<form
 					onSubmit={doVerify}
 					className="max-w-[400px] w-full rounded 2x1 shadowl 2xl border-4 border-black mx-auto bg-white p-10"
