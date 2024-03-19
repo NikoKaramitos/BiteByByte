@@ -100,7 +100,7 @@ export default function Register() {
 				src={kitchen}
 				alt=""
 			/>
-			<div className="flex justify-center items-center h-full">
+			<div className="relative flex justify-center items-center h-full">
 				<form
 					className="max-w-[400px] w-full rounded 2xl shadowl 2xl border-4 border-black mx-auto bg-white p-10"
 					noValidate

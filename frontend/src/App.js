@@ -6,7 +6,7 @@ import CardPage from "./pages/CardPage";
 import RegisterPage from "./pages/RegisterPage";
 import LandingPage from "./pages/LandingPage";
 import VerifyPage from "./pages/VerifyPage";
-
+import ForgotPassPage from "./pages/ForgotPassPage";
 import { ThemeProvider } from "@material-tailwind/react";
 
 function App() {
@@ -17,6 +17,7 @@ function App() {
 				<Route path="/login" index element={<LoginPage />} />
 				<Route path="/register" index element={<RegisterPage />} />
 				<Route path="/cards" index element={<CardPage />} />
+				<Route path="/reset/sendcode" index element={<ForgotPassPage />} />
 				<Route path="/verify" index element={<VerifyPage />} />
 			</Routes>
 		</BrowserRouter>
