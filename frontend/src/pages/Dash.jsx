@@ -3,17 +3,15 @@ import Navbar from '../components/navbar';
 import { Button } from "@material-tailwind/react";
 import Footer from "../components/Footer"
 import tower2 from "../assets/tower2.webp";
+import CustomStepper from '../components/stepper';
 
 const Dash = () =>{
 	return (
-        <div className=''>
+        <div className='relative'>
         <Navbar></Navbar>
-        <img className="w-full relative"src={tower2}></img>
-        <div className='flex items-center justify-center'>
-        <Button className='btn h-16 w-16 m-2 rounded-full text-color-black border-solid border-2 border-black mt-14 bg-red-600 hover:bg-emerald-500'>1</Button>
-        <Button className='btn h-16 w-16 px-6 m-2 rounded-full text-color-black border-solid border-2 border-black mt-14 bg-red-600 hover:bg-emerald-500'>2</Button>
-        <Button className='btn h-16 w-16 px-6 m-2 rounded-full text-color-black border-solid border-2 border-black mt-14 bg-red-600 hover:bg-emerald-500'>3</Button>
-        <Button className='btn h-16 w-16 px-6 m-2 rounded-full text-color-black border-solid border-2 border-black mt-14 bg-red-600 hover:bg-emerald-500'>4</Button>
+        <img className="w-full  z-0"src={tower2}></img>
+        <div className='absolute z-10 top-40 left-0 w-full'>
+        <CustomStepper/>
         </div>
         <Footer/>
         </div>
