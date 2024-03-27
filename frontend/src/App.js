@@ -2,12 +2,12 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
-import CardPage from "./pages/CardPage";
 import RegisterPage from "./pages/RegisterPage";
 import LandingPage from "./pages/LandingPage";
 import VerifyPage from "./pages/VerifyPage";
 
 import { ThemeProvider } from "@material-tailwind/react";
+import CuisinePage from "./pages/CuisinePage";
 
 function App() {
 	return (
@@ -16,7 +16,7 @@ function App() {
 				<Route path="/" index element={<LandingPage />} />
 				<Route path="/login" index element={<LoginPage />} />
 				<Route path="/register" index element={<RegisterPage />} />
-				<Route path="/cards" index element={<CardPage />} />
+				<Route path="/cuisines" index element={<CuisinePage />} />
 				<Route path="/verify" index element={<VerifyPage />} />
 			</Routes>
 		</BrowserRouter>

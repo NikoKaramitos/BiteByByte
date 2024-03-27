@@ -59,7 +59,7 @@ export default function Login() {
 				// console.log("verified?: ", res.verified);
 				if (res.verified) {
 					setMessage("");
-					window.location.href = "/cards";
+					window.location.href = "/cuisines";
 				} else {
 					setMessage("Verified your email first. Check your email");
 					sendEmail(res.email, res.code, "verify");
