@@ -19,7 +19,7 @@ code {
 }
 
 .btn{
-  z-index: 9999;
+  z-index: 9999999;
 }
 
 .nav{
@@ -29,6 +29,7 @@ code {
 .navbar ul a.active {
   color: #4ade80;
  }
+
 
  .outline-text {
   text-shadow: -1px -1px 0 #000,  

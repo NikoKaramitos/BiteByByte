@@ -8,7 +8,7 @@ const Dash = () =>{
 	return (
         <div className=''>
         <Navbar></Navbar>
-        <img className="w-full "src={tower2}></img>
+        <img className="w-full relative"src={tower2}></img>
         <div className='flex items-center justify-center'>
         <Button className='btn h-16 w-16 m-2 rounded-full text-color-black border-solid border-2 border-black mt-14 bg-red-600 hover:bg-emerald-500'>1</Button>
         <Button className='btn h-16 w-16 px-6 m-2 rounded-full text-color-black border-solid border-2 border-black mt-14 bg-red-600 hover:bg-emerald-500'>2</Button>
