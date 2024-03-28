@@ -5,7 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import LandingPage from "./pages/LandingPage";
 import VerifyPage from "./pages/VerifyPage";
-
+import Dash from "./pages/Dash";
 import { ThemeProvider } from "@material-tailwind/react";
 import CuisinePage from "./pages/CuisinePage";
 
@@ -18,6 +18,7 @@ function App() {
 				<Route path="/register" index element={<RegisterPage />} />
 				<Route path="/cuisines" index element={<CuisinePage />} />
 				<Route path="/verify" index element={<VerifyPage />} />
+					<Route path="/dash" index element={<Dash/>} />
 			</Routes>
 		</BrowserRouter>
 	);
