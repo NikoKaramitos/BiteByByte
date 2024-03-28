@@ -6,84 +6,11 @@ import italyBear from "../assets/cuisineBears/italyBear.png";
 import window from "../assets/Designer.jpeg";
 
 export default function CuisinePicker() {
-  var card = "";
-  var search = "";
-
-  const app_name = "bitebybyte-9e423411050b";
-  function buildPath(route) {
-    if (process.env.NODE_ENV === "production") {
-      return "https://" + app_name + ".herokuapp.com/" + route;
-    } else {
-      return "http://localhost:5001/" + route;
-    }
-  }
-
-  const [message, setMessage] = useState("");
-  const [searchResults, setResults] = useState("");
-  const [cardList, setCardList] = useState("");
-
-  let _ud = localStorage.getItem("user_data");
-  let ud = JSON.parse(_ud);
-  let userId = ud.id;
-  let firstName = ud.firstName;
-  let lastName = ud.lastName;
-
-  const addCard = async (event) => {
-    event.preventDefault();
-
-    let obj = { userId: userId, card: card.value };
-    let js = JSON.stringify(obj);
-
-    try {
-      const response = await fetch("buildPath('api/addcard", {
-        method: "POST",
-        body: js,
-        headers: { "Content-Type": "application/json" },
-      });
-
-      let txt = await response.text();
-      let res = JSON.parse(txt);
-
-      if (res.error.length > 0) {
-        setMessage("API Error:" + res.error);
-      } else {
-        setMessage("Card has been added");
-      }
-    } catch (e) {
-      setMessage(e.toString());
-    }
-  };
-
-  const searchCard = async (event) => {
-    event.preventDefault();
-
-    let obj = { userId: userId, search: search.value };
-    let js = JSON.stringify(obj);
-
-    try {
-      const response = await fetch(buildPath("searchcards"), {
-        method: "POST",
-        body: js,
-        headers: { "Content-Type": "application/json" },
-      });
-
-      let txt = await response.text();
-      let res = JSON.parse(txt);
-      let _results = res.results;
-      let resultText = "";
-      for (var i = 0; i < _results.length; i++) {
-        resultText += _results[i];
-        if (i < _results.length - 1) {
-          resultText += ", ";
-        }
-      }
-      setResults("Card(s) have been retrieved");
-      setCardList(resultText);
-    } catch (e) {
-      alert(e.toString());
-      setResults(e.toString());
-    }
-  };
+  var _ud = localStorage.getItem("user_data");
+	var ud = JSON.parse(_ud);
+	var userId = ud.id;
+	var firstName = ud.firstName;
+	var lastName = ud.lastName;
 
   return (
     <div className="relative w-full h-screen bg-zinc-700/90">
@@ -110,15 +37,15 @@ export default function CuisinePicker() {
           
           </h2>
           <p class=" flex justify-center p-4 text-xs text-center text-gray-500 dark:text-gray-600">
-                        Select the cuisine you wish to master
-                    </p>
+            Select the cuisine you wish to master
+          </p>
           </div>
         </div>
       </div>
 
       <div class="justify-center items-center grid grid-cols-2 m-8 p-5">
         <div className=" relative flex m-8 justify-center">
-          <button className="w-full sm:w-auto">
+          <button className="w-full sm:w-auto" id="italyCuisine">
             <a
               href="#_"
               class="relative  inline-flex items-center justify-start py-7 pl-8 pr-16 overflow-hidden font-semibold
@@ -172,7 +99,7 @@ export default function CuisinePicker() {
         </div>
 
         <div className=" relative flex m-8 justify-center">
-          <button className="w-full sm:w-auto">
+          <button className="w-full sm:w-auto" id="franceCuisine">
             <a
               href="#_"
               class="relative  inline-flex items-center justify-start py-7 pl-8 pr-16 overflow-hidden font-semibold
@@ -227,7 +154,7 @@ export default function CuisinePicker() {
         </div>
 
         <div className=" relative flex m-8 justify-center">
-          <button className="w-full sm:w-auto">
+          <button className="w-full sm:w-auto" id="chinaCuisine">
             <a
               href="#_"
               class="relative  inline-flex items-center justify-start py-7 pl-8 pr-16 overflow-hidden font-semibold
@@ -281,7 +208,7 @@ export default function CuisinePicker() {
         </div>
 
         <div className=" relative flex m-8 justify-center">
-          <button className="w-full sm:w-auto">
+          <button className="w-full sm:w-auto" id="mexicoCuisine">
             <a
               href="#_"
               class="relative  inline-flex items-center justify-start py-7 pl-8 pr-16 overflow-hidden font-semibold
