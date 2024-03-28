@@ -226,13 +226,6 @@ app.post("/api/deleteUser", async (req, res, next) => {
 	res.status(200).json({ error: error });
 });
 
-app.post("/api/loadUser", async (req, res, next) => {
-	// incoming userID
-	// outgoing user information
-
-	const { userId } = req.body;
-});
-
 app.post("/api/changePassword", async (req, res, next) => {
 	// incoming: email, newPassword
 	// outgoing: error
@@ -383,4 +376,27 @@ if (process.env.NODE_ENV === "production") {
 // PORTING
 app.listen(PORT, () => {
 	console.log("Server listening on port " + PORT);
+});
+
+app.post("/api/loadUser", async (req, res, next) => {
+	// incoming userID
+	// outgoing user information
+	const db = client.db("Users");
+	const users = database.collection("users");
+	const user = await users.findOne({_id: userId});
+	const { userId } = req.body;
+
+	try {
+		if(user) {
+			const {_id, firstName, lastName, email} = user;
+			res.json({_id, firstName, lastName, email});
+			res.status(200).json("User found.");
+		}
+		else {
+			res.status(404).json({message: "User was not found"});
+		}
+	} catch (error) {
+		console.log("Error:", error);
+		res.status(500).json("Issue loading the user information.");
+	}
 });

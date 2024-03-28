@@ -19,7 +19,7 @@ function App() {
 					<Route path="/login" index element={<LoginPage/>} />
 					<Route path="/register" index element={<RegisterPage/>} />
 					<Route path="/cards" index element={<CardPage/>} />
-					// <Route path="/profile-settings" index element={<UserInfo/>} />
+					<Route path="/profile-settings" index element={<UserInfo/>} />
 				</Routes>
 			</BrowserRouter>
 	);
