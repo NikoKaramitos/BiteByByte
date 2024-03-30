@@ -6,8 +6,9 @@ import CardPage from "./pages/CardPage";
 import RegisterPage from "./pages/RegisterPage";
 import LandingPage from "./pages/LandingPage";
 import VerifyPage from "./pages/VerifyPage";
-
+import ForgotPassPage from "./pages/ForgotPassPage";
 import { ThemeProvider } from "@material-tailwind/react";
+import ResetPassPage from "./pages/ResetPassPage";
 
 function App() {
 	return (
@@ -17,6 +18,8 @@ function App() {
 				<Route path="/login" index element={<LoginPage />} />
 				<Route path="/register" index element={<RegisterPage />} />
 				<Route path="/cards" index element={<CardPage />} />
+				<Route path="/forgotPass" index element={<ForgotPassPage />} />
+				<Route path="/resetPass" index element={<ResetPassPage />} />
 				<Route path="/verify" index element={<VerifyPage />} />
 			</Routes>
 		</BrowserRouter>
