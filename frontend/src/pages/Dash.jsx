@@ -3,6 +3,9 @@ import Navbar from '../components/navbar';
 import Footer from "../components/Footer"
 import tower2 from "../assets/tower2.webp";
 import CustomStepper from '../components/stepper';
+import RecipeCard from '../components/recipeCard';
+import lasagna from "../assets/lasagna.jpeg";
+import tirmasiu from "../assets/tirmasiu.jpeg"
 
 const Dash = () => {
     const steps1 = [
@@ -55,13 +58,17 @@ const Dash = () => {
                 </div>
             )}
             {!buttonClicked && (
-                <div className="absolute top-80 left-0 right-0 text-center">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4 outline outline-black outline-3" onClick={handleButtonClick1}>
-                        Lasagna Recipe
-                    </button>
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded outline outline-black outline-3" onClick={handleButtonClick2}>
-                        Tiramisu Recipe
-                    </button>
+                <div className="absolute top-40 left-0 right-0 flex justify-center items-center">
+                    <RecipeCard
+                        imageUrl= {lasagna}
+                        buttonText="Lasagna Recipe"
+                        onClick={handleButtonClick1}
+                    />
+                    <RecipeCard
+                        imageUrl={tirmasiu}
+                        buttonText="Tiramisu Recipe"
+                        onClick={handleButtonClick2}
+                    />
                 </div>
             )}
             <Footer />
