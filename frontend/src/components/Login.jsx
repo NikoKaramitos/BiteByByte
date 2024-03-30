@@ -143,9 +143,11 @@ export default function Login() {
 						{message}
 					</span>
 					<a
-					className="text-orange-500 hover:text-orange-700 hover:underline hover:underline-offset-4"
-					onClick={() => navigate("/reset/sendcode")}
-					>Forgot Password?</a>
+						className="text-orange-500 hover:text-orange-700 hover:underline hover:underline-offset-4"
+						href="/forgotPass"
+					>
+						Forgot Password?
+					</a>
 
 					<button
 						id="registerButton"
