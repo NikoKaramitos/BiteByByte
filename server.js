@@ -86,6 +86,7 @@ app.post("/api/register", async (req, res, next) => {
 		Password: password,
 		TokenKey: code,
 		Verified: false,
+		CurrCuisine: null,
 	};
 	var id = -1;
 	var fn = "";
@@ -166,6 +167,7 @@ app.post("/api/login", async (req, res, next) => {
 	var email = "";
 	var code = -1;
 	var verified = false;
+	var currCuisine = null;
 
 	if (results.length > 0) {
 		id = results[0]._id;
@@ -174,6 +176,7 @@ app.post("/api/login", async (req, res, next) => {
 		email = results[0].Email;
 		code = results[0].TokenKey;
 		verified = results[0].Verified;
+		currCuisine = results[0].CurrCuisine;
 	} else {
 		error = "No Record Found";
 	}
@@ -185,6 +188,7 @@ app.post("/api/login", async (req, res, next) => {
 		email: email,
 		code: code,
 		verified: verified,
+		currCuisine: currCuisine,
 		error: error,
 	};
 	res.status(200).json(ret);
@@ -217,8 +221,8 @@ app.post("/api/searchcards", async (req, res, next) => {
 	res.status(200).json(ret);
 });
 const { ObjectId } = require("mongodb");
-const { verify } = require("crypto");
-const { verifiedaccess } = require("googleapis/build/src/apis/verifiedaccess");
+// const { verify } = require("crypto");
+// const { verifiedaccess } = require("googleapis/build/src/apis/verifiedaccess");
 app.post("/api/deleteUser", async (req, res, next) => {
 	//===========================================
 	// incoming: userId
@@ -243,8 +247,10 @@ app.post("/api/deleteUser", async (req, res, next) => {
 });
 
 app.post("/api/changePassword", async (req, res, next) => {
+	// ==========================================
 	// incoming: email, newPassword
 	// outgoing: error
+	// ==========================================
 
 	const { email, newPassword } = req.body;
 	var error = "";
@@ -258,6 +264,34 @@ app.post("/api/changePassword", async (req, res, next) => {
 				{ $set: { Password: newPassword } }
 			);
 		if (!updatedUser) {
+			error = "User not found";
+			return res.status(409).json({ error: error });
+		}
+	} catch (e) {
+		error = e.toString();
+	}
+
+	res.status(200).json({ error: error });
+});
+
+app.post("/api/setCuisine", async (req, res, next) => {
+	// ==========================================
+	// incoming: userId, cuisine
+	// outgoing: error
+	// ==========================================
+
+	const { userId, cuisine } = req.body;
+	var error = "";
+
+	try {
+		const db = client.db("Users");
+		var updatedCuisine = await db
+			.collection("users")
+			.findOneAndUpdate(
+				{ _id: new ObjectId(userId) },
+				{ $set: { CurrCuisine: cuisine } }
+			);
+		if (!updatedCuisine) {
 			error = "User not found";
 			return res.status(409).json({ error: error });
 		}
