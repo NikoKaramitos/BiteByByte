@@ -3,7 +3,7 @@ import { Stepper, Step, CardHeader, Typography } from "@material-tailwind/react"
 import Collapse from '@mui/material/Collapse';
 import { CardContent } from "@mui/material";
 
-const CustomStepper = () => {
+const CustomStepper = ({ steps }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [openCollapse, setOpenCollapse] = useState(false);
 
@@ -17,42 +17,14 @@ const CustomStepper = () => {
   };
 
   const renderContent = () => {
-    switch (activeStep) {
-      case 0:
-        return (
-          <Typography variant="body1" color="white">
-            This is the content for level 1.
-            <br />
-            Specific content for level 1 goes here.
-          </Typography>
-        );
-      case 1:
-        return (
-          <Typography variant="body1" color="white">
-            This is the content for level 2.
-            <br />
-            Specific content for level 2 goes here.
-          </Typography>
-        );
-      case 2:
-        return (
-          <Typography variant="body1" color="white">
-            This is the content for level 3.
-            <br />
-            Specific content for level 3 goes here.
-          </Typography>
-        );
-      case 3:
-        return (
-          <Typography variant="body1" color="white">
-            This is the content for level 4.
-            <br />
-            Specific content for level 4 goes here.
-          </Typography>
-        );
-      default:
-        return null;
+    if (steps[activeStep]) {
+      return (
+        <Typography variant="body1" color="white" style={{ fontFamily: 'Press Start 2P' }}>
+          {steps[activeStep].content}
+        </Typography>
+      );
     }
+    return null;
   };
 
   return (
@@ -65,14 +37,14 @@ const CustomStepper = () => {
               lineClassName="bg-white/50"
               activeLineClassName="bg-green-500"
             >
-              {[...Array(4)].map((_, index) => (
+              {steps.map((step, index) => (
                 <Step
                   key={index}
                   className={`h-4 w-4 ${isStepCompleted(index) || index === activeStep ? '!bg-green-500 text-white' : '!bg-blue-gray-50 text-white/75'} cursor-pointer`}
                   onClick={() => handleStepClick(index)}
                 >
                   <div className="absolute -bottom-[2.3rem] w-max text-center text-xs">
-                    <Typography variant="h6" color="inherit">Level {index + 1}</Typography>
+                    <Typography variant="h6" color="inherit">{step.title}</Typography>
                   </div>
                 </Step>
               ))}
