@@ -54,6 +54,7 @@ export default function Login() {
 					firstName: res.firstName,
 					lastName: res.lastName,
 					id: res.id,
+					currCuisine: res.currCuisine,
 				};
 				localStorage.setItem("user_data", JSON.stringify(user));
 				// console.log("verified?: ", res.verified);
