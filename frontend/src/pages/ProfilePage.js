@@ -1,16 +1,16 @@
 import React from 'react';
 import Navbar from '../components/navbar';
-import UserInfo from '../components/UserInfo.js'
+import UserInfo from '../components/UserInfo.jsx'
 
 const ProfilePage = () => {
     return (
-        <div>
-            <>
-            <Navbar />
-            <UserInfo />
-            </>
-        </div>
+    <div>
+        
+
+        <></><Navbar></Navbar>  
+        <UserInfo />
+      </div>
     );
 };
 
-export default UserInfo;
+export default ProfilePage;
