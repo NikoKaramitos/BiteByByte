@@ -5,11 +5,7 @@ import LoggedInName from '../components/LoggedInName';
 
 const Navbar = () => {
     const location = useLocation();
-    const isHomePage = () => location.pathname === '/';
-    const isLoginPage = () => location.pathname === '/login';
-    const isRegisterPage = () => location.pathname === '/register';
-    const isItaly = () => location.pathname === '/dash';
-    const isSettingsPage = () => location.pathname === '/settings';
+    const isDashPage = () => location.pathname === '/Dash';
     const auth = localStorage.getItem('user_data');
     const navigate = useNavigate();
     const logOut = () =>{
@@ -24,9 +20,9 @@ const Navbar = () => {
             <a href="https://github.com/NikoKaramitos/BiteByByte" className="flex items-center space-x-3 rtl:space-x-reverse">
     <img src={bear} className="h-14" alt="BiteByByteLogo" />
     <span className="self-center">
-        <span className={`text-xl font-semibold whitespace-nowrap ${isHomePage() || isLoginPage() || isRegisterPage() ? 'text-black' : 'text-red-500'}`} style={{ textShadow: '1px 1px 1px black' }}>Bite</span>
-        <span className={`text-xl font-semibold whitespace-nowrap ${isHomePage() || isLoginPage() || isRegisterPage() ? 'text-black' : 'text-white'}`} style={{ textShadow: '1px 1px 1px black' }}>By</span>
-        <span className={`text-xl font-semibold whitespace-nowrap ${isHomePage() || isLoginPage() || isRegisterPage() ? 'text-black' : 'text-green-500'}`} style={{ textShadow: '1px 1px 1px black' }}>Byte</span>
+      <span className={`text-xl font-semibold whitespace-nowrap ${isDashPage() ? 'text-red-500' : 'text-black'}`} style={{ textShadow: '1px 1px 1px black' }}>Bite</span>
+      <span className={`text-xl font-semibold whitespace-nowrap ${isDashPage() ? 'text-white' : 'text-black'}`} style={{ textShadow: '1px 1px 1px black' }}>By</span>
+      <span className={`text-xl font-semibold whitespace-nowrap ${isDashPage() ? 'text-green-500' : 'text-black'}`} style={{ textShadow: '1px 1px 1px black' }}>Byte</span>
     </span>
 </a>
         <div className="hidden w-full md:block md:w-auto" id="navbar-default">

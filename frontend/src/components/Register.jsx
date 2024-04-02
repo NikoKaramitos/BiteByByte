@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Footer from "../components/Footer";
 import kitchen from '../assets/kitchen.gif'
+import '../App.css';
 
 export default function Register()
 {
@@ -78,7 +79,7 @@ export default function Register()
 
   
 	return (
-            <div className="relative w-full h-screen bg-zinc-900/90">
+            <div className="relative w-full h-screen cover">
                 <img className="absolute w-full h-full object-cover mix-blend-overlay" src={kitchen} alt="" />
             <div className="flex justify-center items-center h-full">
                 <form className="max-w-[400px] w-full rounded 2xl shadowl 2xl border-4 border-black mx-auto bg-white p-10"novalidate >
