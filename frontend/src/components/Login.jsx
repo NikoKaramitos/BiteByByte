@@ -54,6 +54,7 @@ export default function Login() {
 					firstName: res.firstName,
 					lastName: res.lastName,
 					id: res.id,
+					currCuisine: res.currCuisine,
 				};
 				localStorage.setItem("user_data", JSON.stringify(user));
 				// console.log("verified?: ", res.verified);
@@ -75,14 +76,14 @@ export default function Login() {
 	const navigate = useNavigate();
 
 	return (
-		<div className="relative w-full h-screen bg-zinc-900/90">
+		<div className="relative w-full h-screen bg-zinc-600/90">
 			<img
 				className="absolute w-full h-full object-cover mix-blend-overlay"
 				src={kitchen}
 				alt=""
 			/>
-			<div className=" flex justify-center items-center h-full">
-				<form className="max-w-[400px] w-full rounded 2xl shadowl border-4 border-black 2xl mx-auto bg-white p-8 ">
+			<div className="relative flex justify-center items-center h-full">
+				<form className="max-w-[400px] w-full rounded 2xl shadowl border-4 border-black 2xl mx-auto bg-white p-8">
 					<h2 className="text-2xl font-bold text-center py-6 ">
 						BITEbyBYTE
 					</h2>
@@ -142,10 +143,12 @@ export default function Login() {
 					<span className="text-xs text-red-500" id="loginResult">
 						{message}
 					</span>
-					<p className="flex items-center mt-2 relative text-sm">
-						<input className="mr-2 mt-3  mb-3" type="checkbox" />{" "}
-						Forgot Password?{" "}
-					</p>
+					<a
+						className="text-orange-500 hover:text-orange-700 hover:underline hover:underline-offset-4"
+						href="/forgotPass"
+					>
+						Forgot Password?
+					</a>
 
 					<button
 						id="registerButton"
