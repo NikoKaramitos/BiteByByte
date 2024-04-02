@@ -68,3 +68,15 @@
 .cover{
   background-color: #475569;
 }
+
+.shadow-outline-red {
+  text-shadow: 1px 1px 1px black;
+}
+
+.shadow-outline-white {
+  text-shadow: 1px 1px 1px black;
+}
+
+.shadow-outline-green {
+  text-shadow: 1px 1px 1px black;
+}
