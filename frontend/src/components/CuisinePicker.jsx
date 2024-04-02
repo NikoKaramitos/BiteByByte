@@ -91,7 +91,7 @@ export default function CuisinePicker() {
                 class="relative w-full text-left transition-colors duration-200 ease-in-out
              group-hover:text-white p-2"
               >
-                ITALY
+                ITALIAN
               </span>
               <img src={italyBear} alt="italyBear" className=" h-21 w-20 " />
             </a>
@@ -145,7 +145,7 @@ export default function CuisinePicker() {
                 class="relative w-full text-left transition-colors duration-200 ease-in-out
              group-hover:text-white"
               >
-                FRANCE
+                FRENCH
               </span>
 
               <img src={frenchBear} alt="frenchBear" className=" h-20 w-25 " />
@@ -200,7 +200,7 @@ export default function CuisinePicker() {
                 class="relative w-full text-left transition-colors duration-200 ease-in-out
              group-hover:text-white p-2"
               >
-                CHINA
+                CHINESE
               </span>
               <img src={chinaBear} alt="chinaBear" className=" h-21 w-20 " />
             </a>
@@ -254,7 +254,7 @@ export default function CuisinePicker() {
                 class="relative w-full text-left transition-colors duration-200 ease-in-out
              group-hover:text-white p-2"
               >
-                MEXICO
+                MEXICAN
               </span>
               <img src={mexicoBear} alt="mexicoBear" className=" h-21 w-20 " />
             </a>
