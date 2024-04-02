@@ -10,20 +10,14 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"@emotion/react": "^11.11.4",
-		"@emotion/styled": "^11.11.0",
 		"@material-tailwind/react": "^2.1.9",
-		"@mui/material": "^5.15.14",
 		"body-parser": "^1.20.2",
 		"cors": "^2.8.5",
 		"dotenv": "^16.4.5",
-		"eslint-module-utils": "^2.8.1",
 		"express": "^4.18.3",
 		"googleapis": "^133.0.0",
 		"mongodb": "^6.4.0",
-		"nodemailer": "^6.9.12",
-		"react-awesome-shapes": "^0.1.12",
-		"react-bootstrap": "^2.10.1"
+		"nodemailer": "^6.9.12"
 	},
 	"devDependencies": {
 		"autoprefixer": "^10.4.18",
