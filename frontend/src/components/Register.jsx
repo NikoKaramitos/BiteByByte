@@ -75,6 +75,7 @@ export default function Register() {
 					username: res.username,
 					password: res.password,
 					id: res.id,
+					levels: res.levels,
 				};
 				localStorage.setItem("user_data", JSON.stringify(user));
 
