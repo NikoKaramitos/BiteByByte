@@ -107,7 +107,7 @@ export default function Register() {
 					noValidate
 				>
 					<h2 className="text-2xl font-bold text-center py-6 ">
-						BITEbyBYTE.
+						BiteByByte
 					</h2>
 
 					<div className="flex flex-col mb-4 text-sm">
@@ -216,7 +216,7 @@ export default function Register() {
 
 					<a
 						href="#_"
-						className="relative flex flex-col items-center px-12 py-3 mt-2 overflow-hidden font-medium text-black border-2 border-orange-500 rounded-full hover:text-white group hover:bg-gray-50 text-sm"
+						className="relative flex flex-col items-center px-12 py-3 mt-2 mb-5 overflow-hidden font-medium text-black border-2 border-orange-500 rounded-full hover:text-white group hover:bg-gray-50 text-sm"
 					>
 						<span className="absolute left-0 block w-full h-0 transition-all bg-orange-500 opacity-100 group-hover:h-full top-1/2 group-hover:top-0 duration-400 ease"></span>
 						<span className="absolute right-0 flex-col items-center justify-start w-10 h-10 duration-300 transform translate-x-full group-hover:translate-x-0 ease">
@@ -246,13 +246,9 @@ export default function Register() {
 					<span className="text-xs text-red-500" id="registerResult">
 						{message}
 					</span>
-					<p className="flex items-center mt-2 relative text-sm">
-						<input className="mr-2 mt-3  mb-3" type="checkbox" />{" "}
-						Forgot Password?{" "}
-					</p>
 					<span
 						id="signinButton"
-						className="relative text-sm w-full my-5 py-3 mt-4 text-black"
+						className="relative text-sm w-full text-black underline"
 						onClick={() => navigate("/login")}
 					>
 						Already a member? Sign in now!

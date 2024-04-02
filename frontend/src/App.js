@@ -18,7 +18,6 @@ function App() {
 				<Route path="/login" index element={<LoginPage />} />
 				<Route path="/register" index element={<RegisterPage />} />
 				<Route path="/cuisines" index element={<CuisinePage />} />
-				<Route path="/cards" index element={<CardPage />} />
 				<Route path="/forgotPass" index element={<ForgotPassPage />} />
 				<Route path="/resetPass" index element={<ResetPassPage />} />
 				<Route path="/verify" index element={<VerifyPage />} />
