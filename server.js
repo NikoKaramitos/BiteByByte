@@ -77,6 +77,7 @@ app.post("/api/register", async (req, res, next) => {
 	//===========================================
 
 	const { firstName, lastName, email, username, password, code } = req.body;
+	const levels = { Italian: "0", American: "0" };
 
 	const newUser = {
 		FirstName: firstName,
@@ -87,6 +88,7 @@ app.post("/api/register", async (req, res, next) => {
 		TokenKey: code,
 		Verified: false,
 		CurrCuisine: null,
+		Levels: levels,
 	};
 	var id = -1;
 	var fn = "";
@@ -168,6 +170,7 @@ app.post("/api/login", async (req, res, next) => {
 	var code = -1;
 	var verified = false;
 	var currCuisine = null;
+	var levels = "";
 
 	if (results.length > 0) {
 		id = results[0]._id;
@@ -177,6 +180,7 @@ app.post("/api/login", async (req, res, next) => {
 		code = results[0].TokenKey;
 		verified = results[0].Verified;
 		currCuisine = results[0].CurrCuisine;
+		levels = results[0].Levels;
 	} else {
 		error = "No Record Found";
 	}
@@ -189,6 +193,7 @@ app.post("/api/login", async (req, res, next) => {
 		code: code,
 		verified: verified,
 		currCuisine: currCuisine,
+		levels: levels,
 		error: error,
 	};
 	res.status(200).json(ret);
