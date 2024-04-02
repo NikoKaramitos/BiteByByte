@@ -38,9 +38,6 @@ const Navbar = () => {
                 </li>
                     {
                         auth ? ( <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0">
-                            <li> 
-                            <NavLink to="profile settings">Hi, <LoggedInName/></NavLink>
-                            </li>
                             <li>
                             <NavLink onClick={logOut} to="/">Logout</NavLink>
                             </li>
