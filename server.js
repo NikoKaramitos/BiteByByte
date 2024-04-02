@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const { ObjectId } = require("mongodb");
 
 const path = require("path");
 const PORT = process.env.PORT || 5001;
@@ -77,7 +78,7 @@ app.post("/api/register", async (req, res, next) => {
 	//===========================================
 
 	const { firstName, lastName, email, username, password, code } = req.body;
-	const levels = { Italian: "0", American: "0" };
+	const levels = { Italian: 0, American: 0 };
 
 	const newUser = {
 		FirstName: firstName,
@@ -132,7 +133,7 @@ app.post("/api/register", async (req, res, next) => {
 app.post("/api/login", async (req, res, next) => {
 	//===========================================
 	// incoming: login, password
-	// outgoing: id, firstName, lastName, error
+	// outgoing: everything in the user document, error
 	//===========================================
 
 	var error = "";
@@ -225,9 +226,7 @@ app.post("/api/searchcards", async (req, res, next) => {
 	var ret = { results: _ret, error: error };
 	res.status(200).json(ret);
 });
-const { ObjectId } = require("mongodb");
-// const { verify } = require("crypto");
-// const { verifiedaccess } = require("googleapis/build/src/apis/verifiedaccess");
+
 app.post("/api/deleteUser", async (req, res, next) => {
 	//===========================================
 	// incoming: userId
@@ -282,29 +281,155 @@ app.post("/api/changePassword", async (req, res, next) => {
 app.post("/api/setCuisine", async (req, res, next) => {
 	// ==========================================
 	// incoming: userId, cuisine
-	// outgoing: error
+	// outgoing: currCuisine, newLevel, error
 	// ==========================================
 
 	const { userId, cuisine } = req.body;
 	var error = "";
-
+	let updatedCuisine;
+	let newLevel;
+	let levels;
 	try {
 		const db = client.db("Users");
-		var updatedCuisine = await db
+		const user = await db
 			.collection("users")
-			.findOneAndUpdate(
-				{ _id: new ObjectId(userId) },
-				{ $set: { CurrCuisine: cuisine } }
-			);
-		if (!updatedCuisine) {
-			error = "User not found";
+			.findOne({ _id: new ObjectId(userId) });
+
+		if (!user) {
+			error = "user not found";
 			return res.status(409).json({ error: error });
+		}
+		levels = user.Levels;
+		newLevel = Math.max(levels[cuisine], 10);
+
+		updatedCuisine = await db.collection("users").updateOne(
+			{ _id: new ObjectId(userId) },
+			{
+				$set: {
+					CurrCuisine: cuisine,
+					["Levels." + cuisine]: newLevel,
+				},
+			}
+		);
+
+		if (updatedCuisine.matchedCount === 0) {
+			error = "Update failed";
+			return res.status(500).json({ error: error });
 		}
 	} catch (e) {
 		error = e.toString();
 	}
 
-	res.status(200).json({ error: error });
+	var ret = {
+		currCuisine: cuisine,
+		newLevel: newLevel,
+		error: error,
+	};
+	res.status(200).json(ret);
+});
+
+app.post("/api/setLevel", async (req, res, next) => {
+	// ==========================================
+	// incoming: userId, xp
+	// outgoing: currCuisine, newLevel, error
+	// ==========================================
+
+	const { userId, xp } = req.body;
+	var error = "";
+	let updatedLevel;
+	let newLevel;
+	let currCuisine;
+	let levels;
+	try {
+		const db = client.db("Users");
+		const user = await db
+			.collection("users")
+			.findOne({ _id: new ObjectId(userId) });
+
+		if (!user) {
+			error = "user not found";
+			return res.status(409).json({ error: error });
+		}
+		levels = user.Levels;
+		currCuisine = user.CurrCuisine;
+		newLevel = levels[user.CurrCuisine] + xp;
+
+		updatedLevel = await db.collection("users").updateOne(
+			{ _id: new ObjectId(userId) },
+			{
+				$set: {
+					["Levels." + user.CurrCuisine]: newLevel,
+				},
+			}
+		);
+
+		if (updatedLevel.matchedCount === 0) {
+			error = "Update failed";
+			return res.status(500).json({ error: error });
+		}
+	} catch (e) {
+		error = e.toString();
+	}
+
+	var ret = {
+		currCuisine: currCuisine,
+		newLevel: newLevel,
+		error: error,
+	};
+	res.status(200).json(ret);
+});
+
+app.post("/api/findUser", async (req, res, next) => {
+	//===========================================
+	// incoming: userId
+	// outgoing: error
+	//===========================================
+
+	var error = "";
+
+	const { userId } = req.body;
+
+	const db = client.db("Users");
+
+	const results = await db
+		.collection("users")
+		.find({ _id: new ObjectId(userId) })
+		.toArray();
+
+	var id = -1;
+	var fn = "";
+	var ln = "";
+	var email = "";
+	var code = -1;
+	var verified = false;
+	var currCuisine = null;
+	var levels = "";
+
+	if (results.length > 0) {
+		id = results[0]._id;
+		fn = results[0].FirstName;
+		ln = results[0].LastName;
+		email = results[0].Email;
+		code = results[0].TokenKey;
+		verified = results[0].Verified;
+		currCuisine = results[0].CurrCuisine;
+		levels = results[0].Levels;
+	} else {
+		error = "No Record Found";
+	}
+
+	var ret = {
+		id: id,
+		firstName: fn,
+		lastName: ln,
+		email: email,
+		code: code,
+		verified: verified,
+		currCuisine: currCuisine,
+		levels: levels,
+		error: error,
+	};
+	res.status(200).json(ret);
 });
 
 app.post("/api/findEmail", async (req, res, next) => {
