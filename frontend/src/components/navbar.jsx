@@ -1,6 +1,10 @@
 import React from "react";
 import bear from "../assets/bear.png";
 import { NavLink } from "react-router-dom";
+import React from 'react';
+import bear from '../assets/bear.png';
+import { NavLink, useNavigate, useLocation} from "react-router-dom";
+import '../App.css';
 
 const Navbar = () => {
 	return (
