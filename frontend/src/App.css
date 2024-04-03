@@ -45,38 +45,3 @@
     transform: rotate(360deg);
   }
 }
-
-/* styles.css */
-.emerald {
-  background-color: #34d399;
-  color: #000; /* Adjust text color as needed */
-}
-
-.emerald:hover{
-  background-color: #10b981;
-}
-
-.slate {
-  background-color: #f1f5f9;
-  color: #000; /* Adjust text color as needed */
-}
-
-.slate:hover{
-  background-color: #e2e8f0;
-}
-
-.cover{
-  background-color: #475569;
-}
-
-.shadow-outline-red {
-  text-shadow: 1px 1px 1px black;
-}
-
-.shadow-outline-white {
-  text-shadow: 1px 1px 1px black;
-}
-
-.shadow-outline-green {
-  text-shadow: 1px 1px 1px black;
-}
