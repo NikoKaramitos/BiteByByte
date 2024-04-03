@@ -9,7 +9,6 @@ import ForgotPassPage from "./pages/ForgotPassPage";
 import { ThemeProvider } from "@material-tailwind/react";
 import CuisinePage from "./pages/CuisinePage";
 import ResetPassPage from "./pages/ResetPassPage";
-import Dash from "./pages/Dash";
 
 function App() {
 	return (
@@ -22,7 +21,6 @@ function App() {
 				<Route path="/forgotPass" index element={<ForgotPassPage />} />
 				<Route path="/resetPass" index element={<ResetPassPage />} />
 				<Route path="/verify" index element={<VerifyPage />} />
-				<Route path="/dash" index element={<Dash/>} />
 			</Routes>
 		</BrowserRouter>
 	);
