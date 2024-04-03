@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import kitchen from "../assets/kitchen.gif";
 import sendEmail from "../functions/SendEmail";
+import '../App.css';
 
 export default function Register() {
 	var firstName;
