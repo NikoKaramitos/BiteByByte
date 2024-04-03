@@ -96,7 +96,7 @@ export default function Register() {
 	};
 
 	return (
-		<div className="relative w-full h-screen bg-zinc-900/90">
+		<div className="relative w-full h-screen bg-zinc-600/90">
 			<img
 				className="absolute w-full h-full object-cover mix-blend-overlay"
 				src={kitchen}
@@ -217,7 +217,7 @@ export default function Register() {
 
 					<a
 						href="#_"
-						className="relative flex flex-col items-center px-12 py-3 mt-2 mb-5 overflow-hidden font-medium text-black border-2 border-orange-500 rounded-full hover:text-white group hover:bg-gray-50 text-sm"
+						className="relative flex flex-col items-center px-12 py-3 mt-2 overflow-hidden font-medium text-black border-2 border-orange-500 rounded-full hover:text-white group hover:bg-gray-50 text-sm"
 					>
 						<span className="absolute left-0 block w-full h-0 transition-all bg-orange-500 opacity-100 group-hover:h-full top-1/2 group-hover:top-0 duration-400 ease"></span>
 						<span className="absolute right-0 flex-col items-center justify-start w-10 h-10 duration-300 transform translate-x-full group-hover:translate-x-0 ease">
@@ -251,7 +251,7 @@ export default function Register() {
 						id="signinButton"
 						className="relative text-sm w-full text-black underline"
 						onClick={() => navigate("/login")}
-					>
+					><br></br>
 						Already a member? Sign in now!
 					</span>
 				</form>

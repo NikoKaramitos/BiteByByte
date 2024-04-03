@@ -4,6 +4,7 @@ import chinaBear from "../assets/cuisineBears/chinaBear.png";
 import mexicoBear from "../assets/cuisineBears/mexicoBear.png";
 import italyBear from "../assets/cuisineBears/italyBear.png";
 import window from "../assets/Designer.jpeg";
+import { useNavigate } from "react-router-dom";
 
 export default function CuisinePicker() {
   var _ud = localStorage.getItem("user_data");
@@ -11,6 +12,7 @@ export default function CuisinePicker() {
 	var userId = ud.id;
 	var firstName = ud.firstName;
 	var lastName = ud.lastName;
+  const navigate = useNavigate();
 
   return (
     <div className="relative w-full h-screen bg-zinc-700/90">
@@ -45,7 +47,7 @@ export default function CuisinePicker() {
 
       <div class="justify-center items-center grid grid-cols-2 m-8 p-5">
         <div className=" relative flex m-8 justify-center">
-          <button className="w-full sm:w-auto" id="italyCuisine">
+          <button className="w-full sm:w-auto" id="italyCuisine" onClick={() => navigate("/dash")}>
             <a
               href="#_"
               class="relative  inline-flex items-center justify-start py-7 pl-8 pr-16 overflow-hidden font-semibold
@@ -94,12 +96,13 @@ export default function CuisinePicker() {
                 ITALIAN
               </span>
               <img src={italyBear} alt="italyBear" className=" h-21 w-20 " />
+              
             </a>
           </button>
         </div>
 
         <div className=" relative flex m-8 justify-center">
-          <button className="w-full sm:w-auto" id="franceCuisine">
+          <button className="w-full sm:w-auto" id="franceCuisine" onClick={() => navigate("/dash")}>
             <a
               href="#_"
               class="relative  inline-flex items-center justify-start py-7 pl-8 pr-16 overflow-hidden font-semibold
@@ -154,7 +157,7 @@ export default function CuisinePicker() {
         </div>
 
         <div className=" relative flex m-8 justify-center">
-          <button className="w-full sm:w-auto" id="chinaCuisine">
+          <button className="w-full sm:w-auto" id="chinaCuisine" onClick={() => navigate("/dash")}>
             <a
               href="#_"
               class="relative  inline-flex items-center justify-start py-7 pl-8 pr-16 overflow-hidden font-semibold
@@ -208,7 +211,7 @@ export default function CuisinePicker() {
         </div>
 
         <div className=" relative flex m-8 justify-center">
-          <button className="w-full sm:w-auto" id="mexicoCuisine">
+          <button className="w-full sm:w-auto" id="mexicoCuisine" onClick={() => navigate("/dash")}>
             <a
               href="#_"
               class="relative  inline-flex items-center justify-start py-7 pl-8 pr-16 overflow-hidden font-semibold
