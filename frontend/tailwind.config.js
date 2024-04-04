@@ -9,5 +9,6 @@ module.exports = {
     'customGreen': '#7DCFB6',
   },
   plugins: [],
-}
+};
+
 

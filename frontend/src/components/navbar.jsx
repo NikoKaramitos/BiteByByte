@@ -38,7 +38,7 @@ const Navbar = () => {
                                 <li className='hover:text-emerald-400'>
                                     <NavLink to="settings">Settings</NavLink>
                                 </li>
-                                <li>
+                                <li className='hover:text-emerald-400'>
                                     <NavLink onClick={logOut} to="/">Logout</NavLink>
                                 </li>
                             </>
