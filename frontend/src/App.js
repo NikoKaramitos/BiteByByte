@@ -10,6 +10,7 @@ import { ThemeProvider } from "@material-tailwind/react";
 import CuisinePage from "./pages/CuisinePage";
 import ResetPassPage from "./pages/ResetPassPage";
 import Dash from "./pages/Dash";
+import CookBook from "./pages/CookBookPage";
 
 function App() {
 	return (
@@ -23,6 +24,7 @@ function App() {
 				<Route path="/resetPass" index element={<ResetPassPage />} />
 				<Route path="/verify" index element={<VerifyPage />} />
 				<Route path="/dash" index element={<Dash/>} />
+				<Route path="/cookbook" index element={<CookBook/>} />
 			</Routes>
 		</BrowserRouter>
 	);
