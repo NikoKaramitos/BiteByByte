@@ -6,8 +6,16 @@ import CustomStepper from '../components/stepper';
 import RecipeCard from '../components/recipeCard';
 import lasagna from "../assets/lasagna.jpeg";
 import tirmasiu from "../assets/tirmasiu.jpeg"
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    useParams,
+} from "react-router-dom";
 
 const Dash = () => {
+    let { cuisine } = useParams();
+
     const steps1 = [
         { title: 'Intro', content: 'Lasagna holds a revered place in Italian culinary heritage, with origins dating back to ancient Greece and Rome. Evolving over centuries, it has become a quintessential dish symbolizing celebration and familial bonds in Italy. Passed down through generations, the tradition of making lasagna embodies the essence of Italian heritage, bringing people together to share in its hearty, comforting flavors.' },
         { title: 'Ingredients', content: 'This is the content for step 2 of the first stepper.' },
@@ -45,6 +53,8 @@ const Dash = () => {
     return (
         <div className='relative'>
             <Navbar />
+            <h1>Dash Page</h1>
+            <h2>{cuisine} Cuisine</h2>
             <img className="w-full  z-0" src={tower2} alt="Tower"></img>
             {(showStepper1 || showStepper2) && (
                 <div className='absolute z-10 top-40 left-0 w-full'>

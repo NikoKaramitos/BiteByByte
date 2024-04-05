@@ -14,6 +14,10 @@ export default function CuisinePicker() {
 	var lastName = ud.lastName;
   const navigate = useNavigate();
 
+  const handleCuisineSelect = (cuisine) => {
+    navigate(`/dash/${cuisine}`);
+};
+
   return (
     <div className="relative w-full h-screen bg-zinc-700/90">
       <img
@@ -47,7 +51,7 @@ export default function CuisinePicker() {
 
       <div class="justify-center items-center grid grid-cols-2 m-8 p-5">
         <div className=" relative flex m-8 justify-center">
-          <button className="w-full sm:w-auto" id="italyCuisine" onClick={() => navigate("/dash")}>
+          <button className="w-full sm:w-auto" id="italyCuisine" onClick={() => handleCuisineSelect("italian")}>
             <a
               href="#_"
               class="relative  inline-flex items-center justify-start py-7 pl-8 pr-16 overflow-hidden font-semibold
@@ -102,7 +106,7 @@ export default function CuisinePicker() {
         </div>
 
         <div className=" relative flex m-8 justify-center">
-          <button className="w-full sm:w-auto" id="franceCuisine" onClick={() => navigate("/dash")}>
+          <button className="w-full sm:w-auto" id="franceCuisine" onClick={() => handleCuisineSelect("french")}>
             <a
               href="#_"
               class="relative  inline-flex items-center justify-start py-7 pl-8 pr-16 overflow-hidden font-semibold
@@ -157,7 +161,7 @@ export default function CuisinePicker() {
         </div>
 
         <div className=" relative flex m-8 justify-center">
-          <button className="w-full sm:w-auto" id="chinaCuisine" onClick={() => navigate("/dash")}>
+          <button className="w-full sm:w-auto" id="chinaCuisine" onClick={() => handleCuisineSelect("chinese")}>
             <a
               href="#_"
               class="relative  inline-flex items-center justify-start py-7 pl-8 pr-16 overflow-hidden font-semibold
@@ -211,7 +215,7 @@ export default function CuisinePicker() {
         </div>
 
         <div className=" relative flex m-8 justify-center">
-          <button className="w-full sm:w-auto" id="mexicoCuisine" onClick={() => navigate("/dash")}>
+          <button className="w-full sm:w-auto" id="mexicoCuisine" onClick={() => handleCuisineSelect("mexican")}>
             <a
               href="#_"
               class="relative  inline-flex items-center justify-start py-7 pl-8 pr-16 overflow-hidden font-semibold
