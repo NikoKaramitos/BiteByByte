@@ -22,32 +22,30 @@ export default function Login() {
 
 	const doLogin = async (event) => {
 		event.preventDefault();
-
+	
 		var obj = { login: loginName.value, password: loginPassword.value };
 		var js = JSON.stringify(obj);
-
+	
 		if (!loginName.value || !loginPassword.value) {
 			setMessage("All fields are required.");
 			return;
 		}
-
+	
 		try {
 			const response = await fetch(buildPath("api/login"), {
 				method: "POST",
 				body: js,
 				headers: { "Content-Type": "application/json" },
 			});
-
+	
 			var res = JSON.parse(await response.text());
-
+	
 			if (res.error === "Username not found") {
 				setMessage("Username not found. Create an account now!");
 				return;
 			}
 			if (res.error === "Password not found") {
-				setMessage(
-					"Seems to be the wrong password. \n Use Forgot Password"
-				);
+				setMessage("Seems to be the wrong password. \n Use Forgot Password");
 				return;
 			} else {
 				var user = {
@@ -57,12 +55,18 @@ export default function Login() {
 					currCuisine: res.currCuisine,
 				};
 				localStorage.setItem("user_data", JSON.stringify(user));
-				// console.log("verified?: ", res.verified);
+				
 				if (res.verified) {
 					setMessage("");
-					window.location.href = "/cuisines";
+					if (res.CurrCuisine) {
+						// Redirect to Dash page if user has a current cuisine set
+						window.location.href = "/dash"; 
+					} else {
+						// Redirect to select cuisine page if user hasn't set a current cuisine
+						window.location.href = "/cuisines";
+					}
 				} else {
-					setMessage("Verified your email first. Check your email");
+					setMessage("Verify your email first. Check your email");
 					sendEmail(res.email, res.code, "verify");
 					window.location.href = "/verify";
 				}
@@ -72,6 +76,7 @@ export default function Login() {
 			return;
 		}
 	};
+	
 
 	const navigate = useNavigate();
 

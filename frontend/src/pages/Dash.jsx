@@ -1,21 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/navbar';
 import Footer from "../components/Footer"
 import tower2 from "../assets/tower2.webp";
+import greek from "../assets/greek2.png";
+import mexicanImage from "../assets/mexicanImage.png";
 import CustomStepper from '../components/stepper';
 import RecipeCard from '../components/recipeCard';
 import lasagna from "../assets/lasagna.jpeg";
 import tirmasiu from "../assets/tirmasiu.jpeg"
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    useParams,
-} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import {useParams,} from "react-router-dom";
 
 const Dash = () => {
-    let { cuisine } = useParams();
-
     const steps1 = [
         { title: 'Intro', content: 'Lasagna holds a revered place in Italian culinary heritage, with origins dating back to ancient Greece and Rome. Evolving over centuries, it has become a quintessential dish symbolizing celebration and familial bonds in Italy. Passed down through generations, the tradition of making lasagna embodies the essence of Italian heritage, bringing people together to share in its hearty, comforting flavors.' },
         { title: 'Ingredients', content: 'This is the content for step 2 of the first stepper.' },
@@ -50,12 +46,65 @@ const Dash = () => {
         setButtonClicked(false);
     };
 
+    const [recipes, setRecipes] = useState([]);
+    const { cuisine } = useParams();
+    const navigate = useNavigate(); 
+
+
+    const app_name = "bitebybyte-9e423411050b";
+	function buildPath(route) {
+		if (process.env.NODE_ENV === "production") {
+			return "https://" + app_name + ".herokuapp.com/" + route;
+		} else {
+			return "http://localhost:5001/" + route;
+		}
+	}
+
+    useEffect(() => {
+        const fetchRecipes = async () => {
+            try {
+                const response = await fetch(buildPath(`/api/cuisines/${cuisine}/recipes`));
+                if (!response.ok) {
+                    throw new Error('Failed to fetch recipes');
+                }
+                const data = await response.json();
+                setRecipes(data);
+            } catch (error) {
+                console.error("Error fetching recipes:", error);
+            }
+        };
+    
+        fetchRecipes();
+    }, [cuisine]);
+
+    // Define image based on cuisine
+    let imageSrc;
+    switch (cuisine) {
+        case 'italian':
+            imageSrc = tower2;
+            break;
+        case 'mexican':
+            imageSrc = mexicanImage;
+            break;
+        case 'chinese':
+            imageSrc = greek;
+            break;
+        case 'french':
+            imageSrc = greek;
+            break;
+    }
+
+    // Define click handler for recipe cards
+    const handleRecipeClick = (recipeId) => {
+        // Redirect to recipe details page or perform any other action
+        navigate(`/recipes/${recipeId}`);
+    };
+
     return (
         <div className='relative'>
             <Navbar />
-            <h1>Dash Page</h1>
-            <h2>{cuisine} Cuisine</h2>
-            <img className="w-full  z-0" src={tower2} alt="Tower"></img>
+            <h1>{cuisine} Dash Page</h1>
+            <img className="w-full  z-0 " src={imageSrc} ></img>
             {(showStepper1 || showStepper2) && (
                 <div className='absolute z-10 top-40 left-0 w-full'>
                     {showStepper1 && <CustomStepper steps={steps1} />}
@@ -84,6 +133,6 @@ const Dash = () => {
             <Footer />
         </div>
     );
-};
+    };
 
 export default Dash;
