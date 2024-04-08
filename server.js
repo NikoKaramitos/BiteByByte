@@ -352,7 +352,10 @@ app.post("/api/setLevel", async (req, res, next) => {
 		}
 		levels = user.Levels;
 		currCuisine = user.CurrCuisine;
-		newLevel = levels[user.CurrCuisine] + xp;
+		newLevel =
+			(levels[user.CurrCuisine] + xp) % 10 == 3
+				? levels[user.CurrCuisine] + 8
+				: levels[user.CurrCuisine] + xp;
 
 		updatedLevel = await db.collection("users").updateOne(
 			{ _id: new ObjectId(userId) },
@@ -374,6 +377,81 @@ app.post("/api/setLevel", async (req, res, next) => {
 	var ret = {
 		currCuisine: currCuisine,
 		newLevel: newLevel,
+		error: error,
+	};
+	res.status(200).json(ret);
+});
+app.post("/api/getRecipes", async (req, res, next) => {
+	//===========================================
+	// incoming: cuisine
+	// outgoing: recipes, error
+	//===========================================
+
+	var error = "";
+	var recipes = "";
+
+	const { cuisine } = req.body;
+
+	try {
+		const db = client.db("Users");
+		const results = await db
+			.collection("Cuisines")
+			.findOne({ Name: cuisine });
+
+		// console.log("Results: ", results);
+		if (!results) {
+			error = "No Cuisine Found";
+			return res.status(409).json({ error: error });
+		}
+
+		recipes = results.Recipes;
+	} catch (e) {
+		error = e.toString();
+	}
+
+	var ret = {
+		recipes: recipes,
+		error: error,
+	};
+	res.status(200).json(ret);
+});
+
+app.post("/api/recipe", async (req, res, next) => {
+	//===========================================
+	// incoming: recipe
+	// outgoing: ingredients, instructions, difficulty, error
+	//===========================================
+
+	var error = "";
+	var ingredients = "";
+	var instructions = "";
+	var difficulty = -1;
+
+	const { recipe } = req.body;
+
+	try {
+		const db = client.db("Users");
+		const recipes = await db
+			.collection("Recipes")
+			.findOne({ Name: recipe });
+
+		// console.log("Recipe: ", recipes);
+		if (!recipes) {
+			error = "No Recipe Found";
+			return res.status(409).json({ error: error });
+		}
+
+		ingredients = recipes.Ingredients;
+		instructions = recipes.Instructions;
+		difficulty = recipes.Difficulty;
+	} catch (e) {
+		error = e.toString();
+	}
+
+	var ret = {
+		ingredients: ingredients,
+		instructions: instructions,
+		difficulty: difficulty,
 		error: error,
 	};
 	res.status(200).json(ret);
