@@ -13,18 +13,82 @@ import {useParams,} from "react-router-dom";
 
 const Dash = () => {
     const steps1 = [
-        { title: 'Intro', content: 'Lasagna holds a revered place in Italian culinary heritage, with origins dating back to ancient Greece and Rome. Evolving over centuries, it has become a quintessential dish symbolizing celebration and familial bonds in Italy. Passed down through generations, the tradition of making lasagna embodies the essence of Italian heritage, bringing people together to share in its hearty, comforting flavors.' },
-        { title: 'Ingredients', content: 'This is the content for step 2 of the first stepper.' },
-        { title: 'Instructions', content: 'This is the content for step 3 of the first stepper.' },
-        { title: 'Finish', content: 'This is the content for step 4 of the first stepper.' },
-    ];
-
-    const steps2 = [
-        { title: 'Intro', content: 'This is the content for level 1 of the second stepper.' },
-        { title: 'Ingredients', content: 'This is the content for level 2 of the second stepper.' },
-        { title: 'Instructions', content: 'This is the content for level 3 of the second stepper.' },
-        { title: 'Finish', content: 'This is the content for level 4 of the second stepper.' },
-    ];
+        {
+          title: "Introduction",
+          content: "Introduction Content",
+          quizzes: [
+            { question: "Question 1", options: ["Option 1", "Option 2", "Option 3"], answer: 1 },
+            { question: "Question 2", options: ["Option 1", "Option 2", "Option 3"], answer: 0 }
+          ]
+        },
+        {
+          title: "Quiz 1",
+          content: "Quiz 1 Content",
+          quizzes: [
+            { question: "Question 3", options: ["Option 1", "Option 2", "Option 3"], answer: 2 }
+          ]
+        },
+        {
+          title: "Ingredients",
+          content: "Ingredients Content",
+          quizzes: [
+            { question: "Question 4", options: ["Option 1", "Option 2", "Option 3"], answer: 1 }
+          ]
+        },
+        {
+            title: "Quiz 2",
+            content: "Quiz 1 Content",
+            quizzes: [
+              { question: "Question 3", options: ["Option 1", "Option 2", "Option 3"], answer: 2 }
+            ]
+          },
+        {
+            title: "Finish",
+            content: "final quiz",
+            quizzes: [
+              { question: "Question 4", options: ["Option 1", "Option 2", "Option 3"], answer: 1 }
+            ]
+          }     
+         ];
+      
+         const steps2 = [
+            {
+              title: "Introduction",
+              content: "Introduction Content",
+              quizzes: [
+                { question: "Question 1", options: ["Option 1", "Option 2", "Option 3"], answer: 1 },
+                { question: "Question 2", options: ["Option 1", "Option 2", "Option 3"], answer: 0 }
+              ]
+            },
+            {
+              title: "Quiz 1",
+              content: "Quiz 1 Content",
+              quizzes: [
+                { question: "Question 3", options: ["Option 1", "Option 2", "Option 3"], answer: 2 }
+              ]
+            },
+            {
+              title: "Ingredients",
+              content: "Ingredients Content",
+              quizzes: [
+                { question: "Question 4", options: ["Option 1", "Option 2", "Option 3"], answer: 1 }
+              ]
+            },
+            {
+                title: "Quiz 2",
+                content: "Quiz 1 Content",
+                quizzes: [
+                  { question: "Question 3", options: ["Option 1", "Option 2", "Option 3"], answer: 2 }
+                ]
+              },
+            {
+                title: "Finish",
+                content: "final quiz",
+                quizzes: [
+                  { question: "Question 4", options: ["Option 1", "Option 2", "Option 3"], answer: 1 }
+                ]
+              }     
+             ];
 
     const [showStepper1, setShowStepper1] = useState(false);
     const [showStepper2, setShowStepper2] = useState(false);
@@ -103,7 +167,6 @@ const Dash = () => {
     return (
         <div className='relative'>
             <Navbar />
-            <h1>{cuisine} Dash Page</h1>
             <img className="w-full  z-0 " src={imageSrc} ></img>
             {(showStepper1 || showStepper2) && (
                 <div className='absolute z-10 top-40 left-0 w-full'>

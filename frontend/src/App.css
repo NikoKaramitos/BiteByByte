@@ -73,3 +73,35 @@
   text-shadow: 1px 1px 1px black;
 }
 
+.back-button {
+  background-color: transparent; /* Make the background transparent */
+  color: white; /* Set the text color */
+  padding: 8px 16px;
+  margin-right: 8px;
+  opacity: 0.5; /* You can adjust the opacity for the disabled state */
+  cursor: not-allowed; /* You can adjust the cursor for the disabled state */
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+}
+
+.back-button:hover{
+  color: #4caf50; /* Add an outline */
+
+}
+
+.next-button {
+  background-color: transparent; /* Make the background transparent */
+  color: white;
+  padding: 8px 16px;
+  opacity: 0.5; /* You can adjust the opacity for the disabled state */
+  cursor: not-allowed; /* You can adjust the cursor for the disabled state */
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+}
+
+.next-button:hover{
+  color: #4caf50; /* Add an outline */
+
+}
