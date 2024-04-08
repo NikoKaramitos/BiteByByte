@@ -78,7 +78,7 @@ app.post("/api/register", async (req, res, next) => {
 	//===========================================
 
 	const { firstName, lastName, email, username, password, code } = req.body;
-	const levels = { Italian: 0, American: 0 };
+	const levels = { Italian: 0, Mexican: 0, French: 0, Greek: 0 };
 
 	const newUser = {
 		FirstName: firstName,
