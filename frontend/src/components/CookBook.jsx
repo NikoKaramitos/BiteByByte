@@ -5,6 +5,13 @@ import CookBookCard from "../components/cookBookCard";
 import lasagna from "../assets/lasagna.jpeg";
 import tirmasiu from "../assets/tirmasiu.jpeg";
 
+const cuisines = [
+  { buttonText: "Italian" },
+  { buttonText: "France" },
+  { buttonText: "Mexican" },
+  { buttonText: "Chinese " },
+];
+
 export default function CookBook() {
   var _ud = localStorage.getItem("user_data");
   var ud = JSON.parse(_ud);
@@ -12,6 +19,9 @@ export default function CookBook() {
   var firstName = ud.firstName;
   var lastName = ud.lastName;
 
+  function selectCuisine(){
+    
+  }
   return (
     <div class=" text-white bg-black w-screen h-screen flex justify-end">
       <div className="relative w-full h-screen bg-zinc-500/90">
@@ -22,7 +32,7 @@ export default function CookBook() {
         />
 
         <div className="relative flex justify-center items-center h-full">
-          <div className="max-w-[550px] w-full rounded 2xl shadowl border-4 border-black 2xl mx-auto bg-amber-100 bg-opacity-90 p-8">
+          <div className="max-w-[800px] w-full rounded 2xl shadowl border-4 border-black 2xl mx-auto bg-amber-100 bg-opacity-90 p-8">
             <h1 className="text-center text-black text-lg m-3">
               Chef {firstName}'s Cook Book
             </h1>
@@ -77,22 +87,62 @@ export default function CookBook() {
               </button>
             </div>
 
-            <div className="flex justify-center gap-4">
-              <CookBookCard
-                className="flex"
-                imageUrl={lasagna}
-                buttonText="Lasagna Recipe"
-              />
-              <CookBookCard
-                className="flex"
-                imageUrl={tirmasiu}
-                buttonText="Tiramisu Recipe"
-              />
-              <CookBookCard
-                className="flex"
-                imageUrl={lasagna}
-                buttonText="Lasagna Recipe"
-              />
+
+            <div className="flex justify-center gap-5 mt-8">
+              <div className=" cursor-pointer group ">
+                <div className=" bg-white relative preserve-3d group-hover:my-rotate-y-180  duration-1000">
+                  <div className=" text-black backface-hidden ">
+                    <CookBookCard
+                      className="flex w-96 h-96"
+                      imageUrl={lasagna}
+                      buttonText="Lasagna Recipe"
+                    />
+                  </div>
+                  <div className="absolute inset-0 rounded-xl text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                    <div className="text-center text-black flex-col items-center justify-center">
+                      <h1>Lasagna Reciepe!</h1>
+                      <p className="my-2 text-sm"> Ingredigents here</p>
+                      <p className="text-xs">Steps here</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="cursor-pointer group perspective">
+                <div className=" bg-white relative preserve-3d group-hover:my-rotate-y-180  duration-1000">
+                  <div className=" text-black backface-hidden ">
+                    <CookBookCard
+                      className="flex"
+                      imageUrl={tirmasiu}
+                      buttonText="Lasagna Recipe"
+                    />
+                  </div>
+                  <div className="absolute inset-0 rounded-xl text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                    <div className="text-center text-black flex-col items-center justify-center">
+                      <h1>Lasagna Reciepe!</h1>
+                      <p className="my-2"> Ingredigents here</p>
+                      <p>Steps here</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="cursor-pointer group perspective">
+                <div className=" bg-white relative preserve-3d group-hover:my-rotate-y-180  duration-1000">
+                  <div className=" text-black backface-hidden ">
+                    <CookBookCard
+                      className="flex"
+                      imageUrl={lasagna}
+                      buttonText="Lasagna Recipe"
+                    />
+                  </div>
+                  <div className="absolute inset-0 rounded-xl text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                    <div className="text-center text-black flex-col items-center justify-center">
+                      <h1>Lasagna Reciepe!</h1>
+                      <p className="my-2"> Ingredigents here</p>
+                      <p>Steps here</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
