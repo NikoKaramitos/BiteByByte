@@ -95,12 +95,8 @@ const Dash = () => {
     const [buttonClicked, setButtonClicked] = useState(false);
 
     const handleButtonClick1 = () => {
+        fetchRecipes();
         setShowStepper1(true);
-        setButtonClicked(true);
-    };
-
-    const handleButtonClick2 = () => {
-        setShowStepper2(true);
         setButtonClicked(true);
     };
 
@@ -110,36 +106,66 @@ const Dash = () => {
         setButtonClicked(false);
     };
 
-    const [recipes, setRecipes] = useState([]);
     const { cuisine } = useParams();
     const navigate = useNavigate(); 
 
-
     const app_name = "bitebybyte-9e423411050b";
-	function buildPath(route) {
-		if (process.env.NODE_ENV === "production") {
-			return "https://" + app_name + ".herokuapp.com/" + route;
-		} else {
-			return "http://localhost:5001/" + route;
-		}
-	}
+    function buildPath(route) {
+        if (process.env.NODE_ENV === "production") {
+            return "https://" + app_name + ".herokuapp.com/" + route;
+        } else {
+            return "http://localhost:5001/" + route;
+        }
+    }
 
-    useEffect(() => {
-        const fetchRecipes = async () => {
-            try {
-                const response = await fetch(buildPath(`/api/cuisines/${cuisine}/recipes`));
-                if (!response.ok) {
-                    throw new Error('Failed to fetch recipes');
+    const [recipes, setRecipes] = useState([]);
+    const [error, setError] = useState(null);
+
+    // useEffect(() => {
+    //   const fetchRecipes = async () => {
+    //     try {
+    //         const response = await fetch(buildPath('/api/getRecipes'), {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //                 body: JSON.stringify({ cuisine: 'Italian' }), // Adjust cuisine as needed
+    //             });
+    //             if (!response.ok) {
+    //                 throw new Error('Failed to fetch recipes');
+    //             }
+    //             const data = await response.json();
+    //             setRecipes(data.recipes);
+    //         } catch (error) {
+    //             setError(error.message);
+    //         }
+    //     };
+
+    //     fetchRecipes();
+    // }, []);
+
+      const fetchRecipes = async (event) => {
+        var obj = {cuisine: "Italian"};
+        var js = JSON.stringify(obj);
+        try {
+            const response = await fetch(buildPath('/api/getRecipes'), {
+                method: 'POST',
+                body: js,
+                headers: {
+                    'Content-Type': 'application/json',
+                },});
+                var res = JSON.parse(await response.text());
+                console.log("This is what it return from DB ",res);
+                if (res.error) {
+                    console.log(res.error);
                 }
                 const data = await response.json();
-                setRecipes(data);
-            } catch (error) {
-                console.error("Error fetching recipes:", error);
+                setRecipes(data.recipes);
+
+            } catch (e) {
+                setError(e.toString());
             }
         };
-    
-        fetchRecipes();
-    }, [cuisine]);
 
     // Define image based on cuisine
     let imageSrc;
@@ -158,11 +184,6 @@ const Dash = () => {
             break;
     }
 
-    // Define click handler for recipe cards
-    const handleRecipeClick = (recipeId) => {
-        // Redirect to recipe details page or perform any other action
-        navigate(`/recipes/${recipeId}`);
-    };
 
     return (
         <div className='relative'>
@@ -182,20 +203,30 @@ const Dash = () => {
             {!buttonClicked && (
                 <div className="absolute top-40 left-0 right-0 flex justify-center items-center">
                     <RecipeCard
-                        imageUrl= {lasagna}
-                        buttonText="Lasagna Recipe"
+                        imageUrl= {tirmasiu}
+                        recipe="Recipe 1"
+                        buttonText="Tirmasiu Recipe"
                         onClick={handleButtonClick1}
-                    />
+                    /> 
                     <RecipeCard
-                        imageUrl={tirmasiu}
-                        buttonText="Tiramisu Recipe"
-                        onClick={handleButtonClick2}
-                    />
+                        imageUrl= {lasagna}
+                        recipe="Recipe 2"
+                        buttonText="Carbonara Recipe"
+                        onClick={handleButtonClick1}
+                    />                    
+                    <RecipeCard
+                    imageUrl= {lasagna}
+                    recipe="Recipe 3"
+                    buttonText="Lasagna Recipe"
+                    onClick={handleButtonClick1}
+                />
                 </div>
+                
             )}
             <Footer />
         </div>
     );
-    };
+  };
+
 
 export default Dash;

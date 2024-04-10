@@ -23,7 +23,7 @@ function App() {
 				<Route path="/forgotPass" index element={<ForgotPassPage />} />
 				<Route path="/resetPass" index element={<ResetPassPage />} />
 				<Route path="/verify" index element={<VerifyPage />} />
-				<Route path="/dash" index element={<Dash />} />
+				<Route path="/dash/:cuisine" element={<Dash />}/>
 				<Route path="/cookbook" index element={<CookBook />} />
 			</Routes>
 		</BrowserRouter>

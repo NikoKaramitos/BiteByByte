@@ -34,7 +34,7 @@ const CustomStepper = ({ steps }) => {
               }}
             >
               <KeyboardArrowLeft /> Back
-            </button>
+            </button> 
             <button
               disabled={activeStep === steps.length - 1}
               onClick={handleNext}

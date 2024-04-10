@@ -1,9 +1,18 @@
-import React from 'react';
+import { useState } from 'react';
 import bear from '../assets/bear.png';
 import { NavLink, useNavigate, useLocation} from "react-router-dom";
 import '../App.css';
+import { CgProfile } from "react-icons/cg";
+
 
 const Navbar = () => {
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const handleToggle = () => {
+        setIsOpen(!isOpen);
+    };
+
     const location = useLocation();
     const isItalian = () => location.pathname === '/dash/italian';
     const isMexican = () => location.pathname === '/dash/mexican';
@@ -29,7 +38,7 @@ const Navbar = () => {
 
                 </a>
                 <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-                    <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0">
+                    <ul className="font-medium flex flex-col p-2 md:p-0 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0">
                         <li className='hover:text-emerald-400'>
                             <NavLink to="/">Home</NavLink>
                         </li>
@@ -37,16 +46,22 @@ const Navbar = () => {
                             <NavLink to="about">About</NavLink>
                         </li>
                         {auth ? (
-                            <>
-                                <li className='hover:text-emerald-400'>
-                                    <NavLink to="settings">Settings</NavLink>
+                <>
+                    <li className="relative">
+                        <button onClick={handleToggle} className="focus:outline-none">
+                            <CgProfile style={{ fontSize: '28px' }} />
+                        </button>
+                        {isOpen && (
+                            <ul className="absolute top-full left-0 bg-white border border-gray-200 rounded shadow-md mt-1">
+                                <li>
+                                    <NavLink onClick={logOut} to="/" className="block px-4 py-2 text-gray-800 hover:text-emerald-400">Logout</NavLink>
                                 </li>
-                                <li className='hover:text-emerald-400'>
-                                    <NavLink onClick={logOut} to="/">Logout</NavLink>
-                                </li>
-                            </>
-                        ) : null}
-                    </ul>
+                            </ul>
+                        )}
+                    </li>
+                </>
+            ) : null}
+        </ul>
                 </div>
             </div>
         </div>
