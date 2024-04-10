@@ -1,6 +1,13 @@
 import React from 'react';
+import lasagna from "../assets/lasagna.jpeg";
+import tirmasiu from "../assets/tirmasiu.jpeg";
+
+
 
 const CookBookCard = ({ imageUrl, buttonText, onClick }) => {
+
+    
+    
     return (
         <div className="h-96 rounded-sm overflow-hidden outline outline-black outline-4 shadow-lg border bg-white">
             <img className="w-full" src={imageUrl} alt="Recipe" />
