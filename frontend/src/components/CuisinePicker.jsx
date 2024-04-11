@@ -106,7 +106,7 @@ export default function CuisinePicker() {
         </div>
 
         <div className=" relative flex m-8 justify-center">
-          <button className="w-full sm:w-auto" id="franceCuisine" onClick={() => handleCuisineSelect("french")}>
+          <button className="w-full sm:w-auto" id="franceCuisine" onClick={() => handleCuisineSelect("greek")}>
             <a
               href="#_"
               class="relative  inline-flex items-center justify-start py-7 pl-8 pr-16 overflow-hidden font-semibold
@@ -152,7 +152,7 @@ export default function CuisinePicker() {
                 class="relative w-full text-left transition-colors duration-200 ease-in-out
              group-hover:text-white"
               >
-                FRENCH
+                GREEK
               </span>
 
               <img src={frenchBear} alt="frenchBear" className=" h-20 w-25 " />

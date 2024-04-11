@@ -2,15 +2,19 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../components/navbar";
 import Footer from "../components/Footer";
 import tower2 from "../assets/tower2.webp";
+import china from "../assets/chineseImage.png";
 import greek from "../assets/greek2.png";
-import mexicanImage from "../assets/mexicanImage.png";
+import mexicanImage from "../assets/mexicanImage.webp";
 import CustomStepper from "../components/stepper";
 import RecipeCard from "../components/recipeCard";
 import lasagna from "../assets/lasagna.jpeg";
 import tiramisu from "../assets/tirmasiu.jpeg";
+import carbonara from "../assets/carbonara.png";
+import chowMein from "../assets/chowMein.png";
+import kungPaoChicken from "../assets/kungPaoChicken.png";
+import pumpkinPancake from "../assets/pumpkinPancake.png";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-let name;
 
 const Dash = () => {
 	const steps1 = [
@@ -144,11 +148,35 @@ const Dash = () => {
 	const [buttonClicked, setButtonClicked] = useState(false);
 
 	const handleButtonClick1 = () => {
-		// fetchRecipes();
-		setShowStepper1(true);
-		setButtonClicked(true);
+		const fetchRecipesAndShowStepper = async () => {
+			var obj = { cuisine: "Italian" };
+		var js = JSON.stringify(obj);
+		try {
+			const response = await fetch(buildPath("api/getRecipes"), {
+				method: "POST",
+				body: js,
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+				const { recipes, error } = await response.json();
+				if (error) {
+					console.log(error);
+					return;
+				}
+				
+				// Set the recipes in state based on the fetched data
+				setRecipes(recipes);
+				setShowStepper1(true);
+				setButtonClicked(true);
+			} catch (error) {
+				console.error("Error fetching recipes:", error);
+			}
+		};
+	
+		// Call the inner async function
+		fetchRecipesAndShowStepper();
 	};
-
 	const handleBackButtonClick = () => {
 		setShowStepper1(false);
 		setShowStepper2(false);
@@ -171,41 +199,83 @@ const Dash = () => {
 	const [recipes, setRecipes] = useState([]);
 	const [error, setError] = useState(null);
 
-	const fetchRecipes = async (event) => {
-		var obj = { cuisine: "Italian" };
-		var js = JSON.stringify(obj);
-		try {
-			const response = await fetch(buildPath("api/getRecipes"), {
-				method: "POST",
-				body: js,
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
-			var res = JSON.parse(await response.text());
-			if (res.error) {
-				console.log(res.error);
-			}
-		} catch (e) {
-			setError(e.toString());
-		}
-	};
-	fetchRecipes();
+	// const fetchRecipes = async (event) => {
+	// 	var obj = { cuisine: "Italian" };
+	// 	var js = JSON.stringify(obj);
+	// 	try {
+	// 		const response = await fetch(buildPath("api/getRecipes"), {
+	// 			method: "POST",
+	// 			body: js,
+	// 			headers: {
+	// 				"Content-Type": "application/json",
+	// 			},
+	// 		});
+	// 		var res = JSON.parse(await response.text());
+	// 		if (res.error) {
+	// 			console.log(res.error);
+	// 		}
+	// 	} catch (e) {
+	// 		setError(e.toString());
+	// 	}
+	// };
+	// fetchRecipes();
 
 	// Define image based on cuisine
 	let imageSrc;
+	let recipeInfo;
+	let recipeImage;
 	switch (cuisine) {
 		case "italian":
 			imageSrc = tower2;
+			recipeInfo = {
+				recipe1: "Tiramisu Recipe",
+				recipe2: "Carbonara Recipe",
+				recipe3: "Lasagna Recipe"
+			};
+			recipeImage = {
+				recipe1: tiramisu,
+				recipe2: carbonara,
+				recipe3: lasagna
+			};
 			break;
 		case "mexican":
 			imageSrc = mexicanImage;
+			recipeInfo = {
+				recipe1: "Mexican Recipe 1",
+				recipe2: "Mexican Recipe 2",
+				recipe3: "Mexican Recipe 3"
+			};
+			recipeImage = {
+				recipe1: tiramisu,
+				recipe2: carbonara,
+				recipe3: lasagna
+			};
 			break;
 		case "chinese":
-			imageSrc = greek;
+			imageSrc = china;
+			recipeInfo = {
+				recipe1: "Chinese Recipe 1",
+				recipe2: "Chinese Recipe 2",
+				recipe3: "Chinese Recipe 3"
+			};
+			recipeImage = {
+				recipe1: pumpkinPancake,
+				recipe2: chowMein,
+				recipe3: kungPaoChicken
+			};
 			break;
-		case "french":
+		case "greek":
 			imageSrc = greek;
+			recipeInfo = {
+				recipe1: "Greek Recipe 1",
+				recipe2: "Greek Recipe 2",
+				recipe3: "Greek Recipe 3"
+			};
+			recipeImage = {
+				recipe1: tiramisu,
+				recipe2: carbonara,
+				recipe3: lasagna
+			};
 			break;
 	}
 
@@ -230,21 +300,21 @@ const Dash = () => {
 			{!buttonClicked && (
 				<div className="absolute top-40 left-0 right-0 flex justify-center items-center">
 					<RecipeCard
-						imageUrl={tiramisu}
+						imageUrl={recipeImage.recipe1}
 						recipe="Recipe 1"
-						buttonText="Tiramisu Recipe"
+						buttonText={recipeInfo.recipe1}
 						onClick={handleButtonClick1}
 					/>
 					<RecipeCard
-						imageUrl={lasagna}
+						imageUrl={recipeImage.recipe2}
 						recipe="Recipe 2"
-						buttonText="Carbonara Recipe"
+						buttonText={recipeInfo.recipe2}
 						onClick={handleButtonClick1}
 					/>
 					<RecipeCard
-						imageUrl={lasagna}
+						imageUrl={recipeImage.recipe3}
 						recipe="Recipe 3"
-						buttonText="Lasagna Recipe"
+						buttonText={recipeInfo.recipe3}
 						onClick={handleButtonClick1}
 					/>
 				</div>

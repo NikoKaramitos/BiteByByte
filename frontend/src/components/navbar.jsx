@@ -33,7 +33,7 @@ const Navbar = () => {
                     <span className="self-center">
                     <span className={`text-xl font-semibold whitespace-nowrap ${isItalian() || isMexican() ? 'text-green-500 shadow-outline' : (isFrench() ? 'text-blue-500 shadow-outline' : (isChinese() ? 'text-red-500 shadow-outline' : 'text-black'))}`}>Bite</span>
                     <span className={`text-xl font-semibold whitespace-nowrap ${isItalian() || isMexican() ? 'text-white shadow-outline' : (isFrench() ? 'text-white shadow-outline' : (isChinese() ? 'text-yellow-300 shadow-outline' : 'text-black'))}`}>By</span>
-                    <span className={`text-xl font-semibold whitespace-nowrap ${isItalian() || isMexican() ? 'text-red-500 shadow-outline' : (isFrench() ? 'text-red-500 shadow-outline' : (isChinese() ? 'text-red-500 shadow-outline' : 'text-black'))}`}>Byte</span>
+                    <span className={`text-xl font-semibold whitespace-nowrap ${isItalian() || isMexican() ? 'text-red-500 shadow-outline' : (isFrench() ? 'text-blue-500 shadow-outline' : (isChinese() ? 'text-red-500 shadow-outline' : 'text-black'))}`}>Byte</span>
                 </span>
 
                 </a>
