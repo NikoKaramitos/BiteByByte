@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import Navbar from "../components/navbar";
 import Footer from "../components/Footer";
 import tower2 from "../assets/tower2.webp";
@@ -13,30 +13,20 @@ import carbonara from "../assets/carbonara.png";
 import chowMein from "../assets/chowMein.png";
 import kungPaoChicken from "../assets/kungPaoChicken.png";
 import pumpkinPancake from "../assets/pumpkinPancake.png";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 const Dash = () => {
 	const steps1 = [
 		{
 			title: "Introduction",
 			content: "Introduction Content",
-			quizzes: [
+
+		},
 				{
-					question: "Question 1",
-					options: ["Option 1", "Option 2", "Option 3"],
-					answer: 1,
-				},
-				{
-					question: "Question 2",
-					options: ["Option 1", "Option 2", "Option 3"],
-					answer: 0,
-				},
-			],
+			title: "Ingredients",
 		},
 		{
 			title: "Quiz 1",
-			content: "Quiz 1 Content",
 			quizzes: [
 				{
 					question: "Question 3",
@@ -46,19 +36,10 @@ const Dash = () => {
 			],
 		},
 		{
-			title: "Ingredients",
-			content: "Ingredients Content",
-			quizzes: [
-				{
-					question: "Question 4",
-					options: ["Option 1", "Option 2", "Option 3"],
-					answer: 1,
-				},
-			],
+			title: "Instructions",
 		},
 		{
 			title: "Quiz 2",
-			content: "Quiz 1 Content",
 			quizzes: [
 				{
 					question: "Question 3",
@@ -69,7 +50,6 @@ const Dash = () => {
 		},
 		{
 			title: "Finish",
-			content: "final quiz",
 			quizzes: [
 				{
 					question: "Question 4",
@@ -80,106 +60,52 @@ const Dash = () => {
 		},
 	];
 
-	const steps2 = [
-		{
-			title: "Introduction",
-			content: "Introduction Content",
-			quizzes: [
-				{
-					question: "Question 1",
-					options: ["Option 1", "Option 2", "Option 3"],
-					answer: 1,
-				},
-				{
-					question: "Question 2",
-					options: ["Option 1", "Option 2", "Option 3"],
-					answer: 0,
-				},
-			],
-		},
-		{
-			title: "Quiz 1",
-			content: "Quiz 1 Content",
-			quizzes: [
-				{
-					question: "Question 3",
-					options: ["Option 1", "Option 2", "Option 3"],
-					answer: 2,
-				},
-			],
-		},
-		{
-			title: "Ingredients",
-			content: "Ingredients Content",
-			quizzes: [
-				{
-					question: "Question 4",
-					options: ["Option 1", "Option 2", "Option 3"],
-					answer: 1,
-				},
-			],
-		},
-		{
-			title: "Quiz 2",
-			content: "Quiz 1 Content",
-			quizzes: [
-				{
-					question: "Question 3",
-					options: ["Option 1", "Option 2", "Option 3"],
-					answer: 2,
-				},
-			],
-		},
-		{
-			title: "Finish",
-			content: "final quiz",
-			quizzes: [
-				{
-					question: "Question 4",
-					options: ["Option 1", "Option 2", "Option 3"],
-					answer: 1,
-				},
-			],
-		},
-	];
-
-	const [showStepper1, setShowStepper1] = useState(false);
-	const [showStepper2, setShowStepper2] = useState(false);
+	const [showStepper, setShowStepper] = useState(false);
+	const [ingredients, setIngredients] = useState([]);
+    const [instructions, setInstructions] = useState([]);
 	const [buttonClicked, setButtonClicked] = useState(false);
 
-	const handleButtonClick1 = () => {
+	const handleButtonClick1 = (recipeName) => { // Modify to accept recipeName parameter
 		const fetchRecipesAndShowStepper = async () => {
-			var obj = { cuisine: "Italian" };
-		var js = JSON.stringify(obj);
-		try {
-			const response = await fetch(buildPath("api/getRecipes"), {
-				method: "POST",
-				body: js,
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
-				const { recipes, error } = await response.json();
-				if (error) {
-					console.log(error);
+			const obj = { recipe: recipeName }; // Pass the recipe name to fetch
+			const js = JSON.stringify(obj);
+			try {
+				const response = await fetch(buildPath("api/recipe"), {
+					method: "POST",
+					body: js,
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+				const data = await response.json();
+				if (data.error) {
+					console.log(data.error);
 					return;
 				}
-				
-				// Set the recipes in state based on the fetched data
-				setRecipes(recipes);
-				setShowStepper1(true);
+	
+				// Extract ingredients and instructions from response data
+				const { ingredients, instructions } = data;
+
+				// Update state with fetched ingredients and instructions
+				setIngredients(ingredients);
+				setInstructions(instructions);
+
+				// Set the stepper to be shown
+				setShowStepper(true);
 				setButtonClicked(true);
+	
 			} catch (error) {
-				console.error("Error fetching recipes:", error);
+				console.error("Error fetching recipe data:", error);
 			}
 		};
 	
 		// Call the inner async function
 		fetchRecipesAndShowStepper();
 	};
+	
+	
 	const handleBackButtonClick = () => {
-		setShowStepper1(false);
-		setShowStepper2(false);
+		setShowStepper(false);
 		setButtonClicked(false);
 	};
 
@@ -199,27 +125,6 @@ const Dash = () => {
 	const [recipes, setRecipes] = useState([]);
 	const [error, setError] = useState(null);
 
-	// const fetchRecipes = async (event) => {
-	// 	var obj = { cuisine: "Italian" };
-	// 	var js = JSON.stringify(obj);
-	// 	try {
-	// 		const response = await fetch(buildPath("api/getRecipes"), {
-	// 			method: "POST",
-	// 			body: js,
-	// 			headers: {
-	// 				"Content-Type": "application/json",
-	// 			},
-	// 		});
-	// 		var res = JSON.parse(await response.text());
-	// 		if (res.error) {
-	// 			console.log(res.error);
-	// 		}
-	// 	} catch (e) {
-	// 		setError(e.toString());
-	// 	}
-	// };
-	// fetchRecipes();
-
 	// Define image based on cuisine
 	let imageSrc;
 	let recipeInfo;
@@ -228,9 +133,9 @@ const Dash = () => {
 		case "italian":
 			imageSrc = tower2;
 			recipeInfo = {
-				recipe1: "Tiramisu Recipe",
-				recipe2: "Carbonara Recipe",
-				recipe3: "Lasagna Recipe"
+				recipe1: "Tiramisu",
+				recipe2: "Carbonara",
+				recipe3: "Lasagna"
 			};
 			recipeImage = {
 				recipe1: tiramisu,
@@ -254,9 +159,9 @@ const Dash = () => {
 		case "chinese":
 			imageSrc = china;
 			recipeInfo = {
-				recipe1: "Chinese Recipe 1",
-				recipe2: "Chinese Recipe 2",
-				recipe3: "Chinese Recipe 3"
+				recipe1: "Char Siu Bao Buns",
+				recipe2: "General Tso's Chicken",
+				recipe3: "Peking Duck"
 			};
 			recipeImage = {
 				recipe1: pumpkinPancake,
@@ -283,19 +188,19 @@ const Dash = () => {
 		<div className="relative">
 			<Navbar />
 			<img className="w-full  z-0 " src={imageSrc}></img>
-			{(showStepper1 || showStepper2) && (
+			{(showStepper) && (
 				<div className="absolute z-10 top-40 left-0 w-full">
-					{showStepper1 && <CustomStepper steps={steps1} />}
-					{showStepper2 && <CustomStepper steps={steps2} />}
-					<div className="absolute top-80 left-0 right-0 text-center">
-						<button
+            {showStepper && 
+			(<CustomStepper steps={steps1} ingredients={ingredients} instructions={instructions} />)}					
+			{/* <div className="absolute top-80 left-0 right-0 text-center"> */}
+						{/* <button
 							className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
 							onClick={handleBackButtonClick}
 						>
 							Back
-						</button>
+						</button> */}
 					</div>
-				</div>
+				// </div>
 			)}
 			{!buttonClicked && (
 				<div className="absolute top-40 left-0 right-0 flex justify-center items-center">
@@ -303,19 +208,19 @@ const Dash = () => {
 						imageUrl={recipeImage.recipe1}
 						recipe="Recipe 1"
 						buttonText={recipeInfo.recipe1}
-						onClick={handleButtonClick1}
+						onClick={() => handleButtonClick1(recipeInfo.recipe1)} // Pass recipe name as parameter
 					/>
 					<RecipeCard
 						imageUrl={recipeImage.recipe2}
 						recipe="Recipe 2"
 						buttonText={recipeInfo.recipe2}
-						onClick={handleButtonClick1}
+						onClick={() => handleButtonClick1(recipeInfo.recipe2)} // Pass recipe name as parameter
 					/>
 					<RecipeCard
 						imageUrl={recipeImage.recipe3}
 						recipe="Recipe 3"
 						buttonText={recipeInfo.recipe3}
-						onClick={handleButtonClick1}
+						onClick={() => handleButtonClick1(recipeInfo.recipe3)} // Pass recipe name as parameter
 					/>
 				</div>
 			)}

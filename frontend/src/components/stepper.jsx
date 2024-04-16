@@ -4,8 +4,10 @@ import HorizontalStepper from 'react-stepper-horizontal';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material'; // Import arrow icons
 import '../App.css';
 
-const CustomStepper = ({ steps }) => {
+const CustomStepper = ({ steps, ingredients, instructions }) => {
   const [activeStep, setActiveStep] = useState(0);
+  const [crossedOffInstructions, setCrossedOffInstructions] = useState(Array(instructions.length).fill(false));
+
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -13,6 +15,12 @@ const CustomStepper = ({ steps }) => {
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
+  };
+
+  const handleInstructionClick = (index) => {
+    const newCrossedOffInstructions = [...crossedOffInstructions];
+    newCrossedOffInstructions[index] = !newCrossedOffInstructions[index];
+    setCrossedOffInstructions(newCrossedOffInstructions);
   };
   
   const renderContent = () => {
@@ -22,11 +30,55 @@ const CustomStepper = ({ steps }) => {
           <Typography variant="body1" color="white" style={{ fontFamily: 'Press Start 2P' }}>
             {steps[activeStep].content}
           </Typography>
+          {steps[activeStep].title === "Ingredients" && (
+            <div style={{ marginTop: '16px' }}>
+              <h3 style={{ color:"white" }}>
+                Ingredients:
+              </h3>
+              <ul style={{ paddingLeft: '20px', color:'white'}}>
+                {ingredients.map((ingredient, index) => (
+                  <li 
+                    key={index} 
+                    style={{ marginBottom: '8px', cursor: 'pointer' }} // Add cursor pointer
+                    onMouseOver={(e) => { e.target.style.textDecoration = 'underline'; }} // Add hover effect
+                    onMouseOut={(e) => { e.target.style.textDecoration = 'none'; }} // Remove underline on hover out
+                  >
+                    {ingredient}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+           {steps[activeStep].title === "Instructions" && (
+            <div style={{ marginTop: '16px' }}>
+              <h3 style={{ color:"white" }}>
+                Instructions:
+              </h3>
+              <ol style={{ paddingLeft: '20px', color:'white'}}>
+                {instructions.map((instruction, index) => (
+                  <li 
+                    key={index} 
+                    style={{ 
+                      marginBottom: '8px', 
+                      cursor: 'pointer', 
+                      textDecoration: crossedOffInstructions[index] ? 'line-through' : 'none',
+                      textDecorationColor: crossedOffInstructions[index] ? '#D2122E' : 'initial',
+                      textDecorationThickness: crossedOffInstructions[index] ? '4px' : 'auto' // Adjust the thickness of the line-through
+
+                    }}
+                    onClick={() => handleInstructionClick(index)}
+                  >
+                    {`${index + 1}. ${instruction}`}
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
           <div style={{ marginTop: '60px', marginBottom: '16px' }}>
             <button
               disabled={activeStep === 0}
               onClick={handleBack}
-              className="back-button" // Added class for next button
+              className="back-button"
               style={{
                 marginRight: '8px',
                 opacity: activeStep === 0 ? 0.5 : 1,
@@ -34,17 +86,17 @@ const CustomStepper = ({ steps }) => {
               }}
             >
               <KeyboardArrowLeft /> Back
-            </button> 
+            </button>
             <button
               disabled={activeStep === steps.length - 1}
               onClick={handleNext}
-              className="next-button" // Added class for next button
+              className="next-button"
               style={{
                 opacity: activeStep === steps.length - 1 ? 0.5 : 1,
                 cursor: activeStep === steps.length - 1 ? 'not-allowed' : 'pointer'
               }}
             >
-            Next <KeyboardArrowRight />
+              Next <KeyboardArrowRight />
             </button>
           </div>
         </>
@@ -52,9 +104,10 @@ const CustomStepper = ({ steps }) => {
     }
     return null;
   };
+  
 
   return (
-    <div className="relative bg-black bg-opacity-60 h-200 rounded-lg ml-10 mr-10">
+    <div className="relative bg-black bg-opacity-70 h-200 rounded-lg ml-10 mr-10">
       <div className="w-full px-8 py-4">
         <div className="bg-black bg-opacity-60 grid h-24 m-0 rounded-lg place-items-center">
           <div className="w-full px-20 pt-4 pb-8">
