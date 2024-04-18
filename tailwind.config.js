@@ -6,6 +6,7 @@ module.exports = {
   },
   colors: {
     'customGreen': '#7DCFB6',
+    'customProfileSettingsBearBackground': '6da999'
   },
   plugins: [],
 }

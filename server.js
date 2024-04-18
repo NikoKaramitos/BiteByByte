@@ -388,9 +388,8 @@ app.post("/api/loadUser", async (req, res, next) => {
 
 	try {
 		if(user) {
-			const {_id, firstName, lastName, email} = user;
-			res.json({_id, firstName, lastName, email});
-			res.status(200).json("User found.");
+			const {_id, FirstName: FirstName, LastName: LastName, Email: Email, Password: Password} = user
+			res.status(200).json({_id, FirstName, LastName, Email, Password});
 		}
 		else {
 			res.status(404).json({message: "User was not found"});
