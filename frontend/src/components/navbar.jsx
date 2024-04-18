@@ -42,9 +42,16 @@ const Navbar = () => {
                         <li className='hover:text-emerald-400'>
                             <NavLink to="/">Home</NavLink>
                         </li>
+                        {/*only show if they are logged in*/ }
+                        {auth ? (
+                        <li className='hover:text-emerald-400'>
+                            <NavLink to="/cuisines">Cuisines</NavLink>
+                        </li>
+                        ) : null}
                         <li className='hover:text-emerald-400'>
                             <NavLink to="about">About</NavLink>
                         </li>
+                        {/*only show if they are logged in*/ }
                         {auth ? (
                 <>
                     <li className="relative hover:text-emerald-400">

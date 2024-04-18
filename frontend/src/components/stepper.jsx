@@ -68,7 +68,11 @@ const CustomStepper = ({ steps, ingredients, instructions }) => {
                     }}
                     onClick={() => handleInstructionClick(index)}
                   >
-                    {`${index + 1}. ${instruction}`}
+                  <span>
+                    <strong>Step {index + 1}:</strong> {/* Add "Step X:" */}
+                    <br />
+                    {instruction} {/* Instruction on a new line */}
+                  </span>
                   </li>
                 ))}
               </ol>
