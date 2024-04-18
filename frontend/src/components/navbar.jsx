@@ -16,7 +16,7 @@ const Navbar = () => {
     const location = useLocation();
     const isItalian = () => location.pathname === '/dash/italian';
     const isMexican = () => location.pathname === '/dash/mexican';
-    const isFrench = () => location.pathname === '/dash/french';
+    const isGreek = () => location.pathname === '/dash/greek';
     const isChinese = () => location.pathname === '/dash/chinese';
     const auth = localStorage.getItem('user_data');
     const navigate = useNavigate();
@@ -31,9 +31,9 @@ const Navbar = () => {
                 <a href="https://github.com/NikoKaramitos/BiteByByte" className="flex items-center space-x-3 rtl:space-x-reverse">
                     <img src={bear} className="h-14" alt="BiteByByteLogo" />
                     <span className="self-center">
-                    <span className={`text-xl font-semibold whitespace-nowrap ${isItalian() || isMexican() ? 'text-green-500 shadow-outline' : (isFrench() ? 'text-blue-500 shadow-outline' : (isChinese() ? 'text-red-500 shadow-outline' : 'text-black'))}`}>Bite</span>
-                    <span className={`text-xl font-semibold whitespace-nowrap ${isItalian() || isMexican() ? 'text-white shadow-outline' : (isFrench() ? 'text-white shadow-outline' : (isChinese() ? 'text-yellow-300 shadow-outline' : 'text-black'))}`}>By</span>
-                    <span className={`text-xl font-semibold whitespace-nowrap ${isItalian() || isMexican() ? 'text-red-500 shadow-outline' : (isFrench() ? 'text-blue-500 shadow-outline' : (isChinese() ? 'text-red-500 shadow-outline' : 'text-black'))}`}>Byte</span>
+                    <span className={`text-xl font-semibold whitespace-nowrap ${isItalian() || isMexican() ? 'text-green-500 shadow-outline' : (isGreek() ? 'text-blue-500 shadow-outline' : (isChinese() ? 'text-red-500 shadow-outline' : 'text-black'))}`}>Bite</span>
+                    <span className={`text-xl font-semibold whitespace-nowrap ${isItalian() || isMexican() ? 'text-white shadow-outline' : (isGreek() ? 'text-white shadow-outline' : (isChinese() ? 'text-yellow-300 shadow-outline' : 'text-black'))}`}>By</span>
+                    <span className={`text-xl font-semibold whitespace-nowrap ${isItalian() || isMexican() ? 'text-red-500 shadow-outline' : (isGreek() ? 'text-blue-500 shadow-outline' : (isChinese() ? 'text-red-500 shadow-outline' : 'text-black'))}`}>Byte</span>
                 </span>
 
                 </a>
