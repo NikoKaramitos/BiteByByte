@@ -47,9 +47,9 @@ const Navbar = () => {
                         </li>
                         {auth ? (
                 <>
-                    <li className="relative">
+                    <li className="relative hover:text-emerald-400">
                         <button onClick={handleToggle} className="focus:outline-none">
-                            <CgProfile style={{ fontSize: '28px' }} />
+                            <CgProfile style={{ fontSize: '30px' }} />
                         </button>
                         {isOpen && (
                             <ul className="absolute top-full left-0 bg-white border border-gray-200 rounded shadow-md mt-1">
