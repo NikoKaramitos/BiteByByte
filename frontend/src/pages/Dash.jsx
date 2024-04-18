@@ -10,9 +10,9 @@ import RecipeCard from "../components/recipeCard";
 import lasagna from "../assets/lasagna.jpeg";
 import tiramisu from "../assets/tirmasiu.jpeg";
 import carbonara from "../assets/carbonara.png";
-import chowMein from "../assets/chowMein.png";
-import kungPaoChicken from "../assets/kungPaoChicken.png";
-import pumpkinPancake from "../assets/pumpkinPancake.png";
+import baoBuns from "../assets/baoBuns.png";
+import pekingDuck from "../assets/pekingDuck.png";
+import tsoChicken from "../assets/tsoChicken.png";
 import {useNavigate, useParams} from "react-router-dom";
 
 const Dash = () => {
@@ -164,9 +164,9 @@ const Dash = () => {
 				recipe3: "Peking Duck"
 			};
 			recipeImage = {
-				recipe1: pumpkinPancake,
-				recipe2: chowMein,
-				recipe3: kungPaoChicken
+				recipe1: baoBuns,
+				recipe2: tsoChicken,
+				recipe3: pekingDuck
 			};
 			break;
 		case "greek":
