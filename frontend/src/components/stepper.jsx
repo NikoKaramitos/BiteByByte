@@ -27,26 +27,24 @@ const CustomStepper = ({ steps, ingredients, instructions }) => {
     if (steps[activeStep]) {
       return (
         <>
-          <Typography variant="body1" color="white" style={{ fontFamily: 'Press Start 2P' }}>
+          <h3 style={{ color: 'white', fontFamily: 'Press Start 2P' }}>
             {steps[activeStep].content}
-          </Typography>
+          </h3>
           {steps[activeStep].title === "Ingredients" && (
             <div style={{ marginTop: '16px' }}>
-              <h3 style={{ color:"white" }}>
-                Ingredients:
-              </h3>
-              <ul style={{ paddingLeft: '20px', color:'white'}}>
-                {ingredients.map((ingredient, index) => (
-                  <li 
-                    key={index} 
-                    style={{ marginBottom: '8px', cursor: 'pointer' }} // Add cursor pointer
-                    onMouseOver={(e) => { e.target.style.textDecoration = 'underline'; }} // Add hover effect
-                    onMouseOut={(e) => { e.target.style.textDecoration = 'none'; }} // Remove underline on hover out
-                  >
+            <h3 style={{ color:"white" }}>
+              Ingredients:
+            </h3>
+            <ul style={{ paddingLeft: '20px', color:'white'}}>
+              {ingredients.map((ingredient, index) => (
+                <li key={index} style={{ marginBottom: '8px', cursor: 'pointer' }}>
+                  <input type="checkbox" id={`ingredient-${index}`} name={`ingredient-${index}`} />
+                  <label htmlFor={`ingredient-${index}`} style={{ marginLeft: '8px', userSelect: 'none' }}>
                     {ingredient}
-                  </li>
-                ))}
-              </ul>
+                  </label>
+                </li>
+              ))}
+            </ul>
             </div>
           )}
            {steps[activeStep].title === "Instructions" && (
@@ -64,13 +62,11 @@ const CustomStepper = ({ steps, ingredients, instructions }) => {
                       textDecoration: crossedOffInstructions[index] ? 'line-through' : 'none',
                       textDecorationColor: crossedOffInstructions[index] ? '#D2122E' : 'initial',
                       textDecorationThickness: crossedOffInstructions[index] ? '4px' : 'auto' // Adjust the thickness of the line-through
-
                     }}
                     onClick={() => handleInstructionClick(index)}
                   >
                   <span>
                     <strong>Step {index + 1}:</strong> {/* Add "Step X:" */}
-                    <br />
                     {instruction} {/* Instruction on a new line */}
                   </span>
                   </li>

@@ -2,7 +2,7 @@ import React, { useState} from "react";
 import Navbar from "../components/navbar";
 import Footer from "../components/Footer";
 import tower2 from "../assets/tower2.webp";
-import china from "../assets/chineseImage.png";
+import china from "../assets/china.png";
 import greek from "../assets/greek2.png";
 import mexicanImage from "../assets/mexicanImage.webp";
 import CustomStepper from "../components/stepper";
@@ -16,16 +16,51 @@ import tsoChicken from "../assets/tsoChicken.png";
 import {useNavigate, useParams} from "react-router-dom";
 
 const Dash = () => {
+	const app_name = "bitebybyte-9e423411050b";
+	const { cuisine } = useParams();
+	const [recipes, setRecipes] = useState([]);
+	const [error, setError] = useState(null);
 	const [showStepper, setShowStepper] = useState(false);
 	const [ingredients, setIngredients] = useState([]);
     const [instructions, setInstructions] = useState([]);
 	const [buttonClicked, setButtonClicked] = useState(false);
+	const [selectedRecipeName, setSelectedRecipeName] = useState(null); // Define setSelectedRecipeName state
+
+	// Function to generate intro content based on cuisine and selected recipe
+	const generateIntroContent = (cuisine, recipeName) => {
+        switch (cuisine) {
+            case "italian":
+                switch (recipeName) {
+                    case "Tiramisu":
+                        return "Tiramisu, Italy's treasured dessert, means 'pick me up,' hinting at its uplifting flavors. In the 1960s, a Venetian chef blended coffee-dipped ladyfingers with mascarpone and cocoa, creating a creamy delight. Traditionally served in a round shape, it symbolizes a full moon's promise of new beginnings and shared joy.";
+                    case "Carbonara":
+                        return "Carbonara, a Roman culinary icon, marries eggs, Pecorino Romano, guanciale, and pepper with pasta for a dish of simple elegance. Folklore suggests it fueled coal workers, hence 'carbonara.' Others tie it to post-WWII when American soldiers mixed bacon and eggs with pasta. Today, it's a global comfort food.";
+                    case "Lasagna":
+                        return "Lasagna, tracing back to ancient Greece, was perfected in Italy’s Emilia-Romagna. Its layers of pasta, ragù, béchamel, and cheese embody tradition. Regional twists vary, but its essence—warmth and celebration—remains universal. Lasagna is more than a meal; it's a symbol of heritage and familial bonds.";
+                    default:
+                        return "Default intro content for Italian cuisine";
+                }
+				case "chinese":
+					switch (recipeName) {
+						case "Char Siu Bao Buns":
+							return "Intro content for Char Siu Bao Buns";
+						case "General Tso's Chicken":
+							return "Intro content for General Tso's Chicken";
+						case "Peking Duck":
+							return "Intro content for Peking Duck";
+						default:
+							return "Default intro content for Italian cuisine";
+					}
+            default:
+                return "Default intro content for unspecified cuisine";
+        }
+    };
 	
+
 	const steps1 = [
 		{
-			title: "Introduction",
-			content: "Introduction Content",
-
+			title: "Intro",
+            content: generateIntroContent(cuisine, selectedRecipeName),
 		},
 				{
 			title: "Ingredients",
@@ -90,6 +125,10 @@ const Dash = () => {
 				setIngredients(ingredients);
 				setInstructions(instructions);
 
+
+                // Update state with the selected recipe name
+                setSelectedRecipeName(recipeName);
+
 				// Set the stepper to be shown
 				setShowStepper(true);
 				setButtonClicked(true);
@@ -102,18 +141,6 @@ const Dash = () => {
 		// Call the inner async function
 		fetchRecipesAndShowStepper();
 	};
-	
-	
-	
-	const handleBackButtonClick = () => {
-		setShowStepper(false);
-		setButtonClicked(false);
-	};
-
-	const { cuisine } = useParams();
-	const navigate = useNavigate();
-
-	const app_name = "bitebybyte-9e423411050b";
 
 	function buildPath(route) {
 		if (process.env.NODE_ENV === "production") {
@@ -123,8 +150,6 @@ const Dash = () => {
 		}
 	}
 
-	const [recipes, setRecipes] = useState([]);
-	const [error, setError] = useState(null);
 
 	// Define image based on cuisine
 	let imageSrc;
