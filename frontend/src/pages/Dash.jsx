@@ -16,6 +16,11 @@ import tsoChicken from "../assets/tsoChicken.png";
 import {useNavigate, useParams} from "react-router-dom";
 
 const Dash = () => {
+	const [showStepper, setShowStepper] = useState(false);
+	const [ingredients, setIngredients] = useState([]);
+    const [instructions, setInstructions] = useState([]);
+	const [buttonClicked, setButtonClicked] = useState(false);
+	
 	const steps1 = [
 		{
 			title: "Introduction",
@@ -60,11 +65,6 @@ const Dash = () => {
 		},
 	];
 
-	const [showStepper, setShowStepper] = useState(false);
-	const [ingredients, setIngredients] = useState([]);
-    const [instructions, setInstructions] = useState([]);
-	const [buttonClicked, setButtonClicked] = useState(false);
-
 	const handleButtonClick1 = (recipeName) => { // Modify to accept recipeName parameter
 		const fetchRecipesAndShowStepper = async () => {
 			const obj = { recipe: recipeName }; // Pass the recipe name to fetch
@@ -102,6 +102,7 @@ const Dash = () => {
 		// Call the inner async function
 		fetchRecipesAndShowStepper();
 	};
+	
 	
 	
 	const handleBackButtonClick = () => {
