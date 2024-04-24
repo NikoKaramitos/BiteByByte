@@ -399,3 +399,24 @@ app.post("/api/loadUser", async (req, res, next) => {
 		res.status(500).json("Issue loading the user information.");
 	}
 });
+
+app.get('/api/profile-settings', async (req, res) => {
+	try {
+	  const user = await User.findById(req.query.userId); 
+	  res.json(user);
+	} catch (error) {
+	  res.status(500).json({ message: error.message });
+	}
+  });
+  
+  // API endpoint to update user data
+  app.put('/api/update-profile-settings', async (req, res) => {
+	try {
+	  const { userId, ...updateData } = req.body;
+	  const updatedUser = await User.findByIdAndUpdate(userId, updateData, { new: true });
+	  res.json(updatedUser);
+	} catch (error) {
+	  res.status(500).json({ message: error.message });
+	}
+  });
+  
