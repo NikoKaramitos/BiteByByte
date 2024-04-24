@@ -1,25 +1,41 @@
-import React from 'react';
+import React from "react";
 import lasagna from "../assets/lasagna.jpeg";
-import tirmasiu from "../assets/tirmasiu.jpeg";
+import tiramisu from "../assets/tirmasiu.jpeg";
+import carbonara from "../assets/carbonara.png";
+import baoBuns from "../assets/baoBuns.png";
+import pekingDuck from "../assets/pekingDuck.png";
+import tsoChicken from "../assets/tsoChicken.png";
+import "../styles/cookBookCard.css";
 
+const CookBookCard = ({ text, buttonText, onClick }) => {
+  var imageUrl = "";
 
+  if (text === "Lasagna") {
+    imageUrl = lasagna;
+  } else if (text === "Tiramisu") {
+    imageUrl = tiramisu;
+  } else if (text === "Carbonara") {
+    imageUrl = carbonara;
+  } else if (text === "Char Siu Bao Buns") {
+    imageUrl = baoBuns;
+  } else if (text === "General Tso's Chicken") {
+    imageUrl = tsoChicken;
+  } else if (text === "Peking Duck") {
+    imageUrl = pekingDuck;
+  }
 
-const CookBookCard = ({ imageUrl, buttonText, onClick }) => {
-
-    
-    
-    return (
-        <div className="h-96 rounded-sm overflow-hidden outline outline-black outline-4 shadow-lg border bg-white">
-            <img className="w-full" src={imageUrl} alt="Recipe" />
-            
-            <div className="m-2 text-sm">
-                <button className="bg-white hover:bg-gray-100 text-black border-gray-400 rounded shadow" onClick={onClick}>
-                    {buttonText}
-                </button>
-            </div>
-        </div>
-    );
+  return (
+    <div className="card">
+      <div className="card_image">
+        <img src={imageUrl} alt="Recipe" />
+      </div>
+      <div className="card_content">
+        <h2>{text}</h2>
+        <div className="card_title">{buttonText}</div>
+        <div className="card_text">{/* Content for the card */}</div>
+      </div>
+    </div>
+  );
 };
 
 export default CookBookCard;
-
