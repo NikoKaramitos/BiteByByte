@@ -18,13 +18,13 @@ import {useNavigate, useParams} from "react-router-dom";
 const Dash = () => {
 	const app_name = "bitebybyte-9e423411050b";
 	const { cuisine } = useParams();
-	const [recipes, setRecipes] = useState([]);
-	const [error, setError] = useState(null);
 	const [showStepper, setShowStepper] = useState(false);
 	const [ingredients, setIngredients] = useState([]);
     const [instructions, setInstructions] = useState([]);
 	const [buttonClicked, setButtonClicked] = useState(false);
 	const [selectedRecipeName, setSelectedRecipeName] = useState(null); // Define setSelectedRecipeName state
+	const [questions, setQuestions] = useState([]); // State to store fetched questions
+
 
 	// Function to generate intro content based on cuisine and selected recipe
 	const generateIntroContent = (cuisine, recipeName) => {
@@ -100,44 +100,108 @@ const Dash = () => {
 		},
 	];
 
-	const handleButtonClick1 = (recipeName) => { // Modify to accept recipeName parameter
-		const fetchRecipesAndShowStepper = async () => {
-			const obj = { recipe: recipeName }; // Pass the recipe name to fetch
+	// Define the updateUserLevel function to update the user's level
+	const updateUserLevel = async (userId, xp) => {
+		try {
+		  const response = await fetch(buildPath("api/setLevel"), {
+			method: "POST",
+			body: JSON.stringify({ userId, xp }),
+			headers: {
+			  "Content-Type": "application/json",
+			},
+		  });
+	
+		  const data = await response.json();
+	
+		  if (data.error) {
+			console.error("Error updating user level:", data.error);
+			// Handle error appropriately, e.g., display an error message to the user
+		  } else {
+			// Optionally, update any state or display a message to the user
+			console.log("User level updated successfully:", data.newLevel);
+		  }
+		} catch (error) {
+		  console.error("Error updating user level:", error);
+		  // Handle error appropriately, e.g., display an error message to the user
+		}
+	  };
+
+	const fetchQuestions = async (recipeName, level) => {
+		try {
+			// Create an object containing the recipe name and level
+			const obj = { recipe: recipeName, level: level };
+			// Convert the object to a JSON string
 			const js = JSON.stringify(obj);
+			
+			// Fetch questions for the selected recipe and level
+			const questionsResponse = await fetch(buildPath("api/getQuestions"), {
+				method: "POST",
+				body: js,
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+			const questionsData = await questionsResponse.json();
+			if (questionsData.error) {
+				console.log(questionsData.error);
+				return null; // Handle error appropriately
+			}
+	
+			// Extract questions from the response
+			const { questions } = questionsData;
+	
+			return questions;
+		} catch (error) {
+			console.error("Error fetching questions:", error);
+			return null; // Handle error appropriately
+		}
+	};
+	
+
+	const handleButtonClick1 = (recipeName, level) => { // Modify to accept recipeName parameter
+		const fetchRecipesAndShowStepper = async () => {
 			try {
-				const response = await fetch(buildPath("api/recipe"), {
+				// Create an object containing the recipe name and level
+				const obj = { recipe: recipeName, level: level };
+				// Convert the object to a JSON string
+				const js = JSON.stringify(obj);
+				
+				// Fetch recipes for the selected recipe name
+				const recipesResponse = await fetch(buildPath("api/recipe"), {
 					method: "POST",
 					body: js,
 					headers: {
 						"Content-Type": "application/json",
 					},
 				});
-				const data = await response.json();
-				if (data.error) {
-					console.log(data.error);
+				const recipesData = await recipesResponse.json();
+				if (recipesData.error) {
+					console.log(recipesData.error);
 					return;
 				}
-	
+		
 				// Extract ingredients and instructions from response data
-				const { ingredients, instructions } = data;
-
-				// Update state with fetched ingredients and instructions
+				const { ingredients, instructions } = recipesData;
+		
+				// Fetch questions for the selected recipe and level
+				const questions = await fetchQuestions(recipeName, level);
+		
+				// Update state with fetched ingredients, instructions, and questions
 				setIngredients(ingredients);
 				setInstructions(instructions);
-
-
-                // Update state with the selected recipe name
-                setSelectedRecipeName(recipeName);
-
+				setQuestions(questions);
+		
+				// Update state with the selected recipe name
+				setSelectedRecipeName(recipeName);
+		
 				// Set the stepper to be shown
 				setShowStepper(true);
 				setButtonClicked(true);
-	
 			} catch (error) {
-				console.error("Error fetching recipe data:", error);
+				console.error("Error fetching data:", error);
 			}
 		};
-	
+		
 		// Call the inner async function
 		fetchRecipesAndShowStepper();
 	};
@@ -217,7 +281,7 @@ const Dash = () => {
 			{(showStepper) && (
 				<div className="absolute z-10 top-40 left-0 w-full">
             {showStepper && 
-			(<CustomStepper steps={steps1} ingredients={ingredients} instructions={instructions} />)}					
+			(<CustomStepper steps={steps1} ingredients={ingredients} instructions={instructions} questions={questions} />)}					
 			{/* <div className="absolute top-80 left-0 right-0 text-center"> */}
 						{/* <button
 							className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

@@ -4,7 +4,7 @@ import HorizontalStepper from 'react-stepper-horizontal';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material'; // Import arrow icons
 import '../App.css';
 
-const CustomStepper = ({ steps, ingredients, instructions }) => {
+const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [crossedOffInstructions, setCrossedOffInstructions] = useState(Array(instructions.length).fill(false));
 
@@ -47,6 +47,21 @@ const CustomStepper = ({ steps, ingredients, instructions }) => {
             </ul>
             </div>
           )}
+          {steps[activeStep].title === "Quiz 1" && (
+            <div style={{ marginTop: '16px', color: 'white' }}>
+              <h3>Quiz 1:</h3>
+              {questions.map((question, index) => (
+                <div key={index}>
+                  <p>{question.text}</p>
+                  <ul>
+                    {question.options.map((option, optionIndex) => (
+                      <li key={optionIndex}>{option}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          )}
            {steps[activeStep].title === "Instructions" && (
             <div style={{ marginTop: '16px' }}>
               <h3 style={{ color:"white" }}>
@@ -72,6 +87,21 @@ const CustomStepper = ({ steps, ingredients, instructions }) => {
                   </li>
                 ))}
               </ol>
+            </div>
+          )}
+          {steps[activeStep].title === "Quiz 2" && (
+            <div style={{ marginTop: '16px', color: 'white' }}>
+              <h3>Quiz 2:</h3>
+              {questions.map((question, index) => (
+                <div key={index}>
+                  <p>{question.text}</p>
+                  <ul>
+                    {question.options.map((option, optionIndex) => (
+                      <li key={optionIndex}>{option}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
           )}
           <div style={{ marginTop: '60px', marginBottom: '16px' }}>

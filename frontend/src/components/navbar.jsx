@@ -28,7 +28,7 @@ const Navbar = () => {
     return (
         <div className='nav navbar bg-orange-50 border-gray-200 sticky top-0'>
             <div className='max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4'>
-                <a href="https://github.com/NikoKaramitos/BiteByByte" className="flex items-center space-x-3 rtl:space-x-reverse">
+                <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
                     <img src={bear} className="h-14" alt="BiteByByteLogo" />
                     <span className="self-center">
                     <span className={`text-xl font-semibold whitespace-nowrap ${isItalian() || isMexican() ? 'text-green-500 shadow-outline' : (isGreek() ? 'text-blue-500 shadow-outline' : (isChinese() ? 'text-red-500 shadow-outline' : 'text-black'))}`}>Bite</span>
@@ -40,7 +40,7 @@ const Navbar = () => {
                 <div className="hidden w-full md:block md:w-auto" id="navbar-default">
                     <ul className="font-medium flex flex-col p-2 md:p-0 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0">
                         <li className='hover:text-emerald-400'>
-                            <NavLink to="/">Home</NavLink>
+                            <NavLink to="/dash/italian">Home</NavLink>
                         </li>
                         {/*only show if they are logged in*/ }
                         {auth ? (

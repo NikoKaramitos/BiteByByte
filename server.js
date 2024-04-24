@@ -457,6 +457,32 @@ app.post("/api/recipe", async (req, res, next) => {
 	res.status(200).json(ret);
 });
 
+app.post("/api/getQuestions", async (req, res, next) => {
+	//===========================================
+	// incoming: recipe, level
+	// outgoing: array of question objects, error
+	//===========================================
+	const { recipe, level } = req.body;
+	var error = "";
+	try {
+		const db = client.db("Users");
+		var questions = await db
+			.collection("Questions")
+			.find({ Level: level, Recipe: recipe })
+			.toArray();
+		if (questions.length == 0) {
+			error = "Could not find questions";
+			return res.status(409).json({ error: error });
+		}
+	} catch (e) {
+		error = e.toString();
+	}
+
+	var ret = { questions: questions, error: error };
+	res.status(200).json(ret);
+
+});
+
 app.post("/api/findUser", async (req, res, next) => {
 	//===========================================
 	// incoming: userId
