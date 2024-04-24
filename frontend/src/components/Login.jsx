@@ -59,8 +59,10 @@ export default function Login() {
 				if (res.verified) {
 					setMessage("");
 					if (res.CurrCuisine) {
+						// Save current cuisine using setCuisine endpoint
+						await saveCurrentCuisine(res.id, res.currCuisine);
 						// Redirect to Dash page if user has a current cuisine set
-						window.location.href = "/dash"; 
+						window.location.href = `/dash/${res.currCuisine}`;
 					} else {
 						// Redirect to select cuisine page if user hasn't set a current cuisine
 						window.location.href = "/cuisines";
@@ -76,6 +78,20 @@ export default function Login() {
 			return;
 		}
 	};
+
+	async function saveCurrentCuisine(userId, cuisine) {
+		try {
+			const response = await fetch(buildPath("api/setCuisine"), {
+				method: "POST",
+				body: JSON.stringify({ userId, cuisine }),
+				headers: { "Content-Type": "application/json" },
+			});
+			const data = await response.json();
+			// Handle response if needed
+		} catch (error) {
+			// Handle error
+		}
+	}
 	
 
 	const navigate = useNavigate();
