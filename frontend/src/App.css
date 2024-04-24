@@ -105,3 +105,17 @@
   color: #4caf50; /* Add an outline */
 }
 
+.quiz-button{
+  padding: 8px 16px;
+  background-color: transparent;
+  color: white;
+  border: 1px solid white;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 8px; /* Add margin between buttons */
+}
+
+.quiz-button:hover{
+  background-color: white;
+  color: black;
+}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CardContent, Typography } from "@mui/material";
+import { CardContent} from "@mui/material";
 import HorizontalStepper from 'react-stepper-horizontal';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material'; // Import arrow icons
 import '../App.css';
@@ -7,7 +7,52 @@ import '../App.css';
 const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [crossedOffInstructions, setCrossedOffInstructions] = useState(Array(instructions.length).fill(false));
+  const [selectedOptions, setSelectedOptions] = useState(Array(questions.length).fill(null));
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [questionNumber, setQuestionNumber] = useState(1); // Initialize question number
+  const [score, setScore] = useState(0); // Initialize score
+  const [showQuiz, setShowQuiz] = useState(true); // State to toggle between showing quiz and showing results
+  const letter = {0:"A", 1:"B", 2:"C",3:"D" };
 
+  const handleOptionSelect = (questionIndex, optionIndex) => {
+    const newSelectedOptions = [...selectedOptions];
+    newSelectedOptions[questionIndex] = optionIndex;
+    setSelectedOptions(newSelectedOptions);
+  };
+  const handleNextQuestion = () => {
+    setCurrentQuestionIndex(currentQuestionIndex + 1);
+    setQuestionNumber(questionNumber + 1); // Increment question number
+  };
+
+  const handlePreviousQuestion = () => {
+    setCurrentQuestionIndex(currentQuestionIndex - 1);
+    setQuestionNumber(questionNumber - 1); // Decrement question number
+  };
+ 
+  const calculateScore = () => {
+    let correctAnswers = 0;
+    for (let i = 0; i < questions.length; i++) {
+      console.log(`Selected: ${letter[selectedOptions[i]]}, Correct: ${questions[i].Correct}`)
+      if (letter[selectedOptions[i]] === questions[i].Correct) {
+        correctAnswers++;
+      }
+    }
+    return correctAnswers;
+  };
+
+  const handleFinishQuiz = () => {
+    const finalScore = calculateScore();
+    setScore(finalScore);
+    setShowQuiz(false); // Hide the quiz questions
+  };
+
+  const handleTryAgain = () => {
+    setShowQuiz(true); // Show the quiz questions again
+    setCurrentQuestionIndex(0); // Reset question index
+    setQuestionNumber(1); // Reset question number
+    setScore(null); // Reset score
+    setSelectedOptions(Array(questions.length).fill(null)); // Reset selected options
+  };
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -47,21 +92,82 @@ const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
             </ul>
             </div>
           )}
-          {steps[activeStep].title === "Quiz 1" && (
-            <div style={{ marginTop: '16px', color: 'white' }}>
-              <h3>Quiz 1:</h3>
-              {questions.map((question, index) => (
-                <div key={index}>
-                  <p>{question.text}</p>
-                  <ul>
-                    {question.options.map((option, optionIndex) => (
-                      <li key={optionIndex}>{option}</li>
-                    ))}
-                  </ul>
-                </div>
+        {steps[activeStep].title === "Quiz 1" && (
+        <div style={{ marginTop: '16px', color: 'white' }}>
+          {/* <h3>Quiz 1:</h3> */}
+          <div key={questions[currentQuestionIndex]._id}>
+            <h3>Question {questionNumber}: {questions[currentQuestionIndex].Question} {/* Display question number */}</h3>
+            <br/>
+            <ul>
+              {Object.entries(questions[currentQuestionIndex].Answers).map(([key, value], optionIndex) => (
+                <li
+                  key={key}
+                  onClick={() => handleOptionSelect(currentQuestionIndex, optionIndex)}
+                  style={{
+                    cursor: 'pointer',
+                    marginBottom: '8px',
+                    color: selectedOptions[currentQuestionIndex] === optionIndex ? 'green' : 'white'
+                  }}
+                >
+                <span
+                    style={{
+                      display: 'inline-block',
+                      width: '16px',
+                      height: '16px',
+                      borderRadius: '50%',
+                      border: '1px solid white',
+                      backgroundColor: selectedOptions[currentQuestionIndex] === optionIndex ? 'green' : 'transparent',
+                      marginRight: '8px',
+                    }}
+                  ></span>
+                  {value}
+                </li>
               ))}
-            </div>
-          )}
+            </ul>
+          </div>
+          <br/>
+          <div>
+            {currentQuestionIndex > 0 && (
+              <button
+                onClick={handlePreviousQuestion}
+                className="quiz-button"
+              >
+                Previous Question
+              </button>
+            )}
+            {currentQuestionIndex < questions.length - 1 ? (
+              <button
+                onClick={handleNextQuestion}
+                className="quiz-button"
+              >
+                Next Question
+              </button>
+            ) : (
+              <button
+                onClick={handleFinishQuiz}
+                className="quiz-button"
+              >
+                Finish Quiz
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+      
+      {!showQuiz && score !== null && (
+        <div style={{ marginTop: '16px', color: 'white' }}>
+          <h3>Quiz Results:</h3>
+          <br/>
+          <p>Your Score: {score} / {questions.length}</p>
+          <br/>
+          <button
+            onClick={handleTryAgain}
+            className="quiz-button"
+          >
+            Try Again
+          </button>
+        </div>
+      )}
            {steps[activeStep].title === "Instructions" && (
             <div style={{ marginTop: '16px' }}>
               <h3 style={{ color:"white" }}>

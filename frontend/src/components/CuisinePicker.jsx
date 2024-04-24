@@ -21,7 +21,18 @@ export default function CuisinePicker() {
         body: JSON.stringify({ userId, cuisine }),
         headers: { "Content-Type": "application/json" },
       });
-      const data = await response.json();
+      var res = JSON.parse(await response.text());
+      
+      if(res.error){
+        console.log("error: ", res.error)
+      }else{
+        var level = {
+					cuisine: res.currCuisine,
+          level: res.newLevel,
+				};
+				localStorage.setItem("level", JSON.stringify(level));
+      }
+      // const data = await response.json();
       // Handle response if needed
     } catch (error) {
       // Handle error

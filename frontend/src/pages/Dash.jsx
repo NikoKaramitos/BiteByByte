@@ -24,7 +24,10 @@ const Dash = () => {
 	const [buttonClicked, setButtonClicked] = useState(false);
 	const [selectedRecipeName, setSelectedRecipeName] = useState(null); // Define setSelectedRecipeName state
 	const [questions, setQuestions] = useState([]); // State to store fetched questions
-
+	var _cuisineLevel = localStorage.getItem("level");
+	var cuisineLevel = JSON.parse(_cuisineLevel);
+	var currCuisine = cuisineLevel.cuisine;
+	var currLevel = cuisineLevel.level;
 
 	// Function to generate intro content based on cuisine and selected recipe
 	const generateIntroContent = (cuisine, recipeName) => {
@@ -138,13 +141,17 @@ const Dash = () => {
 					"Content-Type": "application/json",
 				},
 			});
-			const questionsData = await questionsResponse.json();
+			var questionsData = JSON.parse(await questionsResponse.text());
+			// const questionsData = await questionsResponse.json();
 			if (questionsData.error) {
 				console.log(questionsData.error);
 				return null;
 			}
+
+			// console.log("Questions Data: ", questionsData)
 	
-			const { questions } = questionsData;
+			var { questions } = questionsData;
+			// console.log("What is this: ", questions)
 	
 			return questions;
 		} catch (error) {
@@ -157,9 +164,10 @@ const Dash = () => {
 
 	const handleButtonClick1 = (recipeName, level) => { // Modify to accept recipeName parameter
 		const fetchRecipesAndShowStepper = async () => {
+			console.log("calling the fucntion FRASS")
 			try {
 				// Create an object containing the recipe name and level
-				const obj = { recipe: recipeName, level: level };
+				const obj = { recipe: recipeName };
 				// Convert the object to a JSON string
 				const js = JSON.stringify(obj);
 				
@@ -181,7 +189,9 @@ const Dash = () => {
 				const { ingredients, instructions } = recipesData;
 		
 				// Fetch questions for the selected recipe and level
+				console.log(`Recipe: ${recipeName}, Level: ${level}`);
 				const questions = await fetchQuestions(recipeName, level);
+				console.log("Questions: ", questions)
 		
 				// Update state with fetched ingredients, instructions, and questions
 				setIngredients(ingredients);
@@ -295,19 +305,19 @@ const Dash = () => {
 						imageUrl={recipeImage.recipe1}
 						recipe="Recipe 1"
 						buttonText={recipeInfo.recipe1}
-						onClick={() => handleButtonClick1(recipeInfo.recipe1)} // Pass recipe name as parameter
+						onClick={() => handleButtonClick1(recipeInfo.recipe1, 1)} // Pass recipe name as parameter
 					/>
 					<RecipeCard
 						imageUrl={recipeImage.recipe2}
 						recipe="Recipe 2"
 						buttonText={recipeInfo.recipe2}
-						onClick={() => handleButtonClick1(recipeInfo.recipe2)} // Pass recipe name as parameter
+						onClick={() => handleButtonClick1(recipeInfo.recipe2, 2)} // Pass recipe name as parameter
 					/>
 					<RecipeCard
 						imageUrl={recipeImage.recipe3}
 						recipe="Recipe 3"
 						buttonText={recipeInfo.recipe3}
-						onClick={() => handleButtonClick1(recipeInfo.recipe3)} // Pass recipe name as parameter
+						onClick={() => handleButtonClick1(recipeInfo.recipe3, 3)} // Pass recipe name as parameter
 					/>
 				</div>
 			)}
