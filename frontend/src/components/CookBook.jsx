@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import kitchen2 from "../assets/kitchen2.png";
 import CookBookCard from "../components/cookBookCard";
+import "../styles/cookBookCard.css";
 
 const cuisines = [
   { cuisineName: "Italian" },
@@ -10,6 +11,7 @@ const cuisines = [
 ];
 
 export default function CookBook() {
+
   var _ud = localStorage.getItem("user_data");
   var ud = JSON.parse(_ud);
   var userId = ud.id;
@@ -55,7 +57,8 @@ export default function CookBook() {
         console.log(res.error);
         setMessage("No Recipes Found for " + selectedCuisine);
         setRecipes([]);
-      } else {
+      } 
+      else {
         console.log("Recipes:" + res.recipes);
         setRecipes(res.recipes); // Update recipes state with fetched recipes
         //create a cookBookCard for each recipe per cuisine
@@ -72,26 +75,29 @@ export default function CookBook() {
   }, [currentCuisineIndex]); // Dependency array to re-run effect when index changes
 
   return (
-    <div className="text-white bg-black w-screen h-screen flex justify-end">
+    <div className=" text-white bg-black w-screen h-screen flex justify-end">
       <div className="relative w-full h-screen bg-zinc-500/90">
         <img
           className="absolute w-full h-full object-cover mix-blend-overlay"
           src={kitchen2}
           alt=""
         />
+
         <div className="relative flex justify-center items-center h-full">
-          <div className="max-w-[69em] w-full max-h-[750px] h-full rounded-2xl shadow-xl border-4 border-black xl mx-auto bg-amber-100 bg-opacity-90 p-8">
+          <div className="max-w-[69em] w-full max-h-[750px] h-full rounded 2xl shadowl border-4 border-black 2xl mx-auto bg-amber-100 bg-opacity-90 p-8">
             <h1 className="text-center text-black text-lg m-3">
-              Chef's {cuisines[currentCuisineIndex].cuisineName} Cook Book
+              Chef {firstName}'s Cook Book
             </h1>
-            <div className="flex justify-between items-center mb-3">
+            <div className="flex justify-between items-center">
+              {/* "Prev" Button */}
               <button
                 id="prev"
                 type="button"
                 className="bg-gray-800 text-white rounded py-2 border-l border-gray-200 hover:bg-orange-600 hover:text-white px-3"
                 onClick={selectCuisine}
+                
               >
-                <span className="flex items-center">
+                <div className="flex items-center">
                   <svg
                     className="w-5 mr-2"
                     fill="currentColor"
@@ -104,20 +110,25 @@ export default function CookBook() {
                       clipRule="evenodd"
                     ></path>
                   </svg>
-                  Prev
-                </span>
+                  <span className="mr-2">Prev</span>
+                </div>
               </button>
-              <h2 className="text-center text-black text-lg">
+
+              {/* Heading "Name of Cuisine"*/}
+              {/* Still need to add functionlity to switch between cuisines */}
+              <h2 id="cuisine" className="text-center text-black text-lg m-3">
                 {cuisines[currentCuisineIndex].cuisineName}
               </h2>
+              {/* Next Button */}
               <button
                 id="next"
                 type="button"
                 className="bg-gray-800 text-white rounded py-2 border-l border-gray-200 hover:bg-orange-600 hover:text-white px-3"
                 onClick={selectCuisine}
+                
               >
-                <span className="flex items-center">
-                  Next
+                <div className="flex flex-row align-middle">
+                  <span className="mr-2">Next</span>
                   <svg
                     className="w-5 ml-2"
                     fill="currentColor"
@@ -130,21 +141,35 @@ export default function CookBook() {
                       clipRule="evenodd"
                     ></path>
                   </svg>
-                </span>
+                </div>
               </button>
             </div>
+
             <div className="flex justify-center gap-5 mt-8">
-              {recipes.map((recipe, index) => (
-                <div key={index} className="cursor-pointer group">
-                  <CookBookCard
-                    key={recipe}
-                    text={recipe} // Assuming your recipe object has a 'name' property
-                    buttonText="View Recipe"
-                  />
+            {recipes.map((recipe, index) => (
+              <div className="key={index} cursor-pointer group ">
+                <div className=" bg-white relative preserve-3d group-hover:my-rotate-y-180  duration-1000">
+                  <div className=" text-black backface-hidden ">
+                      {/* Example CookBookCard for each recipe */}
+                      <CookBookCard
+                      text={recipe}
+                           // Assuming your recipe object has an imageUrl
+                          buttonText="Recipe!" // Assuming your recipe object has a name
+                        />
+                      </div>
+                    
+                  </div>
+                  <div className="absolute inset-0 rounded-xl text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                    <div className="text-center text-black flex-col items-center justify-center">
+                      <h1>{}</h1>
+                      <p className="my-2 text-sm"> Ingredigents here</p>
+                      <p className="text-xs">Steps here</p>
+                    </div>
+                  </div>
                 </div>
-              ))}
+            ))}
+              
             </div>
-            {message && <p className="text-center text-red-500">{message}</p>}
           </div>
         </div>
       </div>
