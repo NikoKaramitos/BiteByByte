@@ -340,9 +340,10 @@ app.post("/api/setLevel", async (req, res, next) => {
 	let newLevel;
 	let currCuisine;
 	let levels;
+	var user;
 	try {
 		const db = client.db("Users");
-		const user = await db
+		user = await db
 			.collection("users")
 			.findOne({ _id: new ObjectId(userId) });
 
@@ -377,6 +378,7 @@ app.post("/api/setLevel", async (req, res, next) => {
 	var ret = {
 		currCuisine: currCuisine,
 		newLevel: newLevel,
+		user: user,
 		error: error,
 	};
 	res.status(200).json(ret);
