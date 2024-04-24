@@ -39,7 +39,10 @@ export default function Login() {
 			});
 	
 			var res = JSON.parse(await response.text());
-	
+
+			//check cuisine
+			console.log("Current Cuisine:", res.CurrCuisine);
+
 			if (res.error === "Username not found") {
 				setMessage("Username not found. Create an account now!");
 				return;
@@ -52,17 +55,19 @@ export default function Login() {
 					firstName: res.firstName,
 					lastName: res.lastName,
 					id: res.id,
-					currCuisine: res.currCuisine,
+					currCuisine: res.CurrCuisine,
 				};
 				localStorage.setItem("user_data", JSON.stringify(user));
 				
 				if (res.verified) {
+
 					setMessage("");
 					if (res.CurrCuisine) {
 						// Save current cuisine using setCuisine endpoint
-						await saveCurrentCuisine(res.id, res.currCuisine);
+						//await saveCurrentCuisine(res.id, res.currCuisine);
+
 						// Redirect to Dash page if user has a current cuisine set
-						window.location.href = `/dash/${res.currCuisine}`;
+						window.location.href = `/dash/${res.CurrCuisine}`;
 					} else {
 						// Redirect to select cuisine page if user hasn't set a current cuisine
 						window.location.href = "/cuisines";

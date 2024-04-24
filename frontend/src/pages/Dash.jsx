@@ -29,7 +29,7 @@ const Dash = () => {
 	// Function to generate intro content based on cuisine and selected recipe
 	const generateIntroContent = (cuisine, recipeName) => {
         switch (cuisine) {
-            case "italian":
+            case "Italian":
                 switch (recipeName) {
                     case "Tiramisu":
                         return "Tiramisu, Italy's treasured dessert, means 'pick me up,' hinting at its uplifting flavors. In the 1960s, a Venetian chef blended coffee-dipped ladyfingers with mascarpone and cocoa, creating a creamy delight. Traditionally served in a round shape, it symbolizes a full moon's promise of new beginnings and shared joy.";
@@ -40,7 +40,7 @@ const Dash = () => {
                     default:
                         return "Default intro content for Italian cuisine";
                 }
-				case "chinese":
+				case "Chinese":
 					switch (recipeName) {
 						case "Char Siu Bao Buns":
 							return "Intro content for Char Siu Bao Buns";
@@ -220,7 +220,7 @@ const Dash = () => {
 	let recipeInfo;
 	let recipeImage;
 	switch (cuisine) {
-		case "italian":
+		case "Italian":
 			imageSrc = tower2;
 			recipeInfo = {
 				recipe1: "Tiramisu",
@@ -233,7 +233,7 @@ const Dash = () => {
 				recipe3: lasagna
 			};
 			break;
-		case "mexican":
+		case "Mexican":
 			imageSrc = mexicanImage;
 			recipeInfo = {
 				recipe1: "Mexican Recipe 1",
@@ -246,7 +246,7 @@ const Dash = () => {
 				recipe3: lasagna
 			};
 			break;
-		case "chinese":
+		case "Chinese":
 			imageSrc = china;
 			recipeInfo = {
 				recipe1: "Char Siu Bao Buns",
@@ -259,7 +259,7 @@ const Dash = () => {
 				recipe3: pekingDuck
 			};
 			break;
-		case "greek":
+		case "Greek":
 			imageSrc = greek;
 			recipeInfo = {
 				recipe1: "Greek Recipe 1",
