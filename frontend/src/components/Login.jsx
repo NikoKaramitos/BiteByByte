@@ -8,6 +8,7 @@ import sendEmail from "../functions/SendEmail";
 export default function Login() {
 	var loginName;
 	var loginPassword;
+	const navigate = useNavigate();
 
 	const app_name = "bitebybyte-9e423411050b";
 	function buildPath(route) {
@@ -55,22 +56,21 @@ export default function Login() {
 					firstName: res.firstName,
 					lastName: res.lastName,
 					id: res.id,
-					currCuisine: res.CurrCuisine,
+					currCuisine: res.currCuisine,
 				};
 				localStorage.setItem("user_data", JSON.stringify(user));
 				
 				if (res.verified) {
-
 					setMessage("");
-					if (res.CurrCuisine) {
+					if (res.currCuisine) {
 						// Save current cuisine using setCuisine endpoint
 						//await saveCurrentCuisine(res.id, res.currCuisine);
 
 						// Redirect to Dash page if user has a current cuisine set
-						window.location.href = `/dash/${res.CurrCuisine}`;
+						navigate(`/dash/${res.currCuisine}`);
 					} else {
 						// Redirect to select cuisine page if user hasn't set a current cuisine
-						window.location.href = "/cuisines";
+						navigate("/cuisines");
 					}
 				} else {
 					setMessage("Verify your email first. Check your email");
@@ -84,23 +84,7 @@ export default function Login() {
 		}
 	};
 
-	async function saveCurrentCuisine(userId, cuisine) {
-		try {
-			const response = await fetch(buildPath("api/setCuisine"), {
-				method: "POST",
-				body: JSON.stringify({ userId, cuisine }),
-				headers: { "Content-Type": "application/json" },
-			});
-			const data = await response.json();
-			// Handle response if needed
-		} catch (error) {
-			// Handle error
-		}
-	}
 	
-
-	const navigate = useNavigate();
-
 	return (
 		<div className="relative w-full h-screen bg-zinc-600/90">
 			<img

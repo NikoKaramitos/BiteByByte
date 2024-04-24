@@ -14,9 +14,31 @@ export default function CuisinePicker() {
 	var lastName = ud.lastName;
   const navigate = useNavigate();
 
-  const handleCuisineSelect = (cuisine) => {
+  const handleCuisineSelect = async (cuisine) => {
+    try {
+      const response = await fetch(buildPath("api/setCuisine"), {
+        method: "POST",
+        body: JSON.stringify({ userId, cuisine }),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await response.json();
+      // Handle response if needed
+    } catch (error) {
+      // Handle error
+    }
     navigate(`/dash/${cuisine}`);
 };
+
+
+  const app_name = "bitebybyte-9e423411050b";
+  function buildPath(route) {
+    if (process.env.NODE_ENV === "production") {
+      return "https://" + app_name + ".herokuapp.com/" + route;
+    } else {
+      return "http://localhost:5001/" + route;
+    }
+  }
+
 
   return (
     <div className="relative w-full h-screen bg-zinc-700/90">
@@ -106,7 +128,7 @@ export default function CuisinePicker() {
         </div>
 
         <div className=" relative flex m-8 justify-center">
-          <button className="w-full sm:w-auto" id="franceCuisine" onClick={() => handleCuisineSelect("Greek")}>
+          <button className="w-full sm:w-auto" id="franceCuisine" onClick={() => handleCuisineSelect("French")}>
             <a
               href="#_"
               className="relative  inline-flex items-center justify-start py-7 pl-8 pr-16 overflow-hidden font-semibold
@@ -152,7 +174,7 @@ export default function CuisinePicker() {
                 className="relative w-full text-left transition-colors duration-200 ease-in-out
              group-hover:text-white"
               >
-                GREEK
+                FRENCH
               </span>
 
               <img src={frenchBear} alt="frenchBear" className=" h-20 w-25 " />

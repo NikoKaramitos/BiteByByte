@@ -126,14 +126,11 @@ const Dash = () => {
 		}
 	  };
 
-	const fetchQuestions = async (recipeName, level) => {
+	  const fetchQuestions = async (recipeName, level, difficulty, cuisineId) => {
 		try {
-			// Create an object containing the recipe name and level
-			const obj = { recipe: recipeName, level: level };
-			// Convert the object to a JSON string
+			const obj = { recipe: recipeName, level: level, difficulty: difficulty, cuisineId: cuisineId };
 			const js = JSON.stringify(obj);
 			
-			// Fetch questions for the selected recipe and level
 			const questionsResponse = await fetch(buildPath("api/getQuestions"), {
 				method: "POST",
 				body: js,
@@ -144,18 +141,18 @@ const Dash = () => {
 			const questionsData = await questionsResponse.json();
 			if (questionsData.error) {
 				console.log(questionsData.error);
-				return null; // Handle error appropriately
+				return null;
 			}
 	
-			// Extract questions from the response
 			const { questions } = questionsData;
 	
 			return questions;
 		} catch (error) {
 			console.error("Error fetching questions:", error);
-			return null; // Handle error appropriately
+			return null;
 		}
 	};
+	
 	
 
 	const handleButtonClick1 = (recipeName, level) => { // Modify to accept recipeName parameter
@@ -259,12 +256,12 @@ const Dash = () => {
 				recipe3: pekingDuck
 			};
 			break;
-		case "Greek":
+		case "French":
 			imageSrc = greek;
 			recipeInfo = {
-				recipe1: "Greek Recipe 1",
-				recipe2: "Greek Recipe 2",
-				recipe3: "Greek Recipe 3"
+				recipe1: "French Recipe 1",
+				recipe2: "French Recipe 2",
+				recipe3: "French Recipe 3"
 			};
 			recipeImage = {
 				recipe1: tiramisu,

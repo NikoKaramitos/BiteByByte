@@ -6,7 +6,6 @@ import RegisterPage from "./pages/RegisterPage";
 import LandingPage from "./pages/LandingPage";
 import VerifyPage from "./pages/VerifyPage";
 import ForgotPassPage from "./pages/ForgotPassPage";
-import { ThemeProvider } from "@material-tailwind/react";
 import CuisinePage from "./pages/CuisinePage";
 import ResetPassPage from "./pages/ResetPassPage";
 import Dash from "./pages/Dash";
