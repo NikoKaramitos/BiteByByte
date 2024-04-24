@@ -11,6 +11,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"@material-tailwind/react": "^2.1.9",
+		"@mui/base": "^5.0.0-beta.40",
 		"body-parser": "^1.20.2",
 		"cors": "^2.8.5",
 		"dotenv": "^16.4.5",
