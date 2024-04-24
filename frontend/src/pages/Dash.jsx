@@ -3,7 +3,7 @@ import Navbar from "../components/navbar";
 import Footer from "../components/Footer";
 import tower2 from "../assets/tower2.webp";
 import china from "../assets/china.png";
-import greek from "../assets/greek2.png";
+import france from "../assets/france.png";
 import mexicanImage from "../assets/mexicanImage.webp";
 import CustomStepper from "../components/stepper";
 import RecipeCard from "../components/recipeCard";
@@ -257,7 +257,7 @@ const Dash = () => {
 			};
 			break;
 		case "French":
-			imageSrc = greek;
+			imageSrc = france;
 			recipeInfo = {
 				recipe1: "French Recipe 1",
 				recipe2: "French Recipe 2",

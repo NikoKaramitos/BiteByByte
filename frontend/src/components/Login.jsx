@@ -75,7 +75,7 @@ export default function Login() {
 				} else {
 					setMessage("Verify your email first. Check your email");
 					sendEmail(res.email, res.code, "verify");
-					window.location.href = "/verify";
+					navigate("/verify");
 				}
 			}
 		} catch (e) {
