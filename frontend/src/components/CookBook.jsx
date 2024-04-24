@@ -148,8 +148,7 @@ export default function CookBook() {
             <div className="flex justify-center gap-5 mt-8">
             {recipes.map((recipe, index) => (
               <div className="key={index} cursor-pointer group ">
-                <div className=" bg-white relative preserve-3d group-hover:my-rotate-y-180  duration-1000">
-                  <div className=" text-black backface-hidden ">
+               
                       {/* Example CookBookCard for each recipe */}
                       <CookBookCard
                       text={recipe}
@@ -157,16 +156,6 @@ export default function CookBook() {
                           buttonText="Recipe!" // Assuming your recipe object has a name
                         />
                       </div>
-                    
-                  </div>
-                  <div className="absolute inset-0 rounded-xl text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
-                    <div className="text-center text-black flex-col items-center justify-center">
-                      <h1>{}</h1>
-                      <p className="my-2 text-sm"> Ingredigents here</p>
-                      <p className="text-xs">Steps here</p>
-                    </div>
-                  </div>
-                </div>
             ))}
               
             </div>

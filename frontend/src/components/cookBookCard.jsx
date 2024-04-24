@@ -25,14 +25,30 @@ const CookBookCard = ({ text, buttonText, onClick }) => {
   }
 
   return (
-    <div className="card">
-      <div className="card_image">
-        <img src={imageUrl} alt="Recipe" />
+    <div className="relative preserve-3d group-hover:my-rotate-y-180  duration-1000">
+      <div className=" text-black backface-hidden ">
+        <div className="card">
+          <div className="card_image">
+            <img src={imageUrl} alt="Recipe" />
+          </div>
+          <div className="card_content">
+          <h2 className="card_title">{text}</h2>
+            <h2 className="card_title">{buttonText}</h2>
+            <div className="card_text">{/* Content for the card */}</div>
+          </div>
+        </div>
       </div>
-      <div className="card_content">
-        <h2>{text}</h2>
-        <div className="card_title">{buttonText}</div>
-        <div className="card_text">{/* Content for the card */}</div>
+      <div className="absolute inset-0 rounded-xl text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
+        <div className="text-center text-black flex-col items-center justify-center">
+        <div className="card_face card_back">
+        <div className="card_content">
+          <div className="card_text">
+            <p className="my-2 text-sm">Ingredients here</p>
+            <p className="text-xs">Steps here</p>
+          </div>
+        </div>
+      </div>
+        </div>
       </div>
     </div>
   );

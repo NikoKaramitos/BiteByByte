@@ -55,4 +55,17 @@
       h2.card_title {
         font-size: 1.3em;
       }
-      
+      .card_back{
+        background-color: white;
+        height: 31em;
+        border-radius: 0.25rem;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        padding-left: 30px;
+        background: repeating-linear-gradient(#0000 0 calc(1.2rem - 1px), #66afe1 0 1.2rem) right bottom / 100% 100%, linear-gradient(red 0 0) 30px 0 / 2px 100% #fff;
+        background-repeat: no-repeat;
+        line-height: 1.2rem;
+        -webkit-mask: radial-gradient(circle .8rem at 2px 50%, #0000 98%, #000) 0 0 / 100% 2.4rem;
+
+      }
