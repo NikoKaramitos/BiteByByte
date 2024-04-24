@@ -214,7 +214,7 @@ app.post("/api/searchcards", async (req, res, next) => {
 
 	const db = client.db("Users");
 	const results = await db
-		.collection("Cuisines")
+		.collection("cuisine")
 		.find({ Card: { $regex: _search + ".*", $options: "i" } })
 		.toArray();
 
