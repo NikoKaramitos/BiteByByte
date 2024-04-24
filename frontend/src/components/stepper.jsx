@@ -5,14 +5,34 @@ import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material'; // 
 import '../App.css';
 
 const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
+  const app_name = "bitebybyte-9e423411050b";
   const [activeStep, setActiveStep] = useState(0);
   const [crossedOffInstructions, setCrossedOffInstructions] = useState(Array(instructions.length).fill(false));
   const [selectedOptions, setSelectedOptions] = useState(Array(questions.length).fill(null));
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [questionNumber, setQuestionNumber] = useState(1); // Initialize question number
   const [score, setScore] = useState(0); // Initialize score
-  const [showQuiz, setShowQuiz] = useState(true); // State to toggle between showing quiz and showing results
+  const [showQuiz1, setShowQuiz1] = useState(true); // Initialize showQuiz state
+  const [showQuiz2, setShowQuiz2] = useState(true); // Initialize showQuiz state
+  const [scoreQuiz1, setScoreQuiz1] = useState(0); // Initialize score for Quiz 1
+  const [scoreQuiz2, setScoreQuiz2] = useState(0);  
   const letter = {0:"A", 1:"B", 2:"C",3:"D" };
+  var _ud = localStorage.getItem("user_data");
+	var ud = JSON.parse(_ud);
+	var userId = ud.id;
+
+  if (!questions) {
+    // Return null or an alternative component if questions are null
+    return null;
+  }
+
+  function buildPath(route) {
+		if (process.env.NODE_ENV === "production") {
+			return "https://" + app_name + ".herokuapp.com/" + route;
+		} else {
+			return "http://localhost:5001/" + route;
+		}
+	}
 
   const handleOptionSelect = (questionIndex, optionIndex) => {
     const newSelectedOptions = [...selectedOptions];
@@ -40,17 +60,53 @@ const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
     return correctAnswers;
   };
 
+  const levelUp = async () => {
+    const obj = { userId: userId, xp: 1 };
+    var js = JSON.stringify(obj);
+
+    try {
+      const response = await fetch(buildPath("api/setLevel"), {
+        method: "POST",
+        body: js,
+        headers: { "Content-Type": "application/json" },
+      });
+      var res = JSON.parse(await response.text());
+      
+      if(res.error){
+        console.log("error: ", res.error)
+      }else{
+        var level = {
+					cuisine: res.currCuisine,
+          level: res.newLevel,
+				};
+				localStorage.setItem("level", JSON.stringify(level));
+      }
+    } catch (e) {
+      console.log(e.toString())
+    }
+
+  }
+
   const handleFinishQuiz = () => {
-    const finalScore = calculateScore();
-    setScore(finalScore);
-    setShowQuiz(false); // Hide the quiz questions
+    if (steps[activeStep].title === "Quiz 1") {
+      const finalScore = calculateScore();
+      setScoreQuiz1(finalScore); // Set score for Quiz 1
+    } else if (steps[activeStep].title === "Quiz 2") {
+      const finalScore = calculateScore();
+      setScoreQuiz2(finalScore); // Set score for Quiz 2
+    }
+  
+    setShowQuiz1(false); // Hide the quiz questions
+    setShowQuiz2(false); // Hide the quiz questions
   };
 
   const handleTryAgain = () => {
-    setShowQuiz(true); // Show the quiz questions again
+    setShowQuiz1(true); // Show the quiz questions again
+    // setShowQuiz2(true); // Show the quiz questions again
     setCurrentQuestionIndex(0); // Reset question index
     setQuestionNumber(1); // Reset question number
-    setScore(null); // Reset score
+    setScoreQuiz1(0); // Reset score for Quiz 1
+    // setScoreQuiz2(0); // Reset score for Quiz 2
     setSelectedOptions(Array(questions.length).fill(null)); // Reset selected options
   };
 
@@ -92,9 +148,8 @@ const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
             </ul>
             </div>
           )}
-        {steps[activeStep].title === "Quiz 1" && (
+        {steps[activeStep].title === "Quiz 1"  && (
         <div style={{ marginTop: '16px', color: 'white' }}>
-          {/* <h3>Quiz 1:</h3> */}
           <div key={questions[currentQuestionIndex]._id}>
             <h3>Question {questionNumber}: {questions[currentQuestionIndex].Question} {/* Display question number */}</h3>
             <br/>
@@ -154,11 +209,86 @@ const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
         </div>
       )}
       
-      {!showQuiz && score !== null && (
+      {!showQuiz1 && score !== null && (
         <div style={{ marginTop: '16px', color: 'white' }}>
           <h3>Quiz Results:</h3>
           <br/>
-          <p>Your Score: {score} / {questions.length}</p>
+          <p>Your Score: {scoreQuiz1} / {questions.length}</p>
+          <br/>
+          <button
+            onClick={handleTryAgain}
+            className="quiz-button"
+          >
+            Try Again
+          </button>
+        </div>
+      )}
+      {steps[activeStep].title === "Quiz 2" && (
+        <div style={{ marginTop: '16px', color: 'white' }}>
+          <div key={questions[currentQuestionIndex]._id}>
+            <h3>Question {questionNumber}: {questions[currentQuestionIndex].Question} {/* Display question number */}</h3>
+            <br/>
+            <ul>
+              {Object.entries(questions[currentQuestionIndex].Answers).map(([key, value], optionIndex) => (
+                <li
+                  key={key}
+                  onClick={() => handleOptionSelect(currentQuestionIndex, optionIndex)}
+                  style={{
+                    cursor: 'pointer',
+                    marginBottom: '8px',
+                    color: selectedOptions[currentQuestionIndex] === optionIndex ? 'green' : 'white'
+                  }}
+                >
+                <span
+                    style={{
+                      display: 'inline-block',
+                      width: '16px',
+                      height: '16px',
+                      borderRadius: '50%',
+                      border: '1px solid white',
+                      backgroundColor: selectedOptions[currentQuestionIndex] === optionIndex ? 'green' : 'transparent',
+                      marginRight: '8px',
+                    }}
+                  ></span>
+                  {value}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <br/>
+          <div>
+            {currentQuestionIndex > 0 && (
+              <button
+                onClick={handlePreviousQuestion}
+                className="quiz-button"
+              >
+                Previous Question
+              </button>
+            )}
+            {currentQuestionIndex < questions.length - 1 ? (
+              <button
+                onClick={handleNextQuestion}
+                className="quiz-button"
+              >
+                Next Question
+              </button>
+            ) : (
+              <button
+                onClick={handleFinishQuiz}
+                className="quiz-button"
+              >
+                Finish Quiz
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+      
+      {!showQuiz2 && score!== null && (
+        <div style={{ marginTop: '16px', color: 'white' }}>
+          <h3>Quiz Results:</h3>
+          <br/>
+          <p>Your Score: {scoreQuiz2} / {questions.length}</p>
           <br/>
           <button
             onClick={handleTryAgain}
@@ -193,21 +323,6 @@ const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
                   </li>
                 ))}
               </ol>
-            </div>
-          )}
-          {steps[activeStep].title === "Quiz 2" && (
-            <div style={{ marginTop: '16px', color: 'white' }}>
-              <h3>Quiz 2:</h3>
-              {questions.map((question, index) => (
-                <div key={index}>
-                  <p>{question.text}</p>
-                  <ul>
-                    {question.options.map((option, optionIndex) => (
-                      <li key={optionIndex}>{option}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
             </div>
           )}
           <div style={{ marginTop: '60px', marginBottom: '16px' }}>
