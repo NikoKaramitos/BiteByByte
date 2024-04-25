@@ -11,6 +11,7 @@ import CuisinePage from "./pages/CuisinePage";
 import ResetPassPage from "./pages/ResetPassPage";
 import Dash from "./pages/Dash";
 import CookBook from "./pages/CookBookPage";
+import Settings from "./components/UserInfo";
 
 function App() {
 	return (
@@ -25,6 +26,7 @@ function App() {
 				<Route path="/verify" index element={<VerifyPage />} />
 				<Route path="/dash/:cuisine" element={<Dash />}/>
 				<Route path="/cookbook" index element={<CookBook />} />
+				<Route path="/Profile-Settings" element={<Settings/>}/>
 			</Routes>
 		</BrowserRouter>
 	);
