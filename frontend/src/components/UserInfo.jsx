@@ -78,7 +78,7 @@ function UserInfo() {
 
     try{
       const response = await fetch(buildPath('/api/update-profile-settings'), {
-        method: 'PUT', 
+        method: 'POST', 
         body: JSON.stringify(userData),
         headers: {'Content-Type': 'application/json'}
     });
@@ -121,7 +121,7 @@ function UserInfo() {
   const fetchUserData = async () => {
     try {
         const response = await fetch(buildPath('/api/profile-settings'), {
-            method: 'GET',
+            method: 'POST',
             headers: {'Content-Type': 'application/json'}
         });
         

@@ -750,7 +750,7 @@ app.post("/api/loadUser", async (req, res, next) => {
 	}
 });
 
-app.get("/api/profile-settings", async (req, res) => {
+app.post("/api/profile-settings", async (req, res) => {
 	try {
 		const user = await user.findById(req.query.userId);
 		res.json(user);
@@ -760,7 +760,7 @@ app.get("/api/profile-settings", async (req, res) => {
 });
 
 // API endpoint to update user data
-app.put("/api/update-profile-settings", async (req, res) => {
+app.post("/api/update-profile-settings", async (req, res) => {
 	try {
 		const { userId, ...updateData } = req.body;
 		const updatedUser = await User.findByIdAndUpdate(userId, updateData, {

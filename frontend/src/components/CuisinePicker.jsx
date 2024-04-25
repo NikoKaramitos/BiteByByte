@@ -193,7 +193,7 @@ export default function CuisinePicker() {
           </button>
         </div>
 
-        <div className=" relative flex m-8 justify-center">
+        <div className=" relative flex m-8 justify-center mt-5">
           <button className="w-full sm:w-auto" id="chinaCuisine" onClick={() => handleCuisineSelect("Chinese")}>
             <a
               href="#_"
@@ -247,7 +247,7 @@ export default function CuisinePicker() {
           </button>
         </div>
 
-        <div className=" relative flex m-8 justify-center">
+        <div className=" relative flex m-8 justify-center mt-5">
           <button className="w-full sm:w-auto" id="mexicoCuisine" onClick={() => handleCuisineSelect("Mexican")}>
             <a
               href="#_"
