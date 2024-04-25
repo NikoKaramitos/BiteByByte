@@ -98,6 +98,11 @@ const CookBookCard = ({ text, buttonText }) => {
                 <div className="card_text">
                   <p className="my-2 text-sm">
                     Ingredients here
+                    <ul className="text-xs">
+                    {ingredients.map((ingredient, index) => (
+                      <li key={index}>{ingredient}</li>
+                    ))}
+                  </ul>
                   </p>
                   <p className="text-xs">Steps here</p>
                 </div>
