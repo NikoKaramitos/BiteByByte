@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import LandingPage from "./pages/LandingPage";
+
 import VerifyPage from "./pages/VerifyPage";
 import ForgotPassPage from "./pages/ForgotPassPage";
 import CuisinePage from "./pages/CuisinePage";

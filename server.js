@@ -340,9 +340,10 @@ app.post("/api/setLevel", async (req, res, next) => {
 	let newLevel;
 	let currCuisine;
 	let levels;
+	var user;
 	try {
 		const db = client.db("Users");
-		const user = await db
+		user = await db
 			.collection("users")
 			.findOne({ _id: new ObjectId(userId) });
 
@@ -370,13 +371,30 @@ app.post("/api/setLevel", async (req, res, next) => {
 			error = "Update failed";
 			return res.status(500).json({ error: error });
 		}
+		user = await db
+			.collection("users")
+			.findOne({ _id: new ObjectId(userId) });
 	} catch (e) {
 		error = e.toString();
 	}
 
+	var newUser = {
+		_id: user._id,
+		firstName: user.FirstName,
+		lastName: user.LastName,
+		email: user.Email,
+		login: user.Login,
+		password: user.Password,
+		tokenKey: user.tokenKey,
+		verified: user.Verified,
+		currCuisine: user.CurrCuisine,
+		levels: user.Levels,
+	};
+
 	var ret = {
 		currCuisine: currCuisine,
 		newLevel: newLevel,
+		user: newUser,
 		error: error,
 	};
 	res.status(200).json(ret);
@@ -415,6 +433,52 @@ app.post("/api/getRecipes", async (req, res, next) => {
 	};
 	res.status(200).json(ret);
 });
+
+app.post("/api/searchRecipe", async (req, res, next) => {
+	//===========================================
+	// incoming: cuisine, search
+	// outgoing: recipes, error
+	//===========================================
+
+	var error = "";
+	var recipes = "";
+
+	const { cuisine, search } = req.body;
+
+	var _search = search.trim();
+
+	try {
+		const db = client.db("Users");
+		const results = await db
+			.collection("Cuisines")
+			.findOne({ Name: cuisine });
+
+		// console.log("Results: ", results);
+		if (!results) {
+			error = "No Cuisine Found";
+			return res.status(409).json({ error: error });
+		}
+
+		recipes = results.Recipes;
+	} catch (e) {
+		error = e.toString();
+	}
+
+	var _ret =[];
+	for (var i = 0; i < recipes.length; i++) {
+		if (recipes[i].toLowerCase().indexOf(_search.toLowerCase()) != -1) {
+			_ret.push(recipes[i]);
+		}
+	}
+
+	var ret = {
+		recipes: _ret,
+		error: error,
+	};
+	res.status(200).json(ret);
+});
+
+
 
 app.post("/api/recipe", async (req, res, next) => {
 	//===========================================
@@ -661,3 +725,46 @@ if (process.env.NODE_ENV === "production") {
 app.listen(PORT, () => {
 	console.log("Server listening on port " + PORT);
 });
+
+app.post("/api/loadUser", async (req, res, next) => {
+	// incoming userID
+	// outgoing user information
+	const db = client.db("Users");
+	const users = database.collection("users");
+	const user = await users.findOne({_id: userId});
+	const { userId } = req.body;
+
+	try {
+		if(user) {
+			const {_id, FirstName: FirstName, LastName: LastName, Email: Email, Password: Password} = user
+			res.status(200).json({_id, FirstName, LastName, Email, Password});
+		}
+		else {
+			res.status(404).json({message: "User was not found"});
+		}
+	} catch (error) {
+		console.log("Error:", error);
+		res.status(500).json("Issue loading the user information.");
+	}
+});
+
+app.get('/api/profile-settings', async (req, res) => {
+	try {
+	  const user = await User.findById(req.query.userId); 
+	  res.json(user);
+	} catch (error) {
+	  res.status(500).json({ message: error.message });
+	}
+  });
+  
+  // API endpoint to update user data
+  app.put('/api/update-profile-settings', async (req, res) => {
+	try {
+	  const { userId, ...updateData } = req.body;
+	  const updatedUser = await User.findByIdAndUpdate(userId, updateData, { new: true });
+	  res.json(updatedUser);
+	} catch (error) {
+	  res.status(500).json({ message: error.message });
+	}
+  });
+  
