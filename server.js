@@ -436,7 +436,7 @@ app.post("/api/getRecipes", async (req, res, next) => {
 
 app.post("/api/searchRecipe", async (req, res, next) => {
 	//===========================================
-	// incoming: cuisine
+	// incoming: cuisine, search
 	// outgoing: recipes, error
 	//===========================================
 
