@@ -26,7 +26,7 @@ const CookBookCard = ({ text, buttonText }) => {
   }
 
   const [ingredients, setIngredients] = useState([]);
-  //const [recipe, setInstructions] = useState([]);
+  const [instructions, setInstructions] = useState([]);
   const [message, setMessage] = useState("");
 
   // builds path
@@ -60,10 +60,10 @@ const CookBookCard = ({ text, buttonText }) => {
        // setIngredients([]);
         //setInstructions([]);
       } else {
-        const { ingredients } = res;
-        console.log("Recipe info for " + text + ": " + ingredients);
+        const { ingredients , instructions } = res;
+        console.log("Recipe info for " + text + ": " + ingredients, instructions);
         setIngredients(ingredients); // Update Ingredigents state with fetched ingredigents
-        // setInstructions(res.setInstructions);
+        setInstructions(instructions);
         setMessage(""); // Clear any previous message
       }
     } catch (e) {
@@ -104,8 +104,15 @@ const CookBookCard = ({ text, buttonText }) => {
                     ))}
                   </ul>
                   </p>
-                  <p className="text-xs">Steps here</p>
                 </div>
+                <div className="card_text">
+                <p className="my-2 text-sm">Instructions here</p>
+                <ol className="text-xs">
+                  {instructions.map((instruction, index) => (
+                    <li key={index}>{instruction}</li>
+                  ))}
+                </ol>
+              </div>
             </div>
           </div>
         </div>
