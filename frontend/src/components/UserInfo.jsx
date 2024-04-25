@@ -157,7 +157,7 @@ function UserInfo() {
 
         const data = await response.json();
         setUserData(data);
-        setJsonData(data);
+
     } catch (error) {
         console.error("Error fetching user info: ", error);
     }
@@ -208,7 +208,7 @@ function UserInfo() {
     let code = Math.floor(100000 + Math.random() * 900000);
     setEmailSent(true);
     setShowMessage(true);
-    setJsonData(prevData => ({ ...prevData, Code: code }));
+
     try {
       const result = await sendEmail(emailInput, code, "verify");
       setEmailSent(true);
