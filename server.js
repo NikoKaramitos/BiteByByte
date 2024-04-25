@@ -434,6 +434,52 @@ app.post("/api/getRecipes", async (req, res, next) => {
 	res.status(200).json(ret);
 });
 
+app.post("/api/searchRecipe", async (req, res, next) => {
+	//===========================================
+	// incoming: cuisine
+	// outgoing: recipes, error
+	//===========================================
+
+	var error = "";
+	var recipes = "";
+
+	const { cuisine, search } = req.body;
+
+	var _search = search.trim();
+
+	try {
+		const db = client.db("Users");
+		const results = await db
+			.collection("Cuisines")
+			.findOne({ Name: cuisine });
+
+		// console.log("Results: ", results);
+		if (!results) {
+			error = "No Cuisine Found";
+			return res.status(409).json({ error: error });
+		}
+
+		recipes = results.Recipes;
+	} catch (e) {
+		error = e.toString();
+	}
+
+	var _ret =[];
+	for (var i = 0; i < recipes.length; i++) {
+		if (recipes[i].toLowerCase().indexOf(_search.toLowerCase()) != -1) {
+			_ret.push(recipes[i]);
+		}
+	}
+
+	var ret = {
+		recipes: _ret,
+		error: error,
+	};
+	res.status(200).json(ret);
+});
+
+
+
 app.post("/api/recipe", async (req, res, next) => {
 	//===========================================
 	// incoming: recipe
