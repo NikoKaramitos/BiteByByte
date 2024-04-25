@@ -26,7 +26,6 @@ function UserInfo() {
     LastName: '',
     Email: '',
     Password: '',
-    Levels: '',
     Verified: ''
   });
 
