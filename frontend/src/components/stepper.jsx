@@ -173,14 +173,14 @@ const CustomStepper = ({
 		const finishQuiz = async () => {
 			if (steps[activeStep].title === "Quiz 1") {
 				const finalScore = calculateScore1();
-				if (finalScore === 3) {
+				if (finalScore === 3 && currLevel === 10) {
 					await levelUp(); // Wait for levelUp to complete
 				}
 				setShowResults1(true); // Set flag to display quiz results
 				setScoreQuiz1(finalScore); // Set score for Quiz 1
 			} else if (steps[activeStep].title === "Quiz 2") {
 				const finalScore = calculateScore2();
-				if (finalScore === 3) {
+				if (finalScore === 3 && currLevel === 11) {
 					await levelUp(); // Wait for levelUp to complete
 				}
 				setScoreQuiz2(finalScore); // Set score for Quiz 2
@@ -188,7 +188,7 @@ const CustomStepper = ({
 				// Set flag to display quiz results
 			} else if (steps[activeStep].title === "Finish") {
 				const finalScore = calculateScore3();
-				if (finalScore === 3) {
+				if (finalScore === 3 && currLevel === 12) {
 					await levelUp(); // Wait for levelUp to complete
 				}
 				setScoreQuiz3(finalScore); // Set score for Quiz 2
@@ -238,6 +238,11 @@ const CustomStepper = ({
 			setActiveStep(activeStep + 1);
 		} else if (currLevel % 10 >= 2) {
 			setActiveStep(activeStep + 1);
+		} else if (
+			steps[activeStep].title === "Finish" &&
+			currLevel % 10 === 0
+		) {
+			window.location.reload();
 		}
 		console.log("CurrLevel: ", currLevel);
 	};
@@ -657,10 +662,9 @@ const CustomStepper = ({
 							onClick={handleNext}
 							className="next-button"
 							style={{
-								opacity:
-									activeStep === steps.length - 1 ? 0.5 : 1,
+								opacity: activeStep === steps.length ? 0.5 : 1,
 								cursor:
-									activeStep === steps.length - 1
+									activeStep === steps.length
 										? "not-allowed"
 										: "pointer",
 							}}
