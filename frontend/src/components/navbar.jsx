@@ -59,12 +59,11 @@ const Navbar = () => {
                         <li className='hover:text-emerald-400'>
                             <NavLink to="about">About</NavLink>
                         </li>
-
                         {auth ? (
-                            <li className='hover:text-emerald-400'>
-                                <NavLink to="/profile-settings">settings</NavLink>
-                            </li>
-                        ) : null}
+                        <li className='hover:text-emerald-400'>
+                                <NavLink to="/Profile-Settings">Settings</NavLink>
+                        </li>
+                        ): null}
                         {/*only show if they are logged in*/ }
                         {auth ? (
                 <>
