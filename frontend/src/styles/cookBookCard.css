@@ -1,0 +1,82 @@
+.card_image {
+  height: calc(15 * 1.2rem);
+  padding: 1.2rem 1.2rem 0;
+  position: relative;
+}
+
+.card_image:before,
+.card_image:after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  left: 60%;
+  top: 0;
+  height: 45px;
+  background: #e6e6e6b8;
+  transform: rotate(45deg);
+}
+
+.card_image:after {
+  transform: rotate(-45deg);
+  top: auto;
+  bottom: -22px;
+  left: 40%;
+}
+
+.card_image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card {
+  background-color: white;
+  height: 31em;
+  width: 332px;
+  border-radius: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-left: 30px;
+  background: repeating-linear-gradient(#0000 0 calc(1.2rem - 1px), #66afe1 0 1.2rem) right bottom / 100% 100%, linear-gradient(red 0 0) 30px 0 / 2px 100% #fff;
+  background-repeat: no-repeat;
+  line-height: 1.2rem;
+  -webkit-mask: radial-gradient(circle .8rem at 2px 50%, #0000 98%, #000) 0 0 / 100% 2.8rem;
+}
+
+.card_content {
+  padding: 1.2rem;
+}
+
+h2.card_title,
+p {
+  margin: 1.2rem 0;
+}
+
+h2.card_title {
+  font-size: 1.3em;
+}
+
+.card_back {
+  height: 31em;
+  border-radius: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+  padding-left: 20px;
+  line-height: 1.2rem;
+  background: repeating-linear-gradient(#0000 0 calc(1.2rem - 1px), #66afe1 0 1.2rem) right bottom / 100% 100%, linear-gradient(red 0 0) 30px 0 / 2px 100% #fff;
+  background-repeat: no-repeat;
+  line-height: 1.2rem;
+ /* -webkit-mask: radial-gradient(circle .8rem at 2px 50%, #0000 98%, #000) 0 0 / 100% 2.8rem;*/
+}
+
+.my-scale-up {
+  transform: scale(1.1);
+  z-index: 1;
+}
+
+.my-scale-down {
+  transform: scale(0.9);
+}
