@@ -34,6 +34,8 @@ function UserInfo() {
   const [confirmPassword, setConfirmPassword] = useState(userData.Password);
   const [passwordErrors, setPasswordErrors] = useState([]);
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [emailInput, setEmailInput] = useState(userData.Email);
+  const [confirmPasswordTouched, setConfirmPasswordTouched] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -140,32 +142,43 @@ function UserInfo() {
       const errors = validatePassword(value);
       setPasswordErrors(errors);
       setConfirmPasswordError(errors);
-    }
-    if (userData.Password !== value) {
-      setConfirmPasswordError('Passwords do not match.');
-    } else {
-      setConfirmPasswordError('');
-    }
-    if (confirmPassword !== value) {
-      setConfirmPasswordError('Passwords do not match.');
-    } else {
+
+      if (userData.Password !== value) {
+        setConfirmPasswordError('Passwords do not match.');
+      } else {
         setConfirmPasswordError('');
+      }
+      if (confirmPassword !== value) {
+        setConfirmPasswordError('Passwords do not match.');
+      } else {
+          setConfirmPasswordError('');
+      }
     }
+
     setUserData(prevState => ({
       ...prevState,
       [name]: value
     }));
   };
 
+  useEffect(() => {
+    if (emailInput === userData.Email) {
+      setUserData(prevState => ({ ...prevState, Verified: 'yes' }));
+    } else {
+      setUserData(prevState => ({ ...prevState, Verified: 'no' }));
+    }
+  }, [emailInput]);
 
-const [confirmPasswordTouched, setConfirmPasswordTouched] = useState(false);
+  const handleEmailChange = (event) => {
+    setEmailInput(event.target.value);
+  };
 
-const handleConfirmPasswordChange = (e) => {
-  const { value } = e.target;
+
+
+
+const handleConfirmPasswordChange = (event) => {
+  const { value } = event.target;
   setConfirmPassword(value);
-  setConfirmPasswordTouched(true);  // Set as touched when changed
-
-  // Set error if passwords do not match
   if (userData.Password !== value) {
       setConfirmPasswordError('Passwords do not match.');
   } else {
@@ -177,6 +190,7 @@ const handleConfirmPasswordChange = (e) => {
 const handleConfirmPasswordBlur = () => {
   setConfirmPasswordTouched(true);
 };
+
   return (
     <div className="relative flex items-center justify-center min-h-screen">
       <img className="absolute top-0 left-0 w-full h-full object-cover" src={bearpic1} alt='Background' />
@@ -188,14 +202,15 @@ const handleConfirmPasswordBlur = () => {
           <form onSubmit={updateUserData}>
             {Object.keys(userData).map((key, index) => (
               <React.Fragment key={index}>
+              {/*Adds each fields of the userData*/}
                 <div className="mb-4">
                   <label className="block text-gray-700 text-lg sm:text-xl font-bold mb-4 capitalize">
                     {key.replace(/([A-Z])/g, ' $1').trim()} </label>
                   <input
                     type={key !== 'Password' ? 'text' : (showPassword ? 'text' : 'password')}
                     name={key}
-                    value={userData[key]}
-                    onChange={changeSettings}
+                    value={key === 'Email' ? emailInput : userData[key]}
+                    onChange={key === 'Email' ? handleEmailChange : changeSettings}
                     className={`shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 text-lg leading-tight focus:outline-none focus:shadow-outline 
                                 ${!doEdit || ['CurrCuisine', 'Verified', 'Levels'].includes(key) ? 'bg-gray-200 opacity-50 cursor-not-allowed' : ''}`}
                     disabled={!doEdit || ['CurrCuisine', 'Verified', 'Levels'].includes(key)}
