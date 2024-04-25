@@ -70,3 +70,12 @@ h2.card_title {
   line-height: 1.2rem;
   -webkit-mask: radial-gradient(circle .8rem at 2px 50%, #0000 98%, #000) 0 0 / 100% 2.4rem;
 }
+
+.my-scale-up {
+  transform: scale(1.2);
+  z-index: 1;
+}
+
+.my-scale-down {
+  transform: scale(0.8);
+}

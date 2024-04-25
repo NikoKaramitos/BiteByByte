@@ -28,6 +28,14 @@ const CookBookCard = ({ text, buttonText }) => {
   const [ingredients, setIngredients] = useState([]);
   const [instructions, setInstructions] = useState([]);
   const [message, setMessage] = useState("");
+  const [hovered, setHovered] = useState(false);
+  const handleHover = () => {
+    setHovered(true);
+  };
+  
+  const handleMouseLeave = () => {
+    setHovered(false);
+  };
 
   // builds path
   const app_name = "bitebybyte-9e423411050b";
@@ -74,42 +82,49 @@ const CookBookCard = ({ text, buttonText }) => {
 
   function getIngredigents(obj) {}
 
-  useEffect(() => {
-    getRecipeInfo();
-  }, [text]); // Dependency array to re-run effect when index changes
 
+useEffect(() => {
+  getRecipeInfo();
+}, [text]);
+
+  
   return (
-    <div className="relative preserve-3d group-hover:my-rotate-y-180  duration-1000">
-      <div className=" text-black backface-hidden ">
-        <div className="card">
-          <div className="card_image">
-            <img src={imageUrl} alt="Recipe" />
-          </div>
-          <div className="card_content">
-            <h2 className="card_title">{text}</h2>
-            <h2 className="card_title">{buttonText}</h2>
-          </div>
+    <div
+    className={`relative preserve-3d ${
+      hovered ? "my-scale-up" : "my-scale-down"
+    } duration-1000`}
+    onMouseEnter={handleHover}
+    onMouseLeave={handleMouseLeave}
+  >
+    <div className="text-black backface-hidden">
+      <div className="card">
+        <div className="card_image">
+          <img src={imageUrl} alt="Recipe" />
+        </div>
+        <div className="card_content">
+          <h2 className="card_title">{text}</h2>
+          <h2 className="card_title">{buttonText}</h2>
         </div>
       </div>
-      <div className="absolute inset-0 rounded-xl text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
+    </div>
+    {hovered && ( // Only render the back face when hovered
+      <div className="absolute inset-0 rounded-xl text-center text-slate-200 transform rotateY-180 backface-visibility-hidden">
         <div className="text-center text-black flex-col items-center justify-center">
           <div className="card_face card_back">
             <div className="card_content">
-                <div className="card_text">
-                  <p className="my-2 text-sm">
-                    Ingredients here
-                    <ul className="text-xs">
-                    {ingredients.map((ingredient, index) => (
-                      <li key={index}>{ingredient}</li>
-                    ))}
-                  </ul>
-                  </p>
-                </div>
-                <div className="card_text">
-                <p className="my-2 text-sm">Instructions here</p>
+              <div className="card_text">
+                <p className="my-2 text-sm">Ingredients:</p>
+                <ul className="text-xs">
+                  {ingredients.map((ingredient, index) => (
+                    <li key={index}>{ingredient}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="card_text">
+                <p className="my-2 text-sm">Instructions:</p>
                 <ol className="text-xs">
                   {instructions.map((instruction, index) => (
-                    <li key={index}>{instruction}</li>
+                    <li key={index}>{`Step ${index + 1}: ${instruction}`}</li>
                   ))}
                 </ol>
               </div>
@@ -117,8 +132,9 @@ const CookBookCard = ({ text, buttonText }) => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    )}
+  </div>
+);
 };
 
 export default CookBookCard;
