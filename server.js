@@ -464,7 +464,7 @@ app.post("/api/searchRecipe", async (req, res, next) => {
 		error = e.toString();
 	}
 
-	var _ret =[];
+	var _ret = [];
 	for (var i = 0; i < recipes.length; i++) {
 		if (recipes[i].toLowerCase().indexOf(_search.toLowerCase()) != -1) {
 			_ret.push(recipes[i]);
@@ -477,8 +477,6 @@ app.post("/api/searchRecipe", async (req, res, next) => {
 	};
 	res.status(200).json(ret);
 });
-
-
 
 app.post("/api/recipe", async (req, res, next) => {
 	//===========================================
@@ -544,7 +542,6 @@ app.post("/api/getQuestions", async (req, res, next) => {
 
 	var ret = { questions: questions, error: error };
 	res.status(200).json(ret);
-
 });
 
 app.post("/api/findUser", async (req, res, next) => {
@@ -731,16 +728,21 @@ app.post("/api/loadUser", async (req, res, next) => {
 	// outgoing user information
 	const db = client.db("Users");
 	const users = database.collection("users");
-	const user = await users.findOne({_id: userId});
+	const user = await users.findOne({ _id: userId });
 	const { userId } = req.body;
 
 	try {
-		if(user) {
-			const {_id, FirstName: FirstName, LastName: LastName, Email: Email, Password: Password} = user
-			res.status(200).json({_id, FirstName, LastName, Email, Password});
-		}
-		else {
-			res.status(404).json({message: "User was not found"});
+		if (user) {
+			const {
+				_id,
+				FirstName: FirstName,
+				LastName: LastName,
+				Email: Email,
+				Password: Password,
+			} = user;
+			res.status(200).json({ _id, FirstName, LastName, Email, Password });
+		} else {
+			res.status(404).json({ message: "User was not found" });
 		}
 	} catch (error) {
 		console.log("Error:", error);
@@ -748,23 +750,24 @@ app.post("/api/loadUser", async (req, res, next) => {
 	}
 });
 
-app.get('/api/profile-settings', async (req, res) => {
+app.get("/api/profile-settings", async (req, res) => {
 	try {
-	  const user = await User.findById(req.query.userId); 
-	  res.json(user);
+		const user = await user.findById(req.query.userId);
+		res.json(user);
 	} catch (error) {
-	  res.status(500).json({ message: error.message });
+		res.status(500).json({ message: error.message });
 	}
-  });
-  
-  // API endpoint to update user data
-  app.put('/api/update-profile-settings', async (req, res) => {
+});
+
+// API endpoint to update user data
+app.put("/api/update-profile-settings", async (req, res) => {
 	try {
-	  const { userId, ...updateData } = req.body;
-	  const updatedUser = await User.findByIdAndUpdate(userId, updateData, { new: true });
-	  res.json(updatedUser);
+		const { userId, ...updateData } = req.body;
+		const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
+			new: true,
+		});
+		res.json(updatedUser);
 	} catch (error) {
-	  res.status(500).json({ message: error.message });
+		res.status(500).json({ message: error.message });
 	}
-  });
-  
+});
