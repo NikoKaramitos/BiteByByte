@@ -41,31 +41,6 @@ function UserInfo() {
   const [message, setMessage] = useState('');
   const [emailSent, setEmailSent] = useState(false);  // State to track if email has been sent
   const [showMessage, setShowMessage] = useState(false);  // State to show the confirmation message
-  const [newEmail, setNewEmail] = useState('');
-
-  const doVerify = async (event) => {
-    let code = Math.floor(100000 + Math.random() * 900000);
-		event.preventDefault();
-		var obj = { code: parseInt(code.value) };
-		var js = JSON.stringify(obj);
-		try {
-			const response = await fetch(buildPath("api/verify"), {
-				method: "POST",
-				body: js,
-				headers: { "Content-Type": "application/json" },
-			});
-			var res = JSON.parse(await response.text());
-			if (res.error) {
-				console.log(res.error);
-				setMessage("Invalid Code");
-				return;
-			} else {
-				setMessage("Email is verified.");
-			}
-		} catch (e) {
-			setMessage(e.toString());
-		}
-	};
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -103,7 +78,7 @@ function UserInfo() {
 
     try{
       const response = await fetch(buildPath('/api/update-profile-settings'), {
-        method: 'POST', 
+        method: 'PUT', 
         body: JSON.stringify(userData),
         headers: {'Content-Type': 'application/json'}
     });
@@ -146,7 +121,7 @@ function UserInfo() {
   const fetchUserData = async () => {
     try {
         const response = await fetch(buildPath('/api/profile-settings'), {
-            method: 'POST',
+            method: 'GET',
             headers: {'Content-Type': 'application/json'}
         });
         
