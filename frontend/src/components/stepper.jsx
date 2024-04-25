@@ -182,9 +182,7 @@ const CustomStepper = ({ steps, ingredients, instructions, questions1, questions
   };
 
   const handleNext = () => {
-    console.log("Active Step: ", activeStep);
     setActiveStep(activeStep + 1);
-    console.log("Active Step: ", activeStep);
   };
 
   const handleBack = () => {

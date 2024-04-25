@@ -13,6 +13,12 @@ import carbonara from "../assets/carbonara.png";
 import baoBuns from "../assets/baoBuns.png";
 import pekingDuck from "../assets/pekingDuck.png";
 import tsoChicken from "../assets/tsoChicken.png";
+import taco from "../assets/taco.png";
+import soup from "../assets/onionSoup.png";
+import enchiladas from "../assets/enchiladas.png";
+import chocolate from "../assets/chocolate.png";
+import cake from "../assets/cake.png";
+import beef from "../assets/beef.png";
 import {useNavigate, useParams} from "react-router-dom";
 
 const Dash = () => {
@@ -228,13 +234,13 @@ const Dash = () => {
 			imageSrc = mexicanImage;
 			recipeInfo = {
 				recipe1: "Tacos",
-				recipe2: "Mexican Recipe 2",
+				recipe2: "Tres leches cake",
 				recipe3: "Enchiladas"
 			};
 			recipeImage = {
-				recipe1: tiramisu,
-				recipe2: carbonara,
-				recipe3: lasagna
+				recipe1: taco,
+				recipe2: cake,
+				recipe3: enchiladas
 			};
 			break;
 		case "Chinese":
@@ -258,9 +264,9 @@ const Dash = () => {
 				recipe3: "Boeuf Bourguignon"
 			};
 			recipeImage = {
-				recipe1: tiramisu,
-				recipe2: carbonara,
-				recipe3: lasagna
+				recipe1: soup,
+				recipe2: chocolate,
+				recipe3: beef
 			};
 			break;
 	}
