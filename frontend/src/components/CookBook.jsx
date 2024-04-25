@@ -22,6 +22,7 @@ export default function CookBook() {
   const [currentCuisineIndex, setCurrentCuisineIndex] = useState(0);
   const [recipes, setRecipes] = useState([]);
   const [message, setMessage] = useState("");
+  const [userLevels, setUserLevels] = useState(null); // State to store user's levels
 
   const app_name = "bitebybyte-9e423411050b";
   function buildPath(route) {
@@ -69,9 +70,30 @@ export default function CookBook() {
       return;
     }
   };
+  const fetchUserLevels = async () => {
+    try {
+      const response = await fetch(buildPath("api/findUser"), {
+        method: "POST",
+        body: JSON.stringify({ userId }), // Send userId in the request body
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const userData = await response.json();
+
+      if (!userData.error) {
+        console.log(userData.levels);
+        setUserLevels(userData.levels); // Set userLevels state with retrieved levels
+      } else {
+        console.log("Error fetching user data:", userData.error);
+      }
+    } catch (error) {
+      console.log("Error fetching user data:", error);
+    }
+  };
 
   useEffect(() => {
     loadRecipes();
+    fetchUserLevels(); // Fetch user levels when component mounts or userId changes
   }, [currentCuisineIndex]); // Dependency array to re-run effect when index changes
 
   return (
@@ -151,9 +173,10 @@ export default function CookBook() {
                
                       {/* Example CookBookCard for each recipe */}
                       <CookBookCard
-                      text={recipe}
+                        text={recipe}
                            // Assuming your recipe object has an imageUrl
                           buttonText="Recipe!" // Assuming your recipe object has a name
+                          userLevels={userLevels} // Pass userLevels to CookBookCard
                         />
                       </div>
             ))}

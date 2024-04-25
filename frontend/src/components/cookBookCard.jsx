@@ -7,7 +7,7 @@ import pekingDuck from "../assets/pekingDuck.png";
 import tsoChicken from "../assets/tsoChicken.png";
 import "../styles/cookBookCard.css";
 
-const CookBookCard = ({ text, buttonText }) => {
+const CookBookCard = ({ text, buttonText, userLevels }) => {
   var imageUrl = ""; // display correct recipe image
 
   // This uses text to return the correct recipe image
@@ -84,6 +84,33 @@ const CookBookCard = ({ text, buttonText }) => {
   };
 
   useEffect(() => {
+     // Fetch recipe info based on 'text'
+     const getRecipeInfo = async () => {
+      try {
+        const obj = { recipe: text };
+        const js = JSON.stringify(obj);
+        const response = await fetch(buildPath("api/recipe"), {
+          method: "POST",
+          body: js,
+          headers: { "Content-Type": "application/json" },
+        });
+
+        const res = await response.json();
+
+        if (res.error) {
+          console.log(res.error);
+          setMessage(res.error);
+        } else {
+          const { ingredients, instructions } = res;
+          setIngredients(ingredients);
+          setInstructions(instructions);
+          setMessage("");
+        }
+      } catch (e) {
+        alert(e.toString());
+      }
+    };
+
     getRecipeInfo();
   }, [text]);
 
@@ -109,6 +136,11 @@ const CookBookCard = ({ text, buttonText }) => {
           </div>
           <div className="card_content">
             <h2 className="card_title">{text}</h2>
+            {userLevels?.Italian < 12 && text === "Lasagna" ? (
+              <p>Unlock at Level 12 for Lasagna</p>
+            ) : (
+              <h2 className="card_title">{buttonText}</h2>
+            )}
             <h2 className="card_title">{buttonText}</h2>
           </div>
         </div>
