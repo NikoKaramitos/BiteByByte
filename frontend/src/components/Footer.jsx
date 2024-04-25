@@ -13,7 +13,7 @@ const Footer = () =>{
                     as="a"
                     href="#"
                     color="blue-gray"
-                    className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
+                    className="font-normal transition-colors hover:text-emerald-400 focus:text-emerald-400"
                   >
                     About Us
                   </Typography>
@@ -23,7 +23,7 @@ const Footer = () =>{
                     as="a"
                     href="#"
                     color="blue-gray"
-                    className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
+                    className="font-normal transition-colors hover:text-emerald-400 focus:text-emerald-400"
                   >
                     License
                   </Typography>
@@ -33,7 +33,7 @@ const Footer = () =>{
                     as="a"
                     href="#"
                     color="blue-gray"
-                    className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
+                    className="font-normal transition-colors hover:text-emerald-400 focus:text-emerald-400"
                   >
                     FAQs
                   </Typography>
@@ -43,7 +43,7 @@ const Footer = () =>{
                     as="a"
                     href="#"
                     color="blue-gray"
-                    className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
+                    className="font-normal transition-colors hover:text-emerald-400 focus:text-emerald-400"
                   >
                     Contact Us
                   </Typography>

@@ -8,6 +8,7 @@ import sendEmail from "../functions/SendEmail";
 export default function Login() {
 	var loginName;
 	var loginPassword;
+	const navigate = useNavigate();
 
 	const app_name = "bitebybyte-9e423411050b";
 	function buildPath(route) {
@@ -22,32 +23,33 @@ export default function Login() {
 
 	const doLogin = async (event) => {
 		event.preventDefault();
-
+	
 		var obj = { login: loginName.value, password: loginPassword.value };
 		var js = JSON.stringify(obj);
-
+	
 		if (!loginName.value || !loginPassword.value) {
 			setMessage("All fields are required.");
 			return;
 		}
-
+	
 		try {
 			const response = await fetch(buildPath("api/login"), {
 				method: "POST",
 				body: js,
 				headers: { "Content-Type": "application/json" },
 			});
-
+	
 			var res = JSON.parse(await response.text());
+
+			//check cuisine
+			console.log("Current Cuisine:", res.CurrCuisine);
 
 			if (res.error === "Username not found") {
 				setMessage("Username not found. Create an account now!");
 				return;
 			}
 			if (res.error === "Password not found") {
-				setMessage(
-					"Seems to be the wrong password. \n Use Forgot Password"
-				);
+				setMessage("Seems to be the wrong password. \n Use Forgot Password");
 				return;
 			} else {
 				var user = {
@@ -57,14 +59,25 @@ export default function Login() {
 					currCuisine: res.currCuisine,
 				};
 				localStorage.setItem("user_data", JSON.stringify(user));
-				// console.log("verified?: ", res.verified);
+				
 				if (res.verified) {
 					setMessage("");
-					window.location.href = "/cuisines";
+					if (res.currCuisine) {
+						// Redirect to Dash page if user has a current cuisine set
+						var level = {
+							cuisine: res.currCuisine,
+							level: res.levels[res.currCuisine],
+						};
+						localStorage.setItem("level", JSON.stringify(level));
+						navigate(`/dash/${res.currCuisine}`);
+					} else {
+						// Redirect to select cuisine page if user hasn't set a current cuisine
+						navigate("/cuisines");
+					}
 				} else {
-					setMessage("Verified your email first. Check your email");
+					setMessage("Verify your email first. Check your email");
 					sendEmail(res.email, res.code, "verify");
-					window.location.href = "/verify";
+					navigate("/verify");
 				}
 			}
 		} catch (e) {
@@ -73,8 +86,7 @@ export default function Login() {
 		}
 	};
 
-	const navigate = useNavigate();
-
+	
 	return (
 		<div className="relative w-full h-screen bg-zinc-600/90">
 			<img

@@ -2,7 +2,13 @@
 	"name": "frontend",
 	"version": "0.1.0",
 	"private": true,
+	"engines": {
+		"node": "16.15.1",
+		"npm" : "8.11.0"
+	},
 	"dependencies": {
+		"@emotion/react": "^11.11.4",
+		"@emotion/styled": "^11.11.5",
 		"@emotion/react": "^11.11.4",
 		"@emotion/styled": "^11.11.5",
 		"@material-tailwind/react": "^2.1.9",
@@ -13,10 +19,14 @@
 		"@testing-library/user-event": "^13.5.0",
 		"framer-motion": "^11.0.8",
 		"react": "^18.2.0",
+		"react-beautiful-dnd": "^13.1.1",
+		"react-dnd": "^16.0.1",
+		"react-dnd-html5-backend": "^16.0.1",
 		"react-dom": "^18.2.0",
 		"react-icons": "^5.0.1",
 		"react-router-dom": "^6.22.3",
-		"react-scripts": "^5.0.1",
+		"react-select": "^5.8.0",
+		"react-stepper-horizontal": "^1.0.11",
 		"source-map-loader": "^1.0.0",
 		"web-vitals": "^2.1.4"
 	},
@@ -48,6 +58,7 @@
 		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
 		"autoprefixer": "^10.4.18",
 		"postcss": "^8.4.35",
+		"react-scripts": "^5.0.1",
 		"tailwindcss": "^3.4.1"
 	}
 }

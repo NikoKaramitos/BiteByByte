@@ -4,13 +4,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import LandingPage from "./pages/LandingPage";
+
 import VerifyPage from "./pages/VerifyPage";
 import ForgotPassPage from "./pages/ForgotPassPage";
-import { ThemeProvider } from "@material-tailwind/react";
 import CuisinePage from "./pages/CuisinePage";
 import ResetPassPage from "./pages/ResetPassPage";
 import Dash from "./pages/Dash";
 import CookBook from "./pages/CookBookPage";
+import Settings from "./components/UserInfo";
 
 function App() {
 	return (
@@ -23,8 +24,9 @@ function App() {
 				<Route path="/forgotPass" index element={<ForgotPassPage />} />
 				<Route path="/resetPass" index element={<ResetPassPage />} />
 				<Route path="/verify" index element={<VerifyPage />} />
-				<Route path="/dash" index element={<Dash/>} />
-				<Route path="/cookbook" index element={<CookBook/>} />
+				<Route path="/dash/:cuisine" element={<Dash />}/>
+				<Route path="/cookbook" index element={<CookBook />} />
+				<Route path="/Profile-Settings" element={<Settings/>}/>
 			</Routes>
 		</BrowserRouter>
 	);
