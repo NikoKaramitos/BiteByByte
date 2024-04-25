@@ -62,7 +62,7 @@ const Navbar = () => {
 
                         {auth ? (
                             <li className='hover:text-emerald-400'>
-                                <NavLink to="/cuisines">Cuisines</NavLink>
+                                <NavLink to="/profile-settings">settings</NavLink>
                             </li>
                         ) : null}
                         {/*only show if they are logged in*/ }
