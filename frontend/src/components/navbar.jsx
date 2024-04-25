@@ -59,7 +59,11 @@ const Navbar = () => {
                         <li className='hover:text-emerald-400'>
                             <NavLink to="about">About</NavLink>
                         </li>
-
+                        {auth ? (
+                        <li className='hover:text-emerald-400'>
+                                <NavLink to="/Profile-Settings">Settings</NavLink>
+                        </li>
+                        ): null}
                         {/*only show if they are logged in*/ }
                         {auth ? (
                 <>
@@ -67,9 +71,7 @@ const Navbar = () => {
                         <button onClick={handleToggle} className="focus:outline-none">
                             <CgProfile style={{ fontSize: '30px' }} />
                         </button>
-                        <li className='hover:text-emerald-400'>
-                                <NavLink to="/Profile-Settings">Settings</NavLink>
-                        </li>
+
                         {isOpen && (
                             <ul className="absolute top-full left-0 bg-white border border-gray-200 rounded shadow-md mt-1">
                                 <li>
