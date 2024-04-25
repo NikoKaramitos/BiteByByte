@@ -1,18 +1,16 @@
 import React from 'react';
 
-const RecipeCard = ({ imageUrl, buttonText, onClick }) => {
+const RecipeCard = ({ imageUrl, buttonText, onClick, message }) => {
     return (
-        <div className="max-w-sm rounded-lg overflow-hidden outline outline-black outline-4  shadow-lg border border-gray-300 bg-white m-4">
-            <img className="w-full" src={imageUrl} alt="Recipe" />
+        <button className="cardButton max-w-sm rounded-lg overflow-hidden outline outline-black outline-4  shadow-lg border border-gray-300 bg-white m-4 " onClick={onClick}>
+            <img className="w-full outline outline-black outline-4 bg-rose-50" src={imageUrl} alt="Recipe" />
             <div className="px-6 py-4">
-                <div className="font-bold text-xl mb-2">Recipe</div>
-            </div>
-            <div className="px-6 py-4">
-                <button className="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={onClick}>
+                <h1 className="bg-white text-black text-2xl font-semibold py-6 px-4" >
                     {buttonText}
-                </button>
+                </h1>
             </div>
-        </div>
+            <span>{message}</span>
+        </button>
     );
 };
 
