@@ -371,14 +371,30 @@ app.post("/api/setLevel", async (req, res, next) => {
 			error = "Update failed";
 			return res.status(500).json({ error: error });
 		}
+		user = await db
+			.collection("users")
+			.findOne({ _id: new ObjectId(userId) });
 	} catch (e) {
 		error = e.toString();
 	}
 
+	var newUser = {
+		_id: user._id,
+		firstName: user.FirstName,
+		lastName: user.LastName,
+		email: user.Email,
+		login: user.Login,
+		password: user.Password,
+		tokenKey: user.tokenKey,
+		verified: user.Verified,
+		currCuisine: user.CurrCuisine,
+		levels: user.Levels,
+	};
+
 	var ret = {
 		currCuisine: currCuisine,
 		newLevel: newLevel,
-		user: user,
+		user: newUser,
 		error: error,
 	};
 	res.status(200).json(ret);
