@@ -21,12 +21,12 @@ function capitalize(str) {
 function UserInfo() {
 
   const [userData, setUserData] = useState({
-    FirstName: '',
-    LastName: '',
-    Email: '',
-    Password: '',
-    Levels: '',
-    Verified: ''
+    FirstName: 'john',
+    LastName: 'doe',
+    Email: 'johndoe@gmail.com',
+    Password: 'abCerr233@',
+    Levels: '5',
+    Verified: 'yes'
   });
   const [doEdit, setEdit] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -173,7 +173,10 @@ function UserInfo() {
     setEmailInput(event.target.value);
   };
 
-
+  const handleVerifyEmail = async () => {
+    // Implement email verification logic here
+    console.log("Verifying email...");
+  };
 
 
 const handleConfirmPasswordChange = (event) => {
@@ -257,14 +260,24 @@ const handleConfirmPasswordBlur = () => {
               </React.Fragment>
             ))}
             {/*edit button*/}
-            <button
-              type="button"
-              onClick={editMode}
-              className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 text-lg rounded-lg focus:outline-none focus:shadow-outline
-              ${userData.Password !== confirmPassword ? 'bg-gray-200 opacity-40 cursor-not-allowed' : ''}`}
-              disabled={passwordErrors.length > 0 || userData.Password !== confirmPassword}>
-              {doEdit ? 'Save Changes' : 'Edit'}
-            </button>
+            <div className="flex mt-10">
+              <button
+                type="button"
+                onClick={editMode}
+                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 text-lg rounded-lg focus:outline-none focus:shadow-outline
+                ${userData.Password !== confirmPassword ? 'bg-gray-200 opacity-40 cursor-not-allowed' : ''}`}
+                disabled={passwordErrors.length > 0 || userData.Password !== confirmPassword}>
+                {doEdit ? 'Save Changes' : 'Edit'}
+              </button>
+              {userData.Verified === 'no' && (
+                <button
+                  type="button"
+                  onClick={handleVerifyEmail}
+                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 ml-4 text-lg rounded-lg focus:outline-none focus:shadow-outline">
+                  Verify Email
+                </button>
+              )}
+            </div>
           </form>
         </div>
         <Footer />
