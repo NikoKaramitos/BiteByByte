@@ -303,19 +303,16 @@ const Dash = () => {
 				<div className="absolute top-40 left-0 right-0 flex justify-center items-center">
 					<RecipeCard
 						imageUrl={recipeImage.recipe1}
-						recipe="Recipe 1"
 						buttonText={recipeInfo.recipe1}
 						onClick={() => handleButtonClick1(recipeInfo.recipe1, 1)} // Pass recipe name as parameter
 					/>
 					<RecipeCard
 						imageUrl={recipeImage.recipe2}
-						recipe="Recipe 2"
 						buttonText={recipeInfo.recipe2}
 						onClick={() => handleButtonClick1(recipeInfo.recipe2, 2)} // Pass recipe name as parameter
 					/>
 					<RecipeCard
 						imageUrl={recipeImage.recipe3}
-						recipe="Recipe 3"
 						buttonText={recipeInfo.recipe3}
 						onClick={() => handleButtonClick1(recipeInfo.recipe3, 3)} // Pass recipe name as parameter
 					/>

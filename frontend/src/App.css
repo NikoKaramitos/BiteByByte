@@ -7,6 +7,16 @@
   }
 }
 
+ /* footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center; 
+  z-index: 0; 
+}  */
+
+
 .App {
   text-align: center;
 }
@@ -118,4 +128,9 @@
 .quiz-button:hover{
   background-color: white;
   color: black;
+}
+
+.cardButton:hover {
+  transform: translateY(-8px); /* Move the button up by 2px */
+  transition: transform 0.2s ease-in-out; /* Smooth transition */
 }
