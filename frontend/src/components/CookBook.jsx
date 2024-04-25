@@ -84,11 +84,11 @@ export default function CookBook() {
         />
 
         <div className="relative flex justify-center items-center h-full">
-          <div className="max-w-[69em] w-full max-h-[750px] h-full rounded 2xl shadowl border-4 border-black 2xl mx-auto bg-amber-100 bg-opacity-90 p-8">
-            <h1 className="text-center text-black text-lg m-3">
+          <div className="max-w-[69em] w-full max-h-[750px] h-full rounded 2xl shadowl  2xl mx-auto bg-transparent bg-opacity-90 p-8">
+            <h1 className="text-center bg-white text-black text-lg">
               Chef {firstName}'s Cook Book
             </h1>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center bg-amber-100 bg-opacity-80 w-[500px] center">
               {/* "Prev" Button */}
               <button
                 id="prev"
@@ -145,7 +145,7 @@ export default function CookBook() {
               </button>
             </div>
 
-            <div className="flex justify-center gap-5 mt-8">
+            <div className="flex justify-center gap-8 mt-8">
             {recipes.map((recipe, index) => (
               <div className=" cursor-pointer group " key={index}>
                

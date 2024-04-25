@@ -41,7 +41,7 @@
   background: repeating-linear-gradient(#0000 0 calc(1.2rem - 1px), #66afe1 0 1.2rem) right bottom / 100% 100%, linear-gradient(red 0 0) 30px 0 / 2px 100% #fff;
   background-repeat: no-repeat;
   line-height: 1.2rem;
-  -webkit-mask: radial-gradient(circle .8rem at 2px 50%, #0000 98%, #000) 0 0 / 100% 2.4rem;
+  -webkit-mask: radial-gradient(circle .8rem at 2px 50%, #0000 98%, #000) 0 0 / 100% 2.8rem;
 }
 
 .card_content {
@@ -64,18 +64,19 @@ h2.card_title {
   flex-direction: column;
   overflow-y: auto;
   /* Enable vertical scrolling */
-  padding-left: 30px;
+  padding-left: 20px;
+  line-height: 1.2rem;
   background: repeating-linear-gradient(#0000 0 calc(1.2rem - 1px), #66afe1 0 1.2rem) right bottom / 100% 100%, linear-gradient(red 0 0) 30px 0 / 2px 100% #fff;
   background-repeat: no-repeat;
   line-height: 1.2rem;
-  -webkit-mask: radial-gradient(circle .8rem at 2px 50%, #0000 98%, #000) 0 0 / 100% 2.4rem;
+ /* -webkit-mask: radial-gradient(circle .8rem at 2px 50%, #0000 98%, #000) 0 0 / 100% 2.8rem;*/
 }
 
 .my-scale-up {
-  transform: scale(1.2);
+  transform: scale(1.1);
   z-index: 1;
 }
 
 .my-scale-down {
-  transform: scale(0.8);
+  transform: scale(0.9);
 }

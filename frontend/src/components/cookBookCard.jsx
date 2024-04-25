@@ -28,11 +28,12 @@ const CookBookCard = ({ text, buttonText }) => {
   const [ingredients, setIngredients] = useState([]);
   const [instructions, setInstructions] = useState([]);
   const [message, setMessage] = useState("");
+  const [clickedLines, setClickedLines] = useState({});
   const [hovered, setHovered] = useState(false);
   const handleHover = () => {
     setHovered(true);
   };
-  
+
   const handleMouseLeave = () => {
     setHovered(false);
   };
@@ -50,26 +51,28 @@ const CookBookCard = ({ text, buttonText }) => {
   //this function uses text as the recipe name and searches through the /api/recipe
   // to display the ingredients and instructions
   const getRecipeInfo = async () => {
-
     try {
       const obj = { recipe: text };
-    const js = JSON.stringify(obj);
+      const js = JSON.stringify(obj);
       const response = await fetch(buildPath("api/recipe"), {
         method: "POST",
         body: js,
         headers: { "Content-Type": "application/json" },
       });
 
-      const res = await response.json()
+      const res = await response.json();
 
       if (res.error) {
         console.log(res.error);
         setMessage(res.error);
-       // setIngredients([]);
+        // setIngredients([]);
         //setInstructions([]);
       } else {
-        const { ingredients , instructions } = res;
-        console.log("Recipe info for " + text + ": " + ingredients, instructions);
+        const { ingredients, instructions } = res;
+        console.log(
+          "Recipe info for " + text + ": " + ingredients,
+          instructions
+        );
         setIngredients(ingredients); // Update Ingredigents state with fetched ingredigents
         setInstructions(instructions);
         setMessage(""); // Clear any previous message
@@ -80,61 +83,82 @@ const CookBookCard = ({ text, buttonText }) => {
     }
   };
 
-  function getIngredigents(obj) {}
+  useEffect(() => {
+    getRecipeInfo();
+  }, [text]);
 
+  const toggleLine = (category, index) => {
+    const newClickedLines = { ...clickedLines };
+    const key = `${category}_${index}`;
+    newClickedLines[key] = !newClickedLines[key];
+    setClickedLines(newClickedLines);
+  };
 
-useEffect(() => {
-  getRecipeInfo();
-}, [text]);
-
-  
   return (
     <div
-    className={`relative preserve-3d ${
-      hovered ? "my-scale-up" : "my-scale-down"
-    } duration-1000`}
-    onMouseEnter={handleHover}
-    onMouseLeave={handleMouseLeave}
-  >
-    <div className="text-black backface-hidden">
-      <div className="card">
-        <div className="card_image">
-          <img src={imageUrl} alt="Recipe" />
-        </div>
-        <div className="card_content">
-          <h2 className="card_title">{text}</h2>
-          <h2 className="card_title">{buttonText}</h2>
+      className={`relative preserve-3d ${
+        hovered ? "my-scale-up" : "my-scale-down"
+      } duration-1000`}
+      onMouseEnter={handleHover}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="text-black backface-hidden">
+        <div className="card">
+          <div className="card_image">
+            <img src={imageUrl} alt="Recipe" />
+          </div>
+          <div className="card_content">
+            <h2 className="card_title">{text}</h2>
+            <h2 className="card_title">{buttonText}</h2>
+          </div>
         </div>
       </div>
-    </div>
-    {hovered && ( // Only render the back face when hovered
-      <div className="absolute inset-0 rounded-xl text-center text-slate-200 transform rotateY-180 backface-visibility-hidden">
-        <div className="text-center text-black flex-col items-center justify-center">
-          <div className="card_face card_back">
-            <div className="card_content">
-              <div className="card_text">
-                <p className="my-2 text-sm">Ingredients:</p>
-                <ul className="text-xs">
-                  {ingredients.map((ingredient, index) => (
-                    <li key={index}>{ingredient}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="card_text">
-                <p className="my-2 text-sm">Instructions:</p>
-                <ol className="text-xs">
-                  {instructions.map((instruction, index) => (
-                    <li key={index}>{`Step ${index + 1}: ${instruction}`}</li>
-                  ))}
-                </ol>
+      {hovered && (
+        <div className="absolute inset-0 rounded-xl text-center text-slate-200 transform rotateY-180 backface-visibility-hidden">
+          <div className="text-center text-black flex-col items-center justify-center">
+            <div className="card_face card_back">
+              <div className="card_content">
+                <div className="card_text">
+                  <p className="my-2 text-sm">Ingredients:</p>
+                  <ul className="text-xs">
+                    {ingredients.map((ingredient, index) => (
+                      <li
+                        key={index}
+                        onClick={() => toggleLine("ingredient", index)}
+                        style={{
+                          textDecoration:
+                            clickedLines[`ingredient_${index}`] &&
+                            "line-through red",
+                        }}
+                      >
+                        {ingredient}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="card_text">
+                  <p className="my-2 text-sm">Instructions:</p>
+                  <ol className="text-xs">
+                    {instructions.map((instruction, index) => (
+                      <li
+                        key={index}
+                        onClick={() => toggleLine("instruction", index)}
+                        style={{
+                          textDecoration:
+                            clickedLines[`instruction_${index}`] &&
+                            "line-through red",
+                        }}
+                      >{`Step ${index + 1}: ${instruction}`}</li>
+                    ))}
+                  </ol>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    )}
-  </div>
-);
+      )}
+    </div>
+  );
 };
 
 export default CookBookCard;
