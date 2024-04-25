@@ -147,7 +147,7 @@ export default function CookBook() {
 
             <div className="flex justify-center gap-5 mt-8">
             {recipes.map((recipe, index) => (
-              <div className="key={index} cursor-pointer group ">
+              <div className=" cursor-pointer group " key={index}>
                
                       {/* Example CookBookCard for each recipe */}
                       <CookBookCard
