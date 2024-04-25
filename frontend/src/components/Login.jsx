@@ -63,10 +63,12 @@ export default function Login() {
 				if (res.verified) {
 					setMessage("");
 					if (res.currCuisine) {
-						// Save current cuisine using setCuisine endpoint
-						//await saveCurrentCuisine(res.id, res.currCuisine);
-
 						// Redirect to Dash page if user has a current cuisine set
+						var level = {
+							cuisine: res.currCuisine,
+							level: res.levels[res.currCuisine],
+						};
+						localStorage.setItem("level", JSON.stringify(level));
 						navigate(`/dash/${res.currCuisine}`);
 					} else {
 						// Redirect to select cuisine page if user hasn't set a current cuisine

@@ -23,11 +23,13 @@ const Dash = () => {
     const [instructions, setInstructions] = useState([]);
 	const [buttonClicked, setButtonClicked] = useState(false);
 	const [selectedRecipeName, setSelectedRecipeName] = useState(null); // Define setSelectedRecipeName state
-	const [questions, setQuestions] = useState([]); // State to store fetched questions
-	var _cuisineLevel = localStorage.getItem("level");
-	var cuisineLevel = JSON.parse(_cuisineLevel);
-	var currCuisine = cuisineLevel.cuisine;
-	var currLevel = cuisineLevel.level;
+	const [questions1, setQuestions1] = useState([]); // State to store fetched questions
+	const [questions2, setQuestions2] = useState([]); // State to store fetched questions
+	const [questions3, setQuestions3] = useState([]); // State to store fetched questions
+	const [message1, setMessage1] = useState("");
+	var _level = localStorage.getItem("level");
+	var level = JSON.parse(_level);
+	var currLevel = level.level;
 
 	// Function to generate intro content based on cuisine and selected recipe
 	const generateIntroContent = (cuisine, recipeName) => {
@@ -103,31 +105,6 @@ const Dash = () => {
 		},
 	];
 
-	// Define the updateUserLevel function to update the user's level
-	const updateUserLevel = async (userId, xp) => {
-		try {
-		  const response = await fetch(buildPath("api/setLevel"), {
-			method: "POST",
-			body: JSON.stringify({ userId, xp }),
-			headers: {
-			  "Content-Type": "application/json",
-			},
-		  });
-	
-		  const data = await response.json();
-	
-		  if (data.error) {
-			console.error("Error updating user level:", data.error);
-			// Handle error appropriately, e.g., display an error message to the user
-		  } else {
-			// Optionally, update any state or display a message to the user
-			console.log("User level updated successfully:", data.newLevel);
-		  }
-		} catch (error) {
-		  console.error("Error updating user level:", error);
-		  // Handle error appropriately, e.g., display an error message to the user
-		}
-	  };
 
 	  const fetchQuestions = async (recipeName, level, difficulty, cuisineId) => {
 		try {
@@ -164,7 +141,6 @@ const Dash = () => {
 
 	const handleButtonClick1 = (recipeName, level) => { // Modify to accept recipeName parameter
 		const fetchRecipesAndShowStepper = async () => {
-			console.log("calling the fucntion FRASS")
 			try {
 				// Create an object containing the recipe name and level
 				const obj = { recipe: recipeName };
@@ -190,13 +166,21 @@ const Dash = () => {
 		
 				// Fetch questions for the selected recipe and level
 				console.log(`Recipe: ${recipeName}, Level: ${level}`);
-				const questions = await fetchQuestions(recipeName, level);
-				console.log("Questions: ", questions)
+				const questions1 = await fetchQuestions(recipeName, 1);
+				const questions2 = await fetchQuestions(recipeName, 2);
+				const questions3 = await fetchQuestions(recipeName, 3);
+
+				console.log("Questions 1: ", questions1)
+				console.log("Questions 2: ", questions2)
+				console.log("Questions 3: ", questions3)
+
 		
 				// Update state with fetched ingredients, instructions, and questions
 				setIngredients(ingredients);
 				setInstructions(instructions);
-				setQuestions(questions);
+				setQuestions1(questions1);
+				setQuestions2(questions2);
+				setQuestions3(questions3);
 		
 				// Update state with the selected recipe name
 				setSelectedRecipeName(recipeName);
@@ -243,9 +227,9 @@ const Dash = () => {
 		case "Mexican":
 			imageSrc = mexicanImage;
 			recipeInfo = {
-				recipe1: "Mexican Recipe 1",
+				recipe1: "Tacos",
 				recipe2: "Mexican Recipe 2",
-				recipe3: "Mexican Recipe 3"
+				recipe3: "Enchiladas"
 			};
 			recipeImage = {
 				recipe1: tiramisu,
@@ -269,9 +253,9 @@ const Dash = () => {
 		case "French":
 			imageSrc = france;
 			recipeInfo = {
-				recipe1: "French Recipe 1",
-				recipe2: "French Recipe 2",
-				recipe3: "French Recipe 3"
+				recipe1: "French onion soup",
+				recipe2: "Chocolate soufflé",
+				recipe3: "Boeuf Bourguignon"
 			};
 			recipeImage = {
 				recipe1: tiramisu,
@@ -287,34 +271,42 @@ const Dash = () => {
 			<img className="w-full  z-0 " src={imageSrc}></img>
 			{(showStepper) && (
 				<div className="absolute z-10 top-40 left-0 w-full">
-            {showStepper && 
-			(<CustomStepper steps={steps1} ingredients={ingredients} instructions={instructions} questions={questions} />)}					
-			{/* <div className="absolute top-80 left-0 right-0 text-center"> */}
-						{/* <button
-							className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-							onClick={handleBackButtonClick}
-						>
-							Back
-						</button> */}
-					</div>
-				// </div>
+					{showStepper && 
+					(<CustomStepper steps={steps1} ingredients={ingredients} instructions={instructions} questions1={questions1} questions2={questions2} questions3={questions3} />)}
+				</div>
 			)}
 			{!buttonClicked && (
 				<div className="absolute top-40 left-0 right-0 flex justify-center items-center">
 					<RecipeCard
 						imageUrl={recipeImage.recipe1}
 						buttonText={recipeInfo.recipe1}
-						onClick={() => handleButtonClick1(recipeInfo.recipe1, 1)} // Pass recipe name as parameter
+						onClick={() => {if (Math.floor(currLevel/10) === 1) {
+							console.log("What is this?",Math.floor(currLevel/10))
+							handleButtonClick1(recipeInfo.recipe1, 1);
+						}else if(Math.floor(currLevel/10) < 1){
+							setMessage1("Completed")}
+							else{setMessage1("Need to complete prior Recipe")
+							}}} // Pass recipe name as parameter
 					/>
-					<RecipeCard
+					{/* <span>{message1}</span> */}
+					<div>
+						<RecipeCard
 						imageUrl={recipeImage.recipe2}
 						buttonText={recipeInfo.recipe2}
-						onClick={() => handleButtonClick1(recipeInfo.recipe2, 2)} // Pass recipe name as parameter
-					/>
+						onClick={() => {if (Math.floor(currLevel/10) === 2) {
+							console.log("What is this?",Math.floor(currLevel/10))
+							handleButtonClick1(recipeInfo.recipe2, 2);
+						}}}
+						message={(Math.floor(currLevel/10) === 2)? "":(Math.floor(currLevel/10) > 2) ? "Completed":"Need to Complete Prior Recipe"}
+						/>
+					</div>
 					<RecipeCard
 						imageUrl={recipeImage.recipe3}
 						buttonText={recipeInfo.recipe3}
-						onClick={() => handleButtonClick1(recipeInfo.recipe3, 3)} // Pass recipe name as parameter
+						onClick={() => {if (Math.floor(currLevel/10) === 3) {
+							console.log("What is this?",Math.floor(currLevel/10))
+							handleButtonClick1(recipeInfo.recipe3, 3);
+						  }}} // Pass recipe name as parameter
 					/>
 				</div>
 			)}

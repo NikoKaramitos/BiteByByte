@@ -1,30 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { CardContent} from "@mui/material";
 import HorizontalStepper from 'react-stepper-horizontal';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material'; // Import arrow icons
+import Select from 'react-select'
 import '../App.css';
 
-const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
+
+const CustomStepper = ({ steps, ingredients, instructions, questions1, questions2, questions3 }) => {
   const app_name = "bitebybyte-9e423411050b";
   const [activeStep, setActiveStep] = useState(0);
   const [crossedOffInstructions, setCrossedOffInstructions] = useState(Array(instructions.length).fill(false));
-  const [selectedOptions, setSelectedOptions] = useState(Array(questions.length).fill(null));
+  const [selectedOptions1, setSelectedOptions1] = useState(Array(questions1.length).fill(null));
+  const [selectedOptions2, setSelectedOptions2] = useState(Array(questions2.length).fill(null));
+  const [selectedOptions3, setSelectedOptions3] = useState(Array(questions3.length).fill(null));
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [questionNumber, setQuestionNumber] = useState(1); // Initialize question number
   const [score, setScore] = useState(0); // Initialize score
   const [showQuiz1, setShowQuiz1] = useState(true); // Initialize showQuiz state
   const [showQuiz2, setShowQuiz2] = useState(true); // Initialize showQuiz state
+  const [showQuiz3, setShowQuiz3] = useState(true); // Initialize showQuiz state
   const [scoreQuiz1, setScoreQuiz1] = useState(0); // Initialize score for Quiz 1
   const [scoreQuiz2, setScoreQuiz2] = useState(0);  
+  const [scoreQuiz3, setScoreQuiz3] = useState(0);  
+  const [showResults1, setShowResults1] = useState(false); // Flag to control quiz results visibility
+  const [showResults2, setShowResults2] = useState(false); // Flag to control quiz results visibility
+  const [showResults3, setShowResults3] = useState(false); // Flag to control quiz results visibility
+
+
   const letter = {0:"A", 1:"B", 2:"C",3:"D" };
   var _ud = localStorage.getItem("user_data");
 	var ud = JSON.parse(_ud);
 	var userId = ud.id;
 
-  if (!questions) {
+  useEffect(() => {
+    // Reset question index and number when active step changes
+    setCurrentQuestionIndex(0);
+    setQuestionNumber(1);
+  }, [activeStep]);
+
+
+  if (!questions1 || !questions2 || !questions3) {
     // Return null or an alternative component if questions are null
     return null;
   }
+  
 
   function buildPath(route) {
 		if (process.env.NODE_ENV === "production") {
@@ -33,12 +52,26 @@ const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
 			return "http://localhost:5001/" + route;
 		}
 	}
+  
 
-  const handleOptionSelect = (questionIndex, optionIndex) => {
-    const newSelectedOptions = [...selectedOptions];
-    newSelectedOptions[questionIndex] = optionIndex;
-    setSelectedOptions(newSelectedOptions);
+  const handleOptionSelect1 = (questionIndex, optionIndex) => {
+    const newSelectedOptions1 = [...selectedOptions1];
+    newSelectedOptions1[questionIndex] = optionIndex;
+    setSelectedOptions1(newSelectedOptions1);
   };
+
+  const handleOptionSelect2 = (questionIndex, optionIndex) => {
+    const newSelectedOptions2 = [...selectedOptions2];
+    newSelectedOptions2[questionIndex] = optionIndex;
+    setSelectedOptions2(newSelectedOptions2);
+  };
+
+  const handleOptionSelect3 = (questionIndex, optionIndex) => {
+    const newSelectedOptions3 = [...selectedOptions3];
+    newSelectedOptions3[questionIndex] = optionIndex;
+    setSelectedOptions3(newSelectedOptions3);
+  };
+
   const handleNextQuestion = () => {
     setCurrentQuestionIndex(currentQuestionIndex + 1);
     setQuestionNumber(questionNumber + 1); // Increment question number
@@ -48,12 +81,34 @@ const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
     setCurrentQuestionIndex(currentQuestionIndex - 1);
     setQuestionNumber(questionNumber - 1); // Decrement question number
   };
- 
-  const calculateScore = () => {
+
+  const calculateScore1 = () => {
     let correctAnswers = 0;
-    for (let i = 0; i < questions.length; i++) {
-      console.log(`Selected: ${letter[selectedOptions[i]]}, Correct: ${questions[i].Correct}`)
-      if (letter[selectedOptions[i]] === questions[i].Correct) {
+    for (let i = 0; i < questions1.length; i++) {
+      console.log(`Selected: ${letter[selectedOptions1[i]]}, Correct: ${questions1[i].Correct}`)
+      if (letter[selectedOptions1[i]] === questions1[i].Correct) {
+        correctAnswers++;
+      }
+    }
+    return correctAnswers;
+  };
+
+  const calculateScore2 = () => {
+    let correctAnswers = 0;
+    for (let i = 0; i < questions2.length; i++) {
+      console.log(`Selected: ${letter[selectedOptions2[i]]}, Correct: ${questions2[i].Correct}`)
+      if (letter[selectedOptions2[i]] === questions2[i].Correct) {
+        correctAnswers++;
+      }
+    }
+    return correctAnswers;
+  };
+
+  const calculateScore3 = () => {
+    let correctAnswers = 0;
+    for (let i = 0; i < questions3.length; i++) {
+      console.log(`Selected: ${letter[selectedOptions3[i]]}, Correct: ${questions3[i].Correct}`)
+      if (letter[selectedOptions3[i]] === questions3[i].Correct) {
         correctAnswers++;
       }
     }
@@ -89,29 +144,47 @@ const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
 
   const handleFinishQuiz = () => {
     if (steps[activeStep].title === "Quiz 1") {
-      const finalScore = calculateScore();
+      const finalScore = calculateScore1();
+      setShowResults1(true); // Set flag to display quiz results
       setScoreQuiz1(finalScore); // Set score for Quiz 1
+
     } else if (steps[activeStep].title === "Quiz 2") {
-      const finalScore = calculateScore();
+      const finalScore = calculateScore2();
       setScoreQuiz2(finalScore); // Set score for Quiz 2
+      setShowResults2(true);
+       // Set flag to display quiz results
+    } else if (steps[activeStep].title === "Finish") {
+      const finalScore = calculateScore3();
+      setScoreQuiz3(finalScore); // Set score for Quiz 2
+      setShowResults3(true); // Set flag to display quiz results
     }
   
-    setShowQuiz1(false); // Hide the quiz questions
-    setShowQuiz2(false); // Hide the quiz questions
+    // setShowQuiz1(false); // Hide the quiz questions
+    // setShowQuiz2(false); // Hide the quiz questions
   };
 
   const handleTryAgain = () => {
     setShowQuiz1(true); // Show the quiz questions again
-    // setShowQuiz2(true); // Show the quiz questions again
+    setShowQuiz2(true); // Show the quiz questions again
+    setShowQuiz3(true); // Show the quiz questions again
     setCurrentQuestionIndex(0); // Reset question index
     setQuestionNumber(1); // Reset question number
     setScoreQuiz1(0); // Reset score for Quiz 1
-    // setScoreQuiz2(0); // Reset score for Quiz 2
-    setSelectedOptions(Array(questions.length).fill(null)); // Reset selected options
+    setScoreQuiz2(0); // Reset score for Quiz 2
+    setScoreQuiz3(0); // Reset score for Quiz 3
+    setSelectedOptions1(Array(questions1.length).fill(null)); // Reset selected options
+    setSelectedOptions2(Array(questions2.length).fill(null)); // Reset selected options
+    setSelectedOptions3(Array(questions3.length).fill(null)); // Reset selected options
+    setShowResults1(false);
+    setShowResults2(false);
+    setShowResults3(false);
+
   };
 
   const handleNext = () => {
+    console.log("Active Step: ", activeStep);
     setActiveStep(activeStep + 1);
+    console.log("Active Step: ", activeStep);
   };
 
   const handleBack = () => {
@@ -139,7 +212,7 @@ const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
             <ul style={{ paddingLeft: '20px', color:'white'}}>
               {ingredients.map((ingredient, index) => (
                 <li key={index} style={{ marginBottom: '8px', cursor: 'pointer' }}>
-                  <input type="checkbox" id={`ingredient-${index}`} name={`ingredient-${index}`} />
+                  <input type="checkbox" id={`ingredient-${index}`} name={`ingredient-${index}`}style={{width: '16px', height: '16px'}} />
                   <label htmlFor={`ingredient-${index}`} style={{ marginLeft: '8px', userSelect: 'none' }}>
                     {ingredient}
                   </label>
@@ -150,18 +223,18 @@ const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
           )}
         {steps[activeStep].title === "Quiz 1"  && (
         <div style={{ marginTop: '16px', color: 'white' }}>
-          <div key={questions[currentQuestionIndex]._id}>
-            <h3>Question {questionNumber}: {questions[currentQuestionIndex].Question} {/* Display question number */}</h3>
+          <div key={questions1[currentQuestionIndex]._id}>
+            <h3>Question {questionNumber}: {questions1[currentQuestionIndex].Question} {/* Display question number */}</h3>
             <br/>
             <ul>
-              {Object.entries(questions[currentQuestionIndex].Answers).map(([key, value], optionIndex) => (
+              {Object.entries(questions1[currentQuestionIndex].Answers).map(([key, value], optionIndex) => (
                 <li
                   key={key}
-                  onClick={() => handleOptionSelect(currentQuestionIndex, optionIndex)}
+                  onClick={() => handleOptionSelect1(currentQuestionIndex, optionIndex)}
                   style={{
                     cursor: 'pointer',
                     marginBottom: '8px',
-                    color: selectedOptions[currentQuestionIndex] === optionIndex ? 'green' : 'white'
+                    color: selectedOptions1[currentQuestionIndex] === optionIndex ? 'green' : 'white'
                   }}
                 >
                 <span
@@ -171,7 +244,7 @@ const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
                       height: '16px',
                       borderRadius: '50%',
                       border: '1px solid white',
-                      backgroundColor: selectedOptions[currentQuestionIndex] === optionIndex ? 'green' : 'transparent',
+                      backgroundColor: selectedOptions1[currentQuestionIndex] === optionIndex ? 'green' : 'transparent',
                       marginRight: '8px',
                     }}
                   ></span>
@@ -190,7 +263,7 @@ const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
                 Previous Question
               </button>
             )}
-            {currentQuestionIndex < questions.length - 1 ? (
+            {currentQuestionIndex < questions1.length - 1 ? (
               <button
                 onClick={handleNextQuestion}
                 className="quiz-button"
@@ -209,11 +282,11 @@ const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
         </div>
       )}
       
-      {!showQuiz1 && score !== null && (
+      {steps[activeStep].title === "Quiz 1" && showResults1 && (
         <div style={{ marginTop: '16px', color: 'white' }}>
-          <h3>Quiz Results:</h3>
+          <h3>Quiz 1 Results:</h3>
           <br/>
-          <p>Your Score: {scoreQuiz1} / {questions.length}</p>
+          <p>Your Score: {scoreQuiz1} / {questions1.length}</p>
           <br/>
           <button
             onClick={handleTryAgain}
@@ -225,18 +298,18 @@ const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
       )}
       {steps[activeStep].title === "Quiz 2" && (
         <div style={{ marginTop: '16px', color: 'white' }}>
-          <div key={questions[currentQuestionIndex]._id}>
-            <h3>Question {questionNumber}: {questions[currentQuestionIndex].Question} {/* Display question number */}</h3>
+          <div key={questions2[currentQuestionIndex]._id}>
+            <h3>Question {questionNumber}: {questions2[currentQuestionIndex].Question} {/* Display question number */}</h3>
             <br/>
             <ul>
-              {Object.entries(questions[currentQuestionIndex].Answers).map(([key, value], optionIndex) => (
+              {Object.entries(questions2[currentQuestionIndex].Answers).map(([key, value], optionIndex) => (
                 <li
                   key={key}
-                  onClick={() => handleOptionSelect(currentQuestionIndex, optionIndex)}
+                  onClick={() => handleOptionSelect2(currentQuestionIndex, optionIndex)}
                   style={{
                     cursor: 'pointer',
                     marginBottom: '8px',
-                    color: selectedOptions[currentQuestionIndex] === optionIndex ? 'green' : 'white'
+                    color: selectedOptions2[currentQuestionIndex] === optionIndex ? 'green' : 'white'
                   }}
                 >
                 <span
@@ -246,7 +319,7 @@ const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
                       height: '16px',
                       borderRadius: '50%',
                       border: '1px solid white',
-                      backgroundColor: selectedOptions[currentQuestionIndex] === optionIndex ? 'green' : 'transparent',
+                      backgroundColor: selectedOptions2[currentQuestionIndex] === optionIndex ? 'green' : 'transparent',
                       marginRight: '8px',
                     }}
                   ></span>
@@ -265,7 +338,7 @@ const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
                 Previous Question
               </button>
             )}
-            {currentQuestionIndex < questions.length - 1 ? (
+            {currentQuestionIndex < questions2.length - 1 ? (
               <button
                 onClick={handleNextQuestion}
                 className="quiz-button"
@@ -283,12 +356,11 @@ const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
           </div>
         </div>
       )}
-      
-      {!showQuiz2 && score!== null && (
+      {steps[activeStep].title === "Quiz 2" && showResults2 && (
         <div style={{ marginTop: '16px', color: 'white' }}>
-          <h3>Quiz Results:</h3>
+          <h3>Quiz 2 Results:</h3>
           <br/>
-          <p>Your Score: {scoreQuiz2} / {questions.length}</p>
+          <p>Your Score: {scoreQuiz2} / {questions2.length}</p>
           <br/>
           <button
             onClick={handleTryAgain}
@@ -298,7 +370,7 @@ const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
           </button>
         </div>
       )}
-           {steps[activeStep].title === "Instructions" && (
+          {steps[activeStep].title === "Instructions" && (
             <div style={{ marginTop: '16px' }}>
               <h3 style={{ color:"white" }}>
                 Instructions:
@@ -325,6 +397,80 @@ const CustomStepper = ({ steps, ingredients, instructions, questions }) => {
               </ol>
             </div>
           )}
+          {steps[activeStep].title === "Finish" && (
+        <div style={{ marginTop: '16px', color: 'white' }}>
+          <div key={questions3[currentQuestionIndex]._id}>
+            <h3>Question {questionNumber}: {questions3[currentQuestionIndex].Question} {/* Display question number */}</h3>
+            <br/>
+            <ul>
+              {Object.entries(questions3[currentQuestionIndex].Answers).map(([key, value], optionIndex) => (
+                <li
+                  key={key}
+                  onClick={() => handleOptionSelect3(currentQuestionIndex, optionIndex)}
+                  style={{
+                    cursor: 'pointer',
+                    marginBottom: '8px',
+                    color: selectedOptions3[currentQuestionIndex] === optionIndex ? 'green' : 'white'
+                  }}
+                >
+                <span
+                    style={{
+                      display: 'inline-block',
+                      width: '16px',
+                      height: '16px',
+                      borderRadius: '50%',
+                      border: '1px solid white',
+                      backgroundColor: selectedOptions3[currentQuestionIndex] === optionIndex ? 'green' : 'transparent',
+                      marginRight: '8px',
+                    }}
+                  ></span>
+                  {value}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <br/>
+          <div>
+            {currentQuestionIndex > 0 && (
+              <button
+                onClick={handlePreviousQuestion}
+                className="quiz-button"
+              >
+                Previous Question
+              </button>
+            )}
+            {currentQuestionIndex < questions3.length - 1 ? (
+              <button
+                onClick={handleNextQuestion}
+                className="quiz-button"
+              >
+                Next Question
+              </button>
+            ) : (
+              <button
+                onClick={handleFinishQuiz}
+                className="quiz-button"
+              >
+                Finish Quiz
+              </button>
+            )}
+            {steps[activeStep].title === "Finish" && showResults3 && (
+        <div style={{ marginTop: '16px', color: 'white' }}>
+          <h3>Final Results:</h3>
+          <br/>
+          <p>Your Score: {scoreQuiz3} / {questions3.length}</p>
+          <br/>
+          <button
+            onClick={handleTryAgain}
+            className="quiz-button"
+          >
+            Try Again
+          </button>
+        </div>
+      )}
+          </div>
+        </div>
+      )}
           <div style={{ marginTop: '60px', marginBottom: '16px' }}>
             <button
               disabled={activeStep === 0}
