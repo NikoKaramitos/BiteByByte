@@ -26,7 +26,7 @@ function App() {
 				<Route path="/verify" index element={<VerifyPage />} />
 				<Route path="/dash/:cuisine" element={<Dash />}/>
 				<Route path="/cookbook" index element={<CookBook />} />
-				<Route path="/Profile-Settings" element={<Settings/>}/>
+				<Route path="/Settings" element={<Settings/>}/>
 			</Routes>
 		</BrowserRouter>
 	);
