@@ -21,12 +21,12 @@ function capitalize(str) {
 function UserInfo() {
 
   const [userData, setUserData] = useState({
-    FirstName: 'john',
-    LastName: 'doe',
-    Email: 'johndoe@gmail.com',
-    Password: 'abcEr2@13',
-    Levels: '5',
-    Verified: 'yes'
+    FirstName: '',
+    LastName: '',
+    Email: '',
+    Password: '',
+    Levels: '',
+    Verified: ''
   });
   const [doEdit, setEdit] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
