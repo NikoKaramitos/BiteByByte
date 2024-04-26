@@ -122,6 +122,7 @@ function UserInfo() {
     try {
         const response = await fetch(buildPath('/api/profile-settings'), {
             method: 'POST',
+            body: JSON.stringify(userData),
             headers: {'Content-Type': 'application/json'}
         });
         
