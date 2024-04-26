@@ -136,11 +136,6 @@ const CookBookCard = ({ text, buttonText, userLevels }) => {
           </div>
           <div className="card_content">
             <h2 className="card_title">{text}</h2>
-            {userLevels?.Italian < 12 && text === "Lasagna" ? (
-              <p>Unlock at Level 12 for Lasagna</p>
-            ) : (
-              <h2 className="card_title">{buttonText}</h2>
-            )}
             <h2 className="card_title">{buttonText}</h2>
           </div>
         </div>
